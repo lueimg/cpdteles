@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('li[id^="sub_"]').click(sistema.armaLink);//arma link de los sub-menus
-    $('#nav-inicio').click(sistema.armaLink);
+    $('#nav-inicio span[id^="sub_"]').click(sistema.armaLink);
 })
 var sistema={
     checked_all:function(element,idtb){
