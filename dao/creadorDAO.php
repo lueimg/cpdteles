@@ -1,4 +1,4 @@
-<?
+<?php
 class creadorDAO{
 	public static function getTransaccionDAO(){
 		return new MySqlTransaccionDAO;
@@ -114,6 +114,9 @@ class creadorDAO{
 
 	public static function getBoltoleDAO(){
 		return new MySqlBoltoleDAO;
+	}
+        public static function getEquivalenciaDAO(){
+		return new MySqlEquivalenciaDAO;
 	}
 }
 ?>

@@ -28,6 +28,7 @@
     require_once('../controlador/servletOpcSist.php');
     require_once('../controlador/servletModIng.php');
     require_once('../controlador/servletHora.php');
+    require_once('../controlador/servletEquivalencia.php');
     require_once('../controlador/servletMedpre.php');
 	require_once('../controlador/servletReporte.php');
 	require_once('../controlador/servletTipoCaptacion.php');
@@ -64,6 +65,7 @@
     require_once('../dao/MySqlOpcSistDAO.php');
     require_once('../dao/MySqlModIngDAO.php');
     require_once('../dao/MySqlHoraDAO.php');
+    require_once('../dao/MySqlEquivalenciaDAO.php');
     require_once('../dao/MySqlMedpreDAO.php');
 	require_once('../dao/MySqlReporteDAO.php');
 	require_once('../dao/MySqlTipoCaptacionDAO.php');

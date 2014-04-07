@@ -1,0 +1,6 @@
+/nbproject/private/
+nbproject/
+nbproject/*
+.idea/
+.idea/*
+conexion/configMySql.php

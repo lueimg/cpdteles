@@ -1,4 +1,4 @@
-<?
+<?php
 class MySqlCarreraDAO{
     public function cargarTipoCarrera(){
         $sql="SELECT ctipcar as id, dtipcar as nombre FROM tipcarm ORDER BY dtipcar";

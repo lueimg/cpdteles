@@ -1,4 +1,4 @@
-<?
+<?php
 	abstract class controladorComandos{
 		public function procesaRequest(){
 			switch ($_SERVER['REQUEST_METHOD']){
@@ -106,6 +106,9 @@
 	                break;
 	           	case "boltole":
 					$classControlador = new servletBoltole;
+                            case 'equivalencia':
+					$classControlador=new servletEquivalencia;
+					break;
 	                break;
 				default:
                     echo json_encode(array('rst'=>3,'msj'=>'Comando no encontrado'));
