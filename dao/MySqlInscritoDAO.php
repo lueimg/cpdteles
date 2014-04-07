@@ -789,20 +789,27 @@ if($data['testalu']!="RE"){
 				$db->rollbackTransaccion();
 				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sql);exit();
 			}
-		
-		$paslog=str_replace("-","",$data['dcodlib']);
-		$actpersona="UPDATE personm 
-					 SET dlogper='".$paslog."',dpasper=concat('".$paslog."',SUBSTR(dnomper,1,1)) 
-					 WHERE cperson='".$data['cperson']."'";
-		$db->setQuery($actpersona);
-			if(!$db->executeQuery()){
-				$db->rollbackTransaccion();
-				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$actpersona);exit();
-			}
-			if(!MySqlTransaccionDAO::insertarTransaccion($actpersona,$data['cfilial']) ){
-				$db->rollbackTransaccion();
-				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$actpersona);exit();
-			}
+
+		$sqlver2="SELECT * 
+				  FROM usugrup
+				  WHERE cperson='".$data['cperson']."'";
+		$db->setQuery($sqlver2);
+    	$valsql2=$db->loadObjectList();
+		if(count($valsql2)==0){		
+			$paslog=str_replace("-","",$data['dcodlib']);
+			$actpersona="UPDATE personm 
+						 SET dlogper='".$paslog."',dpasper=concat('".$paslog."',SUBSTR(dnomper,1,1)) 
+						 WHERE cperson='".$data['cperson']."'";
+			$db->setQuery($actpersona);
+				if(!$db->executeQuery()){
+					$db->rollbackTransaccion();
+					return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$actpersona);exit();
+				}
+				if(!MySqlTransaccionDAO::insertarTransaccion($actpersona,$data['cfilial']) ){
+					$db->rollbackTransaccion();
+					return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$actpersona);exit();
+				}
+		}
 		
 		$sqlver2="Select cgrupo 
 				  FROM grupom 

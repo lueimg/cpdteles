@@ -7,7 +7,9 @@ require_once '../../conexion/configMySql.php';
 /*crea obj conexion*/
 $cn=MySqlConexion::getInstance();
 
-
+$sqlfilial="SELECT * FROM filialm WHERE cfilial='".$_REQUEST["filial"]."'";
+$cn->setQuery($sqlfilial);
+$dfilial=$cn->loadObjectList();
 
 // Redirect output to a client's web browser (Excel2007)
 //header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -16,11 +18,12 @@ $cn=MySqlConexion::getInstance();
 //
 //INCORPORANDO CABECERAS PARA IMPRESION CORRECTA DE UTF-8 USANDO pack("CCC",0xef,0xbb,0xbf);
 header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-header('Content-Disposition: attachment;filename="CajaMecanizada_'.$_REQUEST["dfilial"].'_'.date("Y-m-d_H-i-s").'.xls"');
+header('Content-Disposition: attachment;filename="CajaMecanizada_'.$dfilial[0]['dfilial'].'_'.date("Y-m-d_H-i-s").'.xls"');
 header("Pragma: no-cache");
 header("Expires: 0");
 //echo pack("CCC",0xef,0xbb,0xbf);
 //obteniendo datos a exportar
+
 $sql  ="
 SELECT
 -- datos generales

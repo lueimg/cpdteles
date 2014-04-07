@@ -34,6 +34,34 @@ var grupusuDAO={
             error: this.msjErrorAjax
         });
     },
+    modificarPass:function(){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            dataType : 'json',
+            data : {
+                comando:'grupusu',
+                action:'modificarPass',
+                pass: $("#txt_pass").val(),
+                cusuari:$('#hd_idUsuario').val(),
+                cfilialx:$('#hd_idFilial').val()
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {
+                if(obj.rst=='1'){                   
+                    sistema.msjOk(obj.msj);      
+                    alert('Ingrese nuevamente');
+                    window.location.href='../vista/close.php';
+                }else if(obj.rst=='2'){
+                    sistema.msjAdvertencia(obj.msj);
+                }else{
+                    sistema.msjErrorCerrar(obj.msj);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },  
     editGrupUsu: function(){
         $.ajax({
             url : this.url,

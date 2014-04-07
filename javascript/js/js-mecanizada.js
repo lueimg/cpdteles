@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	/*dialog*/	
-	$('#nav-reportes').addClass('active');//aplica estilo al menu activo
-
+	$('#nav-reportes').addClass('active');//aplica estilo al menu activo	
+	institucionDAO.cargarFilialValida(sistema.llenaSelect,'slct_filial',$("#hd_idFilial").val(),'Filial');
 	/*datepicker*/
 	$(':text[id^="txt_fecha"]').datepicker({
 		dateFormat:'yy-mm-dd',
@@ -25,7 +25,7 @@ ExportarCajaMecanizada=function(){
     if(validar_fechas()){
         var f_ini=$('#txt_fechaInicio').val();
         var f_fin=$('#txt_fechaFin').val();
-        var cfilial = $("#hd_idFilial").val();
+        var cfilial = $("#slct_filial").val();
          var dfilial = $("#hd_desFilial").val();
 	window.location='../reporte/excel/EXCELmecanizada.php?fini='+f_ini+'&ffin='+f_fin+"&filial="+cfilial+"&dfilial="+dfilial;	
     }    

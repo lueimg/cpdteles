@@ -21,7 +21,14 @@ class servletGrupUsu extends controladorComandos{
                     $data['cusuari']=trim($_POST['cusuari']);
                     $data['cfilialx']=trim($_POST['cfilialx']);
                     echo json_encode($daoGrupUsu->editGrupUsu($data));
-                    break;    		
+                    break; 
+                case 'modificarPass':
+                $data=array();
+                    $data['pass'] =trim($_POST['pass']);
+                    $data['cusuari']=trim($_POST['cusuari']);
+                    $data['cfilialx']=trim($_POST['cfilialx']);
+                    echo json_encode($daoGrupUsu->modificarPass($data));
+                    break; 
                 case 'cargar_grupos':
                 $data=array();
                     echo json_encode($daoGrupUsu->cargarGrupos());

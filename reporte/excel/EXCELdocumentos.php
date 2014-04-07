@@ -13,7 +13,7 @@ $az=array(  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'
 		  ,'BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR','BS','BT','BU','BV','BW','BX','BY','BZ','CA','CB','CC','CD','CE','CF','CG','CH','CI','CJ','CK','CL'
 		  ,'CM','CN','CO','CP','CQ','CR','CS','CT','CU','CV','CW','CX','CY','CZ','DA','DB','DC','DD','DE','DF','DG','DH','DI','DJ','DK','DL','DM','DN','DO','DP'
 		  ,'DQ','DR','DS','DT','DU','DV','DW','DX','DY','DZ','EA','EB','EC','ED','EF','EG','EH','EI','EJ','EK','EL','EM','EN','EO','EP','EQ','ER','ES','ET','EU');
-$azcount=array( 8,15,15,15,25,15,28,30,15,15,15,15,15,20,15,15,15,15,15,15,15,15,19,40,20,20,20,15,15,15,15,15,15
+$azcount=array( 8,15,15,15,25,15,28,30,15,15,15,15,15,20,15,15,15,15,15,15,15,15,15,19,40,20,20,20,20,20,20,20,20,20,15,15
 			   ,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15
 			   ,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15
 			   ,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15
@@ -83,9 +83,11 @@ $sql="SELECT DISTINCT
 		,(Select GROUP_CONCAT(d.dnemdia SEPARATOR '-') From diasm d Where FIND_IN_SET (d.cdia,replace(g.cfrecue,'-',','))  >  0) As frecuencia
 		,concat(h.hinici,'-',h.hfin) As hora
 		,f.dfilial
+		,m.dmoding
 		,i.fusuari
 	FROM personm p
 		INNER JOIN ingalum i 	On (i.cperson  	= p.cperson)	
+		INNER JOIN modinga m 	On (m.cmoding  	= i.cmoding)
 		LEFT JOIN paism pa ON (pa.cpais=i.cpais)	
 		INNER JOIN conmatp c 	On (i.cingalu  	= c.cingalu)
 		INNER JOIN gracprp g 	On (c.cgruaca  	= g.cgracpr)
@@ -207,7 +209,7 @@ $objDrawing->setOffsetX(10);
 $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 */
 
-$objPHPExcel->getActiveSheet()->setCellValue("A1","RESUMEN DE CONTROL DE PAGOS DE MATRICULADOS");
+$objPHPExcel->getActiveSheet()->setCellValue("A1","RESUMEN DE CONTROL DE PAGOS DE MATRICULADOS CON DOCUMENTOS");
 $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
 $objPHPExcel->getActiveSheet()->mergeCells('A1:Q1');
 $objPHPExcel->getActiveSheet()->getStyle('A1:Q1')->applyFromArray($styleAlignmentBold);
@@ -225,7 +227,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setSize(15);
 $objPHPExcel->getActiveSheet()->mergeCells('A3:B3');
 $objPHPExcel->getActiveSheet()->getStyle('A3')->applyFromArray($styleAlignmentRight);
 
-$cabecera=array('N°','ESTADO','COD LIBRO','APELL PATERNO','APELL MATERNO','NOMBRES','TEL FIJO / CELULAR','CORREO ELECTRÓNICO','CARRERA','CICLO ACADEMICO','INICIO','FECHA DE INICIO','INSTITUCION','FREC','HORARIO','LOCAL DE ESTUDIOS','NRO DE CERT. DE EST.','NRO DE PART. NACIM.','FOTOCOPIA DE DNI (N/S)','NRO DE FOTOS (1-6)','PAIS DE PROCED.','TIPO DE INSTIT','INST. DE PROCED','CARR. DE PROCEDENCIA','ULT. AÑO QUE ESTUDIÓ','ULT. CICLO REALIZADO','DOCUM. DEJADOS PARA LA CONVALIDACIO','FECHA DIGITACION');
+$cabecera=array('N°','ESTADO','COD LIBRO','APELL PATERNO','APELL MATERNO','NOMBRES','TEL FIJO / CELULAR','CORREO ELECTRÓNICO','CARRERA','CICLO ACADEMICO','INICIO','FECHA DE INICIO','INSTITUCION','FREC','HORARIO','LOCAL DE ESTUDIOS','MOD. INGRESO','NRO DE CERT. DE EST.','NRO DE PART. NACIM.','FOTOCOPIA DE DNI (N/S)','NRO DE FOTOS (1-6)','PAIS DE PROCED.','TIPO DE INSTIT','INST. DE PROCED','CARR. DE PROCEDENCIA','ULT. AÑO QUE ESTUDIÓ','ULT. CICLO REALIZADO','DOCUM. DEJADOS PARA LA CONVALIDACIO','FECHA DIGITACION');
 
 	for($i=0;$i<count($cabecera);$i++){
 	$objPHPExcel->getActiveSheet()->setCellValue($az[$i]."5",$cabecera[$i]);
@@ -240,8 +242,8 @@ $objPHPExcel->getActiveSheet()->getStyle($az[($pos-1)]."4:".$az[($pos+6)]."5")->
 $objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[($pos+6)].'4');$pos+=7;
 
 $objPHPExcel->getActiveSheet()->setCellValue($az[$pos]."4","DATOS DE LA CARRERA");
-$objPHPExcel->getActiveSheet()->getStyle($az[$pos]."4:".$az[($pos+7)]."5")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFABF8F');
-$objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[($pos+7)].'4');$pos+=8;
+$objPHPExcel->getActiveSheet()->getStyle($az[$pos]."4:".$az[($pos+8)]."5")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFABF8F');
+$objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[($pos+8)].'4');$pos+=9;
 
 $objPHPExcel->getActiveSheet()->setCellValue($az[$pos]."4","DOCUMENTOS ESCOLARES ENTREGADOS");
 $objPHPExcel->getActiveSheet()->getStyle($az[$pos]."4:".$az[($pos+3)]."5")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFF6699');
@@ -281,6 +283,7 @@ $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['dinstit
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['frecuencia']);$paz++;
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['hora']);$paz++;
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['dfilial']);$paz++;
+$objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['dmoding']);$paz++;
 
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['certest']);$paz++;
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['partnac']);$paz++;
@@ -297,8 +300,8 @@ $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['ddocval
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['fusuari']);$paz++;
 
 }
-$objPHPExcel->getActiveSheet()->getStyle("A6:AB".$valorinicial)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFCCECFF');
-$objPHPExcel->getActiveSheet()->getStyle('A4:AB'.$valorinicial)->applyFromArray($styleThinBlackBorderAllborders);
+$objPHPExcel->getActiveSheet()->getStyle("A6:AC".$valorinicial)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFCCECFF');
+$objPHPExcel->getActiveSheet()->getStyle('A4:AC'.$valorinicial)->applyFromArray($styleThinBlackBorderAllborders);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 $objPHPExcel->getActiveSheet()->setTitle('Documentos');
 // Set active sheet index to the first sheet, so Excel opens this As the first sheet

@@ -62,6 +62,26 @@ class MySqlGrupUsuDAO{
 		}
         $db->commitTransaccion();
 		return array('rst'=>'1','msj'=>'Grupo de Usuarios Actualizado');
+    }
+
+    public function modificarPass($r){
+        $db=creadorConexion::crear('MySql');
+        /****verifico que registro no exista******/
+        $sql="UPDATE personm 
+              SET dpasper='".$r['pass']."',fusuari=now(),cusuari='".$r['cusuari']."'
+              WHERE cusuari='".$r["cusuari"]."'";
+        $db->iniciaTransaccion();
+        $db->setQuery($sql);
+        if(!$db->executeQuery()){
+            $db->rollbackTransaccion();
+            return array('rst'=>'3','msj'=>'Error al Actualizar Contraseña','sql'=>$sql);exit();
+        }
+        if(!MySqlTransaccionDAO::insertarTransaccion($sql,$r['cfilialx']) ){
+            $db->rollbackTransaccion();
+            return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sql);exit();
+        }
+        $db->commitTransaccion();
+        return array('rst'=>'1','msj'=>'Contraseña Actualizar');
     }    
     
     public function JQGridCountGrupUsu ( $where ) {

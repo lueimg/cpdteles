@@ -17,9 +17,10 @@
         <script type="text/javascript" src="../javascript/includes/fileupload/jquery.fileupload-ui.js" ></script>
         <script type="text/javascript" src="../javascript/includes/fileupload/jquery.fileupload.js" ></script>
 
-		<script type="text/javascript" src="../javascript/sistema.js"></script>
+		<script type="text/javascript" src="../javascript/sistema.js"></script>		
 		<script type="text/javascript" src="../javascript/templates.js"></script>
 
+		<script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>
 		<script type="text/javascript" src="../javascript/js/js-mecanizada.js"></script>
         
     </head>
@@ -43,7 +44,8 @@
                         <form>
     					<div class="barra1 t-left"><i class="icon-gray icon-download"></i> <b>EXPORTAR CAJA</b></div>         
                         <div class="cont-der">
-                        	Su filial es:<b> <?=$_SESSION['SECON']['dfilial']?></b>
+
+                        	<b>Seleccione Filial</b>: <SELECT id='slct_filial'><option>--Seleccione--</option></select>
                             <div id="fechas" style="display:block">
                                 <span class="ui-widget-content t-12" style="padding:2px">Rango de Fechas</span>
                                 <input type="text" id="txt_fechaInicio" placeholder="inicio"/>
