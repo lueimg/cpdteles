@@ -126,6 +126,72 @@ class MySqlEquivalenciaDAO {
         }   
     }
     
+    public function EditarEquivalencia($post){
+        $db=creadorConexion::crear('MySql');
+        $db->iniciaTransaccion();
+        /****verifico que registro no exista******/
+        $sqlVal="SELECT cequisag 
+				 FROM equisag 
+				 WHERE ccurric='".$post["ccurric"]."' 
+				   And ccurso ='".$post["ccurso"]."'
+				   And cmodulo ='".$post["cmodulo"]."'
+				   And ccurria   ='".$post["ccurria"]."'
+				   And ccursoa='".$post["ccursoa"]."'
+				   And cmodulo  ='".$post["cmodulo"]."'
+				   AND estide='".$post["estide"]."' and cestado = 1  and cequisag !='".$post['id']."' limit 1";
+        $db->setQuery($sqlVal);
+        $data=$db->loadObjectList();
+		
+        if(count($data)>0){echo json_encode(array('rst'=>'2','msj'=>'<b>Equivalencia</b> ya existe'));exit();}
+        /********************/	
+		   $sql="update equisag set 
+						 ccurric = '".$post["ccurric"]."'
+						,ccurso = '".$post["ccurso"]."'
+						,cmodulo = '".$post["cmodulo"]."'
+						,ccurria = '".$post["ccurria"]."'
+						,ccursoa = '".$post["ccursoa"]."'
+						,cmoduloa = '".$post["cmoduloa"]."'
+						,estide = '".$post["estide"]."'
+						,cusuariu = '".$post["cusuari"]."'
+						,fusuariu = now()  where cequisag =  '".$post["id"]."'";
+        $db->setQuery($sql);
+		
+        if($db->executeQuery()){
+			if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+				$db->rollbackTransaccion();
+				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+			}
+			$db->commitTransaccion();
+            return array('rst'=>'1','msj'=>'Equivalencia Actualizada','sql'=>$sql);
+        }else{
+			$db->rollbackTransaccion();
+            return array('rst'=>'3','msj'=>'Error al procesar Query','sql'=>$sql);
+        }   
+    }
+    
+    
+    public function EliminarEquivalencia($post){
+        $db=creadorConexion::crear('MySql');
+        $db->iniciaTransaccion();
+        
+		   $sql="update equisag set 
+						cestado = 0
+            ,cusuariu = '".$post["cusuari"]."'
+						,fusuariu = now()  where cequisag =  '".$post["id"]."'";
+        $db->setQuery($sql);
+		
+        if($db->executeQuery()){
+			if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+				$db->rollbackTransaccion();
+				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+			}
+			$db->commitTransaccion();
+            return array('rst'=>'1','msj'=>'Equivalencia Actualizada','sql'=>$sql);
+        }else{
+			$db->rollbackTransaccion();
+            return array('rst'=>'3','msj'=>'Error al procesar Query','sql'=>$sql);
+        }   
+    }
     
     public function JQGridCountEquivalencia($where) {
         $db = creadorConexion::crear('MySql');
@@ -136,6 +202,8 @@ class MySqlEquivalenciaDAO {
                 inner join cursom cua on cua.ccurso = e.ccursoa
                 left join moduloa m on m.cmodulo = e.cmodulo
                 left join moduloa ma on ma.cmodulo = e.cmoduloa
+                inner join carrerm car on car.ccarrer = c.ccarrer
+								inner join carrerm cara on cara.ccarrer = ca.ccarrer
                 where e.cestado  = 1  " . $where;
 
         $db->setQuery($sql);
@@ -162,8 +230,13 @@ class MySqlEquivalenciaDAO {
                 cua.ccurso ccursoa,
                 cua.dcurso dcursoa,
                 ma.cmodulo ccicloa,
-		ma.dmodulo dcicloa,
-                IF(estide = 'r','Regular','Irregular') estide
+                ma.dmodulo dcicloa,
+                IF(estide = 'r','Regular','Irregular') estide,
+                estide cestide,
+								car.cinstit inst,
+								car.ccarrer carrer,
+								cara.cinstit insta,
+                cara.ccarrer carrera
                 FROM equisag e
                 inner join curricm c on c.ccurric = e.ccurric
                 inner join curricm ca on ca.ccurric = e.ccurria
@@ -171,6 +244,8 @@ class MySqlEquivalenciaDAO {
                 inner join cursom cua on cua.ccurso = e.ccursoa
                 left join moduloa m on m.cmodulo = e.cmodulo
                 left join moduloa ma on ma.cmodulo = e.cmoduloa
+                inner join carrerm car on car.ccarrer = c.ccarrer
+								inner join carrerm cara on cara.ccarrer = ca.ccarrer
                 where e.cestado  = 1 "
                 . $where . " ORDER BY  " . $sidx . " " . $sord . " LIMIT " . $limit . " OFFSET " . $start;
         //print $sql;    

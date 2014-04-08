@@ -2,160 +2,168 @@
 
 class servletEquivalencia extends controladorComandos {
 
-    public function doPost() {
-        $daoEquivalencia = creadorDAO::getEquivalenciaDAO();
-        switch ($_POST['action']):
-            
-            case 'cargarCarreras':
-                $post = array();
-                $post = (trim($_POST['cinstit']));
+  public function doPost() {
+    $daoEquivalencia = creadorDAO::getEquivalenciaDAO();
+    switch ($_POST['action']):
 
-                echo json_encode($daoEquivalencia->cargarCarreras($post));
-                break;
-            case 'cargarModulos':
-                $post = array();
-                $post = (trim($_POST['ccarrer']));
+      case 'cargarCarreras':
+        $post = array();
+        $post = (trim($_POST['cinstit']));
 
-                echo json_encode($daoEquivalencia->cargarModulos($post));
-                break;
-            case 'cargarCursos':
-                $post = array();
-                $post["cmodulo"] = (trim($_POST['cmodulo']));
-                $post["ccurric"] = (trim($_POST['ccurric']));
+        echo json_encode($daoEquivalencia->cargarCarreras($post));
+        break;
+      case 'cargarModulos':
+        $post = array();
+        $post = (trim($_POST['ccarrer']));
 
-                echo json_encode($daoEquivalencia->cargarCursos($post));
-                break;
-            case 'cargarCurriculas':
-                $post = array();
-                $post["cinstit"] = (trim($_POST['cinstit']));
-                $post["ccarrer"] = (trim($_POST['ccarrer']));
+        echo json_encode($daoEquivalencia->cargarModulos($post));
+        break;
+      case 'cargarCursos':
+        $post = array();
+        $post["cmodulo"] = (trim($_POST['cmodulo']));
+        $post["ccurric"] = (trim($_POST['ccurric']));
 
-                echo json_encode($daoEquivalencia->cargarCurriculas($post));
-                break;
-            case 'addEquivalencia':
-                //$post = array();
-                $post = $_POST['post'];
-                //$post["ccarrer"] = (trim($_POST['ccarrer']));
+        echo json_encode($daoEquivalencia->cargarCursos($post));
+        break;
+      case 'cargarCurriculas':
+        $post = array();
+        $post["cinstit"] = (trim($_POST['cinstit']));
+        $post["ccarrer"] = (trim($_POST['ccarrer']));
 
-                echo json_encode($daoEquivalencia->addEquivalencia($post));
-                break;
-            default:
-                echo json_encode(array('rst' => 3, 'msg' => 'Action no encontrado1'));
-        endswitch;
-    }
+        echo json_encode($daoEquivalencia->cargarCurriculas($post));
+        break;
+      case 'addEquivalencia':
+        //$post = array();
+        $post = $_POST['post'];
+        //$post["ccarrer"] = (trim($_POST['ccarrer']));
 
-    public function doGet() {
-        $daoEquivalencia = creadorDAO::getEquivalenciaDAO();
-        switch ($_GET['action']):
-            case 'jqgrid_equivalencia':
-                $page = $_GET["page"];
-                $limit = $_GET["rows"];
-                $sidx = $_GET["sidx"];
-                $sord = $_GET["sord"];
+        echo json_encode($daoEquivalencia->addEquivalencia($post));
+        break;
+      case 'EditarEquivalencia':
+        //$post = array();
+        $post = $_POST['post'];
+        //$post["ccarrer"] = (trim($_POST['ccarrer']));
 
-                $where = "";
-                $param = array();
+        echo json_encode($daoEquivalencia->EditarEquivalencia($post));
+        break;
+      case 'EliminarEquivalencia':
+        //$post = array();
+        $post = $_POST['post'];
+        //$post["ccarrer"] = (trim($_POST['ccarrer']));
 
-                if (isset($_GET['cequivalencia'])) {
-                    if (trim($_GET['id']) != '') {
-                        $where.=" AND c.cequivalencia LIKE '%" . trim($_GET['cequivalencia']) . "%' ";
-                    }
-                }
+        echo json_encode($daoEquivalencia->EliminarEquivalencia($post));
+        break;
+      default:
+        echo json_encode(array('rst' => 3, 'msg' => 'Action no encontrado1'));
+    endswitch;
+  }
 
-                if (isset($_GET['dinstit'])) {
-                    if (trim($_GET['dinstit']) != '') {
-                        $where.=" AND c2.dinstit like '%" . trim($_GET['dinstit']) . "%' ";
-                    }
-                }
+  public function doGet() {
+    $daoEquivalencia = creadorDAO::getEquivalenciaDAO();
+    switch ($_GET['action']):
+      case 'jqgrid_equivalencia':
+        $page = $_GET["page"];
+        $limit = $_GET["rows"];
+        $sidx = $_GET["sidx"];
+        $sord = $_GET["sord"];
 
-                if (isset($_GET['dturno'])) {
-                    if (trim($_GET['dturno']) != '') {
-                        $where.=" AND (SELECT t.dturno FROM turnoa AS t WHERE t.cturno= c.cturno ) like '%" . trim($_GET['dturno']) . "%' ";
-                    }
-                }
+        $where = "";
+        $param = array();
 
-                if (isset($_GET['hinici'])) {
-                    if (trim($_GET['hinici']) != '') {
-                        $where.=" AND c.hinici LIKE '%" . trim($_GET['hinici']) . "%' ";
-                    }
-                }
+        if (isset($_GET['dtitulo'])) {
+          if (trim($_GET['dtitulo']) != '') {
+            $where.=" AND c.dtitulo LIKE '%" . trim($_GET['dtitulo']) . "%' ";
+          }
+        }
 
-                if (isset($_GET['hfin'])) {
-                    if (trim($_GET['hfin']) != '') {
-                        $where.=" AND c.hfin LIKE '%" . trim($_GET['hfin']) . "%' ";
-                    }
-                }
+        if (isset($_GET['dciclo'])) {
+          if (trim($_GET['dciclo']) != '') {
+            $where.=" AND m.dmodulo like '%" . trim($_GET['dciclo']) . "%' ";
+          }
+        }
 
-                if (isset($_GET['tequivalenciario'])) {
-                    if (trim($_GET['tequivalenciario']) != '') {
-                        $where.=" AND c.tequivalenciari =  '" . trim($_GET['tequivalenciario']) . "' ";
-                    }
-                }
+        if (isset($_GET['dcurso'])) {
+          if (trim($_GET['dcurso']) != '') {
+            $where.=" AND cu.dcurso like '%" . trim($_GET['dcurso']) . "%' ";
+          }
+        }
+        
+        if (isset($_GET['dtituloa'])) {
+          if (trim($_GET['dtituloa']) != '') {
+            $where.=" AND ca.dtitulo LIKE '%" . trim($_GET['dtituloa']) . "%' ";
+          }
+        }
 
-                if (isset($_GET['claequivalencia'])) {
-                    if (trim($_GET['claequivalencia']) != '') {
-                        $where.=" AND c.tequivalencia =  '" . trim($_GET['claequivalencia']) . "' ";
-                    }
-                }
+        if (isset($_GET['dcicloa'])) {
+          if (trim($_GET['dcicloa']) != '') {
+            $where.=" AND ma.dmodulo like '%" . trim($_GET['dcicloa']) . "%' ";
+          }
+        }
 
-                if (isset($_GET['estado'])) {
-                    if (trim($_GET['estado']) != '') {
-                        $where.=" AND c.cestado =  '" . trim($_GET['estado']) . "' ";
-                    }
-                }
+        if (isset($_GET['dcursoa'])) {
+          if (trim($_GET['dcursoa']) != '') {
+            $where.=" AND cua.dcurso like '%" . trim($_GET['dcursoa']) . "%' ";
+          }
+        }
+        
+        if (isset($_GET['estide'])) {
+          if (trim($_GET['estide']) != '') {
+            $where.=" AND estide = '" . trim($_GET['estide']) . "' ";
+          }
+        }
+        
+        
+        if (!$sidx)
+          $sidx = 1;
 
-                if (isset($_GET['cinstit'])) {
-                    if (trim($_GET['cinstit']) != '') {
-                        $where.=" AND c.cinstit =  '" . trim($_GET['cinstit']) . "' ";
-                    }
-                }
+        $row = $daoEquivalencia->JQGridCountEquivalencia($where);
+        $count = $row[0]['count'];
+        if ($count > 0) {
+          $total_pages = ceil($count / $limit);
+        } else {
+          $limit = 0;
+          $total_pages = 0;
+        }
 
-                if (!$sidx)
-                    $sidx = 1;
+        if ($page > $total_pages)
+          $page = $total_pages;
 
-                $row = $daoEquivalencia->JQGridCountEquivalencia($where);
-                $count = $row[0]['count'];
-                if ($count > 0) {
-                    $total_pages = ceil($count / $limit);
-                } else {
-                    $limit = 0;
-                    $total_pages = 0;
-                }
+        $start = $page * $limit - $limit;
 
-                if ($page > $total_pages)
-                    $page = $total_pages;
-
-                $start = $page * $limit - $limit;
-
-                $response = array("page" => $page, "total" => $total_pages, "records" => $count);
-                $data = $daoEquivalencia->JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where);
-                $dataRow = array();
-                for ($i = 0; $i < count($data); $i++) {
-                    array_push($dataRow, array("id" => $data[$i]['cequisag'], "cell" => array(
-                            $data[$i]['dtitulo'],
-                            $data[$i]['ccurric'],
-                            $data[$i]['dciclo'],
-                            $data[$i]['cciclo'],
-                            $data[$i]['dcurso'],
-                            $data[$i]['ccurso'],
-                            $data[$i]['dtituloa'],
-                            $data[$i]['ccurrica'],
-                            $data[$i]['dcicloa'],
-                            $data[$i]['ccicloa'],
-                            $data[$i]['dcursoa'],
-                            $data[$i]['ccursoa'],
-                            $data[$i]['estide'],
-                        )
-                            )
-                    );
-                }
-                $response["rows"] = $dataRow;
-                echo json_encode($response);
-                break;
-            default:
-                echo json_encode(array('rst' => 3, 'msg' => 'Action no encontrado'));
-        endswitch;
-    }
+        $response = array("page" => $page, "total" => $total_pages, "records" => $count);
+        $data = $daoEquivalencia->JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where);
+        $dataRow = array();
+        for ($i = 0; $i < count($data); $i++) {
+          array_push($dataRow, array("id" => $data[$i]['cequisag'], "cell" => array(
+                  $data[$i]['dtitulo'],
+                  $data[$i]['ccurric'],
+                  $data[$i]['dciclo'],
+                  $data[$i]['cciclo'],
+                  $data[$i]['dcurso'],
+                  $data[$i]['ccurso'],
+                  $data[$i]['dtituloa'],
+                  $data[$i]['ccurrica'],
+                  $data[$i]['dcicloa'],
+                  $data[$i]['ccicloa'],
+                  $data[$i]['dcursoa'],
+                  $data[$i]['ccursoa'],
+                  $data[$i]['estide'],
+                  $data[$i]['cestide'],
+                  $data[$i]['inst'],
+                  $data[$i]['carrer'],
+                  $data[$i]['insta'],
+                  $data[$i]['carrera'],
+              )
+                  )
+          );
+        }
+        $response["rows"] = $dataRow;
+        echo json_encode($response);
+        break;
+      default:
+        echo json_encode(array('rst' => 3, 'msg' => 'Action no encontrado'));
+    endswitch;
+  }
 
 }
 

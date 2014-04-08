@@ -1,8 +1,12 @@
 <div id="frmEquivalencia" title="MANTENIMIENTO OPCIONES DE SISTEMA" class="corner_all" style="background: #ffffff;margin:7px;height: auto">
     <form>
-        <div id="frmErr_mtn" style="display: none" align="center" class="ui-state-error ui-corner-all">Ingrese todos los campos</div>
+        <div id="frmErr_mtn" style="display: none" align="center" class="ui-state-error ui-corner-all ">Ingrese todos los campos</div>
         <table cellspacing="1" cellpadding="2" border="0" style="table-layout:fixed" class="EditTable">
+            
             <tr class="FormData">
+                <td>1. Seccione un curso Refencia
+                    <table>
+                      <tr class="FormData">
                 <td class="t-left label" >
                     <b>Instituto: </b>
                 </td>
@@ -22,10 +26,6 @@
                     </select>
                 </td>
             </tr>
-            <tr class="FormData">
-                <td>1. Seccione un curso
-                    <table>
-
                         <tr class="FormData">
                             <td class="t-left label" >
                                 <b>Curricula: </b>
@@ -58,9 +58,28 @@
                         </tr>
                     </table>
                 </td>
-                <td>2. Selecciones un curso de acta
+                <td>2. Seleccione un curso de acta
                     <table>
-
+                        <tr class="FormData">
+                <td class="t-left label" >
+                    <b>Instituto: </b>
+                </td>
+                <td class="t-left">
+                    <select id="slct_instituto_asig" style="width:120px">
+                        <option value="">--Seleccione--</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="FormData">
+                <td class="t-left label" >
+                    <b>Carrera: </b>
+                </td>
+                <td class="t-left">
+                    <select id="slct_carrera_asig" style="width:120px">
+                        <option value="">--Seleccione--</option>
+                    </select>
+                </td>
+            </tr>
                         <tr class="FormData">
                             <td class="t-left label" >
                                 <b>Curricula: </b>

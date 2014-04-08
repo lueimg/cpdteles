@@ -27,6 +27,32 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
+    cargarCarreras_asig: function(fxllena,slct_dest,id_slct) {
+        $.ajax({
+            url: this.url,
+            type: 'POST',
+            async: false, //no ejecuta otro ajax hasta q este termine
+            dataType: 'json',
+            data: {
+                comando: this.comando,
+                action: 'cargarCarreras',
+                cinstit: $('#slct_instituto_asig').val(),
+                
+                cusuari: $('#hd_idUsuario').val(),
+                cfilialx: $('#hd_idFilial').val()
+            },
+            beforeSend: function( ) {
+               // sistema.abreCargando();
+            },
+            success: function(obj) {
+               // sistema.cierraCargando();
+               if( obj.length!=0 ){
+                    fxllena(obj.data,slct_dest,id_slct);					
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
     cargarCurriculas: function(fxllena,slct_dest,id_slct) {
         $.ajax({
             url: this.url,
@@ -54,6 +80,33 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
+    cargarCurriculas_asig: function(fxllena,slct_dest,id_slct) {
+        $.ajax({
+            url: this.url,
+            type: 'POST',
+            async: false, //no ejecuta otro ajax hasta q este termine
+            dataType: 'json',
+            data: {
+                comando: this.comando,
+                action: 'cargarCurriculas',
+                cinstit: $('#slct_instituto_asig').val(),
+                ccarrer: $('#slct_carrera_asig').val(),
+                
+                cusuari: $('#hd_idUsuario').val(),
+                cfilialx: $('#hd_idFilial').val()
+            },
+            beforeSend: function( ) {
+               // sistema.abreCargando();
+            },
+            success: function(obj) {
+               // sistema.cierraCargando();
+               if( obj.length!=0 ){
+                    fxllena(obj.data,slct_dest,id_slct);					
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
     cargarModulos: function(fxllena,slct_dest,id_slct) {
         $.ajax({
             url: this.url,
@@ -65,6 +118,33 @@ var equivalenciaDAO = {
                 action: 'cargarModulos',
                 //cinstit: $('#slct_instituto').val(),
                 ccarrer: $('#slct_carrera').val(),
+                
+                cusuari: $('#hd_idUsuario').val(),
+                cfilialx: $('#hd_idFilial').val()
+            },
+            beforeSend: function( ) {
+               // sistema.abreCargando();
+            },
+            success: function(obj) {
+               // sistema.cierraCargando();
+               if( obj.length!=0 ){
+                    fxllena(obj.data,slct_dest,id_slct);					
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
+    cargarModulos_asig: function(fxllena,slct_dest,id_slct) {
+        $.ajax({
+            url: this.url,
+            type: 'POST',
+            async: false, //no ejecuta otro ajax hasta q este termine
+            dataType: 'json',
+            data: {
+                comando: this.comando,
+                action: 'cargarModulos',
+                //cinstit: $('#slct_instituto').val(),
+                ccarrer: $('#slct_carrera_asig').val(),
                 
                 cusuari: $('#hd_idUsuario').val(),
                 cfilialx: $('#hd_idFilial').val()
@@ -158,6 +238,81 @@ var equivalenciaDAO = {
                 estide :$("#slct_tequi").val() ,
                 cusuari:$('#hd_idUsuario').val(),
 		cfilialx:$('#hd_idFilial').val()
+                }
+            },
+            beforeSend : function ( ) {
+                 sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                 sistema.cierraCargando();
+                if(obj.rst=='1'){
+                    $('#frmEquivalencia').dialog('close');
+                    $("#table_hora").trigger('reloadGrid');
+                    sistema.msjOk(obj.msj);
+					
+                }else if(obj.rst=='2'){
+                    sistema.msjAdvertencia(obj.msj,3000);
+                }else{
+                    sistema.msjErrorCerrar(obj.msj);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
+    EditarEquivalencia: function(){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:this.comando,
+            	action:'EditarEquivalencia',
+                post:{
+                  id :$('#cequiasg').val(),
+                  ccurric:$('#slct_curricula').val(),
+                  cmodulo :$('#slct_modulo').val(),
+                  ccurso :$("#slct_curso").val() ,
+                  ccurria:$('#slct_curricula_asig').val(),
+                  cmoduloa :$('#slct_modulo_asig').val(),
+                  ccursoa :$("#slct_curso_asig").val() ,
+                  estide :$("#slct_tequi").val() ,
+                  cusuari:$('#hd_idUsuario').val(),
+                  cfilialx:$('#hd_idFilial').val()
+                }
+            },
+            beforeSend : function ( ) {
+                 sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                 sistema.cierraCargando();
+                if(obj.rst=='1'){
+                    $('#frmEquivalencia').dialog('close');
+                    $("#table_hora").trigger('reloadGrid');
+                    sistema.msjOk(obj.msj);
+					
+                }else if(obj.rst=='2'){
+                    sistema.msjAdvertencia(obj.msj,3000);
+                }else{
+                    sistema.msjErrorCerrar(obj.msj);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
+    EliminarEquivalencia: function(id){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:this.comando,
+            	action:'EliminarEquivalencia',
+                post:{
+                  id :id,
+                  cusuari:$('#hd_idUsuario').val(),
+                  cfilialx:$('#hd_idFilial').val()
                 }
             },
             beforeSend : function ( ) {
