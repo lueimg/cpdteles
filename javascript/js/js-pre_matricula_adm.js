@@ -103,6 +103,13 @@ VisualizarDetalleHTML=function(obj){
         '        	<i class="icon-white icon-folder-open"></i>'+
         '       </a>'+
         ' 	</div>'+
+
+        '	<div style="margin:15px 0px 10px 0px;">'+
+		'		<a onClick="ExportarGrupoWord('+"'"+obj[i].id+"','"+obj[i].cingalu+"','1'"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
+        '        	<i class="icon-white icon-folder-open">W</i>'+
+        '       </a>'+
+        ' 	</div>'+
+
 		'</td>';
 	}
 	else{
@@ -161,6 +168,19 @@ ExportarGrupo2=function(grupo){
 ExportarGrupo=function(grupo,alumno,t){
 	if(t<=30){
 	window.location='../reporte/excel/EXCELpreMatriculaAdm.php?cgracpr='
+                	+grupo+'&cingalu='+alumno+
+					'&csemaca='+$("#slct_semestre").val()+
+					'&cfilial='+$("#slct_filial").val()+
+					'&cinstit='+$("#slct_instituto").val();
+	}
+	else{
+	sistema.msjAdvertencia("El max para enviar es de 30 ud tiene "+t,3000);
+	}
+}
+
+ExportarGrupoWord=function(grupo,alumno,t){
+	if(t<=30){
+	window.location='../reporte/excel/WORDpreMatriculaAdm.php?cgracpr='
                 	+grupo+'&cingalu='+alumno+
 					'&csemaca='+$("#slct_semestre").val()+
 					'&cfilial='+$("#slct_filial").val()+
