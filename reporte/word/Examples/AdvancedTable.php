@@ -25,7 +25,7 @@ $PHPWord->addTableStyle('myOwnTableStyle', $styleTable, $styleFirstRow);
 $table = $section->addTable('myOwnTableStyle');
 
 // Add row
-$table->addRow(900);
+$table->addRow();
 
 // Add cells
 $table->addCell(2000, $styleCell)->addText('Row 1', $fontStyle);

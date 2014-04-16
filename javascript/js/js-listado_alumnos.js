@@ -10,7 +10,7 @@ $(document).ready(function(){
         
         
 	carreraDAO.cargarSemestreR(sistema.llenaSelect,'slct_semestre','');	
-	carreraDAO.cargarCarreraTodasDisponibles(sistema.llenaSelect,'slct_carrera','');	
+	carreraDAO.cargarCarrera(sistema.llenaSelect,'slct_carrera','');	
 	     
 });
 

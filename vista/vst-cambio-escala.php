@@ -19,8 +19,7 @@
 
 		<script type="text/javascript" src="../javascript/js/js-cambio-escala.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
-        <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>
-        
+        <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>  
     </head>
 
 	<body>

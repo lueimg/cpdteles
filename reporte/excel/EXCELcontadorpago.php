@@ -121,7 +121,8 @@ AND r.cconcep IN (SELECT cconcep FROM concepp WHERE  cinstit=g.cinstit AND cctai
 AND g.cfilial='".$cfil['cfilial']."' 
 AND g.cinstit='".$cins['cinstit']."' 
 AND g.ccarrer='".$ccar['ccarrer']."'
-AND g.csemaca='".$_REQUEST["csemaca"]."'"
+AND g.csemaca='".$_REQUEST["csemaca"]."' 
+AND r.`testfin`!='F' "
 .$cinicio.
 "GROUP BY r.cfilial,g.cciclo,r.cingalu
 HAVING MAX(r.testfin)='C'

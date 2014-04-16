@@ -31,7 +31,7 @@ var usuarioDAO={
             },
             error: this.msjErrorAjax
         });
-    },  
+    },
 	nuevoUsuario:function(){
         $.ajax({
             url : this.url,

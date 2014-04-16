@@ -60,6 +60,7 @@ foreach ($institlista as $r) {
 					WHERE g.cfilial IN ('".$cfilial."')  AND g.cinstit IN ('".$cinstit."')
 					AND DATE(g.finicio) BETWEEN '".$fechini."' AND '".$fechfin."' 
 					AND i.`cpromot`!=''
+					AND i.cestado='1' 
 					AND g.`cinstit`='".$r['cinstit']."'
 					GROUP BY i.`cpromot`
 					
@@ -83,6 +84,7 @@ $sql="	SELECT t.dtipcap,t.detalle_captacion,t.cant as total_cant ".$addtexto."
 			WHERE g.cfilial IN ('".$cfilial."')  AND g.cinstit IN ('".$cinstit."')
 			AND DATE(g.finicio) BETWEEN '".$fechini."' AND '".$fechfin."' 
 			AND i.`cpromot`!=''
+			AND i.cestado='1' 
 			GROUP BY i.`cpromot`
 			
 		) t ".$addquery." 

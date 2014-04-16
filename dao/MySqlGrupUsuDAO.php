@@ -69,7 +69,7 @@ class MySqlGrupUsuDAO{
         /****verifico que registro no exista******/
         $sql="UPDATE personm 
               SET dpasper='".$r['pass']."',fusuari=now(),cusuari='".$r['cusuari']."'
-              WHERE cusuari='".$r["cusuari"]."'";
+              WHERE dlogper='".$r["cusuari"]."'";
         $db->iniciaTransaccion();
         $db->setQuery($sql);
         if(!$db->executeQuery()){

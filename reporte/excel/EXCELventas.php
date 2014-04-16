@@ -171,6 +171,7 @@ INNER JOIN modinga m on (m.cmoding=i.cmoding)
 inner JOIN recacap r on (r.cingalu=c.cingalu and r.cgruaca=c.cgruaca)
 where c.cgruaca in ('".str_replace(",","','",$cgracpr)."')
  ".$alumno."
+ AND r.testfin!='F' 
 GROUP BY c.cingalu,c.cgruaca
 order by p.cperson desc";
 $cn->setQuery($sql);

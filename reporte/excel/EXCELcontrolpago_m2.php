@@ -13,7 +13,7 @@ $az=array(  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'
 		  ,'BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR','BS','BT','BU','BV','BW','BX','BY','BZ','CA','CB','CC','CD','CE','CF','CG','CH','CI','CJ','CK','CL'
 		  ,'CM','CN','CO','CP','CQ','CR','CS','CT','CU','CV','CW','CX','CY','CZ','DA','DB','DC','DD','DE','DF','DG','DH','DI','DJ','DK','DL','DM','DN','DO','DP'
 		  ,'DQ','DR','DS','DT','DU','DV','DW','DX','DY','DZ','EA','EB','EC','ED','EF','EG','EH','EI','EJ','EK','EL','EM','EN','EO','EP','EQ','ER','ES','ET','EU');
-$azcount=array( 8,15,15,15,15,15,15,25,15,28,30,15,15,15,15,15,20,15,15,15,15,15,15,15,15,19,40,20,20,20,20,20,20,20,15,15
+$azcount=array( 8,15,15,15,15,15,15,25,15,28,30,15,15,15,15,15,20,15,15,15,15,15,15,15,15,19,40,20,20,20,20,25,20,20,15,15
 			   ,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15
 			   ,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15
 			   ,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15
@@ -97,12 +97,14 @@ $sql="SELECT DISTINCT
 		,ifnull(deu_real_pen.monto,0) As deu_real_pen
 		,t.dtipcap
 		,t.dclacap
+		,concat(ve.dapepat,' ',ve.dapemat,', ',ve.dnombre) recepcionista
 		,If(i.cpromot!='',(Select concat(v.dapepat,' ',v.dapemat,', ',v.dnombre,' | ',v.codintv) From vendedm v Where v.cvended=i.cpromot),
 			If(i.cmedpre!='',(Select m.dmedpre From medprea m Where m.cmedpre=i.cmedpre limit 1),
 				If(i.destica!='',i.destica,''))) As detalle_captacion,po.fusuari
 	FROM personm p
 		INNER JOIN ingalum i 	On (i.cperson  	= p.cperson)
 		INNER  JOIN postulm po 	On (i.cingalu = po.cingalu)
+		INNER JOIN vendedm ve on (po.crecepc=ve.cvended) 
 		inner join filialm f2 on (po.cfilial=f2.cfilial) 
 		INNER JOIN tipcapa t 	On (i.ctipcap  	= t.ctipcap)		
 		INNER JOIN conmatp c 	On (i.cingalu  	= c.cingalu)
@@ -310,7 +312,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setSize(15);
 $objPHPExcel->getActiveSheet()->mergeCells('A3:B3');
 $objPHPExcel->getActiveSheet()->getStyle('A3')->applyFromArray($styleAlignmentRight);
 
-$cabecera=array('N°','CAJA - ODE-CENT. DE CAPTACIÓN','CAJERO QUE INSCRIBE','FICHA DE  MATRICULA ','LIBRO DE CODIGO','ESTADO','APELL PATERNO','APELL MATERNO','NOMBRES','TEL FIJO / CELULAR','CORREO ELECTRÓNICO','CARRERA','CICLO ACADEMICO','INICIO','FECHA DE INICIO','INSTITUCION','FREC','HORARIO','LOCAL DE ESTUDIOS','INSCRIPCION','MATRIC','PENSION','MATRIC','PENSION','DEUDA TOTAL','MEDIO CAPTACION','RESPONSABLE CAPTACION','TIPO CAPTACION','CODIGO RESPONSABLE CAPTACION','FECHA MATRIC','FECHA DIGITACION');
+$cabecera=array('N°','CAJA - ODE-CENT. DE CAPTACIÓN','CAJERO QUE INSCRIBE','FICHA DE  MATRICULA ','LIBRO DE CODIGO','ESTADO','APELL PATERNO','APELL MATERNO','NOMBRES','TEL FIJO / CELULAR','CORREO ELECTRÓNICO','CARRERA','CICLO ACADEMICO','INICIO','FECHA DE INICIO','INSTITUCION','FREC','HORARIO','LOCAL DE ESTUDIOS','INSCRIPCION','MATRIC','PENSION','MATRIC','PENSION','DEUDA TOTAL','MEDIO CAPTACION','RESPONSABLE CAPTACION','TIPO CAPTACION','CODIGO RESPONSABLE CAPTACION','RECEPCIONISTA','FECHA MATRIC','FECHA DIGITACION');
 
 	for($i=0;$i<count($cabecera);$i++){
 	$objPHPExcel->getActiveSheet()->setCellValue($az[$i]."5",$cabecera[$i]);
@@ -355,6 +357,9 @@ $objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[$pos].'5');$pos+=1
 $objPHPExcel->getActiveSheet()->setCellValue($az[$pos]."4","CODIGO RESPONSABLE CAPTACION");
 $objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[$pos].'5');
 $objPHPExcel->getActiveSheet()->getStyle($az[$pos].'4:'.$az[$pos].'5')->getAlignment()->setWrapText(true);$pos+=1;
+
+$objPHPExcel->getActiveSheet()->setCellValue($az[$pos]."4","RECEPCIONISTA");
+$objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[$pos].'5');$pos+=1;
 
 $objPHPExcel->getActiveSheet()->setCellValue($az[$pos]."4","FECHA MATRIC");
 $objPHPExcel->getActiveSheet()->mergeCells($az[$pos].'4:'.$az[$pos].'5');$pos+=1;
@@ -418,6 +423,7 @@ $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$dclacap);$
 		$objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$detcap[1]);$paz++;
 	}
 
+$objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['recepcionista']);$paz++;
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['fmatric']);$paz++;
 $objPHPExcel->getActiveSheet()->setCellValue($az[$paz].$valorinicial,$r['fusuari']);$paz++;
 
