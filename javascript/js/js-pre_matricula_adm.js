@@ -180,7 +180,7 @@ ExportarGrupo=function(grupo,alumno,t){
 
 ExportarGrupoWord=function(grupo,alumno,t){
 	if(t<=30){
-	window.location='../reporte/excel/WORDpreMatriculaAdm.php?cgracpr='
+	window.location='../reporte/word/WORDpreMatriculaAdm.php?cgracpr='
                 	+grupo+'&cingalu='+alumno+
 					'&csemaca='+$("#slct_semestre").val()+
 					'&cfilial='+$("#slct_filial").val()+
