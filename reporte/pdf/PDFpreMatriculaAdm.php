@@ -193,7 +193,7 @@ font-weight:bold;
 			</tr>
 			<tr>
 				<td class="textright">APELLIDOS Y NOMBRES:</td>
-				<th class="textleft">{$rs['dnomper']}</th>
+				<th class="textleft">{$rs['dnomper']} {$rs['dappape']} {$rs['dapmape']}</th>
 			</tr>
 			<tr>
 				<td class="textright">LOCAL DE ESTUDIOS:</td>

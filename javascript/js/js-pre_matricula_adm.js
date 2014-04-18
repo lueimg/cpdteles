@@ -53,7 +53,7 @@ VisualizarGruposHTML=function(obj){
 	htm+="<td width='30' class='t-left'>"+obj[i].total+"</td>";
 	htm+="<td width='30' class='t-left'>"+
 		'	<div style="margin:15px 0px 10px 0px;">'+
-		'		<a onClick="VisualizarDetalle('+"'"+obj[i].id+"'"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
+		'		<a onClick="VisualizarDetalle('+"'"+obj[i].id+"'"+')" class="btn btn-azul sombra-3d t-blanco" href="#v_lista_alumnos">'+
         '        	<i class="icon-white icon-search"></i>'+
         '       </a>'+
         ' 	</div>'+
@@ -64,7 +64,7 @@ VisualizarGruposHTML=function(obj){
         ' 	</div>'+
         '	<div style="margin:15px 0px 10px 0px;">'+
 		'		<a onClick="ExportarGrupoPDF('+"'"+obj[i].id+"','','"+obj[i].total+"'"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
-        '        	<i class="icon-white icon-folder-open">W</i>'+
+        '        	 PDF'+
         '       </a>'+
         ' 	</div>'+
 		'</td>';
@@ -111,7 +111,7 @@ VisualizarDetalleHTML=function(obj){
 
         '	<div style="margin:15px 0px 10px 0px;">'+
 		'		<a onClick="ExportarGrupoPDF('+"'"+obj[i].id+"','"+obj[i].cingalu+"','1'"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
-        '        	<i class="icon-white icon-folder-open">W</i>'+
+        '        	PDF'+
         '       </a>'+
         ' 	</div>'+
 

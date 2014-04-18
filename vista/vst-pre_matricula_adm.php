@@ -131,7 +131,7 @@
                                     </div>
                             	</div><!--fin listado de grupos-->
                                 <br>
-                                <div id="v_lista_alumnos" style="display:none; width:700px">
+                                <div id="v_lista_alumnos" style="display:none; width:700px" name="v_lista_alumnos">
                                 	<div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table>
                                         <tr class="" align="center">
