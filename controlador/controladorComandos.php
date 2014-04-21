@@ -106,10 +106,13 @@
 	                break;
 	           	case "boltole":
 					$classControlador = new servletBoltole;
-                            case 'equivalencia':
+					break;
+				case 'equivalencia':
 					$classControlador=new servletEquivalencia;
 					break;
-	                break;
+				case 'ambiente':
+					$classControlador=new servletAmbiente;
+					break;	               
 				default:
                     echo json_encode(array('rst'=>3,'msj'=>'Comando no encontrado'));
                     exit();

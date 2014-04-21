@@ -115,8 +115,13 @@ class creadorDAO{
 	public static function getBoltoleDAO(){
 		return new MySqlBoltoleDAO;
 	}
-        public static function getEquivalenciaDAO(){
+        
+    public static function getEquivalenciaDAO(){
 		return new MySqlEquivalenciaDAO;
+	}
+
+	public static function getAmbienteDAO(){
+		return new MySqlAmbienteDAO;
 	}
 }
 ?>
