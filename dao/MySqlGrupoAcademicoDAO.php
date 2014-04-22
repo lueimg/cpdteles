@@ -472,7 +472,7 @@ class MySqlGrupoAcademicoDAO{
   public function cargarCursosAcademicos($array){
   		$array['cgracpr']=str_replace(',',"','",$array['cgracpr']);
 		$sql="	SELECT c.`ccuprpr`,cu.`dcurso`,c.`finipre`,c.`ffinpre`,c.`finivir`,c.`ffinvir`,
-				IFNULL(CONCAT(pe.`dappape`,' ',pe.`dapmape`,', ',pe.`dnomper`),'') AS nombre
+				IFNULL(CONCAT(pe.`dappape`,' ',pe.`dapmape`,', ',pe.`dnomper`),'') AS nombre,IFNULL(c.cprofes,'') cprofes 
 				FROM gracprp g
 				INNER JOIN cuprprp c ON (c.`cgracpr`=g.`cgracpr`)
 				INNER JOIN cursom cu ON (cu.`ccurso`=c.`ccurso`)
@@ -491,6 +491,30 @@ class MySqlGrupoAcademicoDAO{
 		else{
             return array('rst'=>'2','msj'=>'No existen Cursos Academicos','data'=>$data,'sql'=>$sql);
         }
-	}
+  }
+
+  public function cargarHorarioProgramado($array){  		
+		$sql="	SELECT h.`chorpro`,h.`ccurpro`,h.ctietol,h.`chora`,h.`cdia`,a.`ctipamb`,h.`cambien`,d.`dnomdia` AS dia,
+				CONCAT(ho.`hinici`,'-',ho.`hfin`) AS hora,IF(ctipcla='T','Teorico','Practica') AS tipo,
+				ti.`mintol`,t.`dtipamb`,a.`numamb`
+				FROM horprop h
+				INNER JOIN diasm d ON (d.`cdia`=h.`cdia`)
+				INNER JOIN horam ho ON (ho.`chora`=h.`chora`)
+				INNER JOIN ambienm a ON (a.`cambien`=h.`cambien`)
+				INNER JOIN tipamba t ON (t.`ctipamb`=a.`ctipamb`)
+				INNER JOIN tietolm ti ON (ti.`ctietol`=h.`ctietol`)
+				WHERE h.ccuprpr='".$array['ccuprpr']."'";
+        $db=creadorConexion::crear('MySql');
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Horarios cargados','data'=>$data);
+        }
+		else{
+            return array('rst'=>'2','msj'=>'No existen Horarios','data'=>$data,'sql'=>$sql);
+        }
+  }
+  
 }
 ?>

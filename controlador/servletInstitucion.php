@@ -44,78 +44,82 @@ class servletInstitucion extends controladorComandos{
 				echo json_encode($daoInstitucion->ListaBancos());
 			break;
 			case 'ListarDetalleGrupos':
-			$array=array();
-			$array['cgracpr']=$_POST['cgracpr'];
+				$array=array();
+				$array['cgracpr']=$_POST['cgracpr'];
 				echo json_encode($daoInstitucion->ListarDetalleGrupos($array));
 			break;			
-                    case 'ListarGrupos':
-                        $data['cinstit']=trim($_POST['cinstit']);
-			$data['cfilial']=trim($_POST['cfilial']);
-                        $data['ccarrer']=trim($_POST['ccarrer']);
-			$data['csemaca']=trim($_POST['csemaca']);
-                        
-                        $data['ccurric']=trim($_POST['ccurric']);
-			$data['cciclo']=trim($_POST['cciclo']);
-                        $data['cinicio']=trim($_POST['cinicio']);
-			$data['cturno']=trim($_POST['cturno']);
-                        $data['chora']=trim($_POST['chora']);
-                        echo json_encode($daoInstitucion->ListarGrupos($data));
+            case 'ListarGrupos':
+            	$data=array();
+	            $data['cinstit']=trim($_POST['cinstit']);
+				$data['cfilial']=trim($_POST['cfilial']);
+	            $data['ccarrer']=trim($_POST['ccarrer']);
+				$data['csemaca']=trim($_POST['csemaca']);
+	                        
+	            $data['ccurric']=trim($_POST['ccurric']);
+				$data['cciclo']=trim($_POST['cciclo']);
+	            $data['cinicio']=trim($_POST['cinicio']);
+				$data['cturno']=trim($_POST['cturno']);
+	            $data['chora']=trim($_POST['chora']);
+            	echo json_encode($daoInstitucion->ListarGrupos($data));
 			break;
-                     case 'ActualizarGrupo':
-                        $data['cfilialx']=trim($_POST['cfilialx']);
-			$data['cusuari']=trim($_POST['cusuari']);
-                        $data['ces']=trim($_POST['ces']);
-			$data['gru']=trim($_POST['gru']);
-                        echo json_encode($daoInstitucion->ActualizarGrupo($data));
+            case 'ActualizarGrupo':
+            	$data=array();
+	            $data['cfilialx']=trim($_POST['cfilialx']);
+				$data['cusuari']=trim($_POST['cusuari']);
+	            $data['ces']=trim($_POST['ces']);
+				$data['gru']=trim($_POST['gru']);
+            	echo json_encode($daoInstitucion->ActualizarGrupo($data));
 			break;
-                    case 'getFechasSemetre':
-                        $data['cinstit']=trim($_POST['cinstit']);
-			$data['cfilial']=trim($_POST['cfilial']);    
-			$data['csemaca']=trim($_POST['csemaca']);
-                        $data['cinicio']=trim($_POST['cinicio']);
-			echo json_encode($daoInstitucion->getFechasSemetre($data));
+            case 'getFechasSemetre':
+            	$data=array();
+                $data['cinstit']=trim($_POST['cinstit']);
+				$data['cfilial']=trim($_POST['cfilial']);    
+				$data['csemaca']=trim($_POST['csemaca']);
+                $data['cinicio']=trim($_POST['cinicio']);
+				echo json_encode($daoInstitucion->getFechasSemetre($data));
 			break;
-                      case 'listarUsuarios':
-                        $data['cfilial']=trim($_POST['cfilial']);
-			$data['nombres']=trim($_POST['nombres']);    
-			$data['paterno']=trim($_POST['paterno']);
-                        $data['materno']=trim($_POST['materno']);
-			echo json_encode($daoInstitucion->listarUsuarios($data));
+            case 'listarUsuarios':
+            	$data=array();
+                $data['cfilial']=trim($_POST['cfilial']);
+				$data['nombres']=trim($_POST['nombres']);    
+				$data['paterno']=trim($_POST['paterno']);
+                $data['materno']=trim($_POST['materno']);
+				echo json_encode($daoInstitucion->listarUsuarios($data));
 			break;
-                    case 'listarIndiceMatricula':
-                        $data['cfilial']=trim($_POST['cfilial']);
-			$data['cinsiti']=trim($_POST['cinsiti']);    
-			$data['csemaca']=trim($_POST['csemaca']);
-			$data['fechini']=trim($_POST['fechini']);
-			$data['fechfin']=trim($_POST['fechfin']);
-                       
-			echo json_encode($daoInstitucion->listarIndiceMatricula($data));
+            case 'listarIndiceMatricula':
+            	$data=array();
+                $data['cfilial']=trim($_POST['cfilial']);
+				$data['cinsiti']=trim($_POST['cinsiti']);    
+				$data['csemaca']=trim($_POST['csemaca']);
+				$data['fechini']=trim($_POST['fechini']);
+				$data['fechfin']=trim($_POST['fechfin']);                       
+				echo json_encode($daoInstitucion->listarIndiceMatricula($data));
 			break;
-                      case 'mostrarUsuarios':
-                       $data['cfilial']=trim($_POST['cfilial']);
-                       $data['cperson']=trim($_POST['cperson']);    
-
-                       echo json_encode($daoInstitucion->mostrarUsuarios($data));
-                       break;
-                                     case 'cargarGrupos':
-                                         $data['cfilial']=trim($_POST['cfilial']);
-                       $data['cperson']=trim($_POST['cperson']);    
-
-                       echo json_encode($daoInstitucion->cargarGrupos($data));
-                       break;
-                 case 'actualizarUsuario':
-                     $data['cfilial']=trim($_POST['cfilial']);
-                     $data['cperson']=trim($_POST['cperson']);  
-                     $data['cestado']=trim($_POST['cestado']);
-                     $data['login']=trim($_POST['login']);
-                     $data['clave']=trim($_POST['clave']);
-                     $data['cgrupos']=trim($_POST['cgrupos']);
-                     $data["dnivusu"] =trim($_POST['dnivusu']);
-                     $data["cusuari"] = (trim($_POST['cusuari']));
-                     $data["cfilialx"] =(trim($_POST['cfilialx']));   
-      
-      echo json_encode($daoInstitucion->actualizarUsuario($data));
-      break; 
+            case 'mostrarUsuarios':
+            	$data=array();
+                $data['cfilial']=trim($_POST['cfilial']);
+                $data['cperson']=trim($_POST['cperson']);    
+                echo json_encode($daoInstitucion->mostrarUsuarios($data));
+            break;
+            case 'cargarGrupos':
+            	$data=array();
+                $data['cfilial']=trim($_POST['cfilial']);
+                $data['cperson']=trim($_POST['cperson']);    
+                echo json_encode($daoInstitucion->cargarGrupos($data));
+            break;
+             case 'actualizarUsuario':
+             	$data=array();
+                 $data['cfilial']=trim($_POST['cfilial']);
+                 $data['cperson']=trim($_POST['cperson']);  
+                 $data['cestado']=trim($_POST['cestado']);
+                 $data['login']=trim($_POST['login']);
+                 $data['clave']=trim($_POST['clave']);
+                 $data['cgrupos']=trim($_POST['cgrupos']);
+                 $data["dnivusu"] =trim($_POST['dnivusu']);
+                 $data["cusuari"] = (trim($_POST['cusuari']));
+                 $data["cfilialx"] =(trim($_POST['cfilialx']));         
+      			echo json_encode($daoInstitucion->actualizarUsuario($data));
+      		break; 
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;

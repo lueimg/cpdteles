@@ -154,16 +154,16 @@
                                     <table>
                                         <tr class="" align="center">                                        
                                             <td class="t-center label" width="220">CURSO</td>
-                                            <td class="t-center label" width="70">F. Ini Pre</td>
-                                            <td class="t-center label" width="70">F. Fin Pre</td>
-                                            <td class="t-center label" width="70">F. Ini Vir</td>
-                                            <td class="t-center label" width="70">F. Fin Vir</td>
+                                            <td class="t-center label" width="60">F. Ini Pre</td>
+                                            <td class="t-center label" width="60">F. Fin Pre</td>
+                                            <td class="t-center label" width="60">F. Ini Vir</td>
+                                            <td class="t-center label" width="60">F. Fin Vir</td>
                                             <td class="t-center label" width="220">DOCENTE</td>                                            
                                             <td class="t-center label" >[/]</td>
                                         </tr>
                                     </table>
                                     </div>
-                                    <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 200px">
+                                    <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 400px">
                                     <table id="lista_cursos" cellspacing="1" cellpadding="1" border="1"> </table>
                                     </div>
                                     <div class="corner_bottom ui-state-default" style="text-align: right;height: 20px;padding: 2px;">
@@ -176,6 +176,137 @@
                                         </span>
                                     </div>
                                 </div><!--fin listado de grupos-->   
+                                <br><br>
+                                <div id='actualizacion' style='display:none'>
+                                <div class="barra4 contentBarra t-blanco t-left"><i class="icon-white icon-th"></i>CURSO ACADÉMICO</div>
+                                <table cellspacing="1" cellpadding="2" border="0" style="table-layout:fixed" class="EditTable">
+                                    <tr>
+                                        <td class="t-left label input-mediun"><b>Curso:</b></td>
+                                        <td>
+                                            <input type="text" id="txt_curso" class="input-large" disabled>
+                                            <input type="hidden" id="ccuprpr" value=''>
+                                        </td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class="t-left label input-mediun"><b>Docente:</b></td>
+                                        <td>
+                                            <input type="text" id="txt_docente" class="input-large" disabled>
+                                            <input type="hidden" id="cprofes">
+                                            <span class="formBotones">
+                                                <a href="javascript:void(0)" onClick="ListarDocente();" id="btnMantDocente" class="btn btn-azul sombra-3d t-blanco">
+                                                    <i class="icon-white icon-search"></i>
+                                                    <span id="spanBtnMantDocente"></span>
+                                                </a>
+                                            </span>
+                                        </td>                            
+                                    </tr>
+                                    <tr id="mantenimiento_docente" style="display:none">
+                                        <td colspan="2">
+                                          <div style="margin-right:3px">
+                                            <table id="table_docente"></table>
+                                            <div id="pager_table_docente"></div>
+                                          </div >                             
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-left label input-mediun"><b>F. Ini Pre:</b></td>
+                                        <td class="t-left">                                            
+                                            <input type="text" id="txt_fecha_ini_pre" class="input-medium" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-left label input-mediun"><b>F. Fin Pre:</b></td>
+                                        <td class="t-left">                                            
+                                            <input type="text" id="txt_fecha_fin_pre" class="input-medium" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-left label input-mediun"><b>F. Ini Vir:</b></td>
+                                        <td class="t-left">                                            
+                                            <input type="text" id="txt_fecha_ini_vir" class="input-medium" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-left label input-mediun"><b>F. Fin Vir:</b></td>
+                                        <td class="t-left">                                            
+                                            <input type="text" id="txt_fecha_fin_vir" class="input-medium" value="">
+                                        </td>
+                                    </tr>                                    
+                                </table>
+                                <br><br>
+                                <div class="barra4 contentBarra t-blanco t-left"><i class="icon-white icon-th"></i>HORARIOS PROGRAMADOS</div>
+                                <table id='detalle_actualizacion'>
+                                    <tr>
+                                        <td class="t-left label" >
+                                          <b>Dia: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Hora: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Tipo: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Tipo Ambiente: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Ambiente: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Tiempo Tolerancia: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Estado: </b>
+                                        </td>
+                                    </tr>
+                                    <tr class="FormData">                                       
+                                        <td class="t-left">
+                                          <select id="slct_dia" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          </select>
+                                        </td>                                      
+                                        <td class="t-left">
+                                          <select id="slct_hora" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          </select>
+                                        </td>                                     
+                                        <td class="t-left">
+                                          <select id="slct_tipo" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          <option value="T">Teórico</option>
+                                          <option value="P">Práctico</option>
+                                          </select>
+                                        </td>
+                                        <td class="t-left">
+                                          <select id="slct_tipo_ambiente" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          </select>
+                                        </td>                                      
+                                        <td class="t-left">
+                                          <select id="slct_ambiente" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          </select>
+                                        </td>                                                                               
+                                        <td class="t-left">
+                                          <select id="slct_tiempo_tolerancia" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          </select>
+                                        </td>                                      
+                                        <td class="t-left">&nbsp;
+                                          <select id="slct_estado">
+                                          <option value="1">Activo</option>
+                                          <option value="0">Inactivo</option>
+                                          </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="center">
+                                          <a id="btnFormHorario" class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px">
+                                          <span>Guardar</span><span class="icon-hdd"></span>
+                                          </a>
+                                        </td>
+                                    </tr>
+                                </table>
                             </fieldset>
 
 

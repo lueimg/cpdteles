@@ -10,6 +10,8 @@ $(document).ready(function(){
    	selectedList: 4 // 0-based index
 	}).multiselectfilter();
 
+	$("#btnFormHorario").click(function(){guardarHorario()});
+
 	$(':text[id^="txt_fecha"]').datepicker({
 		dateFormat:'yy-mm-dd',
 		dayNamesMin:['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
@@ -17,6 +19,8 @@ $(document).ready(function(){
 		nextText:'Siguiente',
 		prevText:'Anterior'
 	});
+
+	//jqGridDocente.docente();
 })
 
 VisualizarGrupos=function(){
@@ -71,9 +75,11 @@ $('#horario').toggle("slow");
 
 VisualizarCursosHTML=function(obj){
 var htm="";	
+var datos="";	
 	for(i=0;i<obj.length;i++){
-	htm+="<tr id='trg-"+obj[i].id+"' class='ui-widget-content jqgrow ui-row-ltr' "+ 
-			 "onClick='sistema.selectorClass(this.id,"+'"'+"lista_grupos"+'"'+");' "+
+	datos=obj[i].dcurso+'_'+obj[i].nombre+'_'+obj[i].cprofes+'_'+obj[i].finipre+'_'+obj[i].ffinpre+'_'+obj[i].finivir+'_'+obj[i].ffinvir;
+	htm+="<tr id='trg-"+obj[i].ccuprpr+"' class='ui-widget-content jqgrow ui-row-ltr' "+ 
+			 "onClick='sistema.selectorClass(this.id,"+'"'+"lista_cursos"+'"'+");' "+
 			 "onMouseOut='sistema.mouseOut(this.id)' onMouseOver='sistema.mouseOver(this.id)'>";
 	htm+="<td width='250' class='t-center'>"+obj[i].dcurso+"</td>";
 	htm+="<td width='80' class='t-center'>"+obj[i].finipre+"</td>";
@@ -83,8 +89,8 @@ var htm="";
 	htm+="<td width='250' class='t-center'>"+obj[i].nombre+"</td>";
 	htm+="<td width='30' class='t-left'>"+
 		'	<div style="margin:15px 0px 10px 0px;">'+
-		'		<a onClick="ActualizaHorario('+"'"+obj[i].id+"'"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
-        '        	<i class="icon-white icon-plas"></i>'+
+		'		<a onClick="ActualizaHorario('+"'"+obj[i].ccuprpr+"','"+datos+"'"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
+        '        	<i class="icon-white icon-pencil"></i>'+
         '       </a>'+
         ' 	</div>'+
 		'</td>';
@@ -96,3 +102,38 @@ var htm="";
 	$("#lista_cursos").html(htm);
 }
 
+ActualizaHorario=function(id,datos){
+	var d=new Array();
+	d=datos.split('_');
+
+	$('#ccuprpr').val(id);
+	$('#txt_curso').val(d[0]);
+	$('#txt_docente').val(d[1]);
+	$('#cprofes').val(d[2]);
+	$('#txt_fecha_ini_pre').val(d[3]);
+	$('#txt_fecha_fin_pre').val(d[4]);
+	$('#txt_fecha_ini_vir').val(d[5]);
+	$('#txt_fecha_fin_vir').val(d[6]);
+
+	grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);
+	$("#actualizacion").css("display","");	
+}
+
+VisualizarHorarioProgramadoHtml=function(obj){
+
+}
+
+guardarHorario=function(){
+	$("#actualizacion").css("display","none");		
+}
+
+
+ListarDocente=function(){
+	var dis=$("#mantenimiento_docente").css("display");
+	if(dis=='none'){
+	$("#mantenimiento_docente").css("display",'');
+	}
+	else{
+	$("#mantenimiento_docente").css("display",'none');
+	}
+}

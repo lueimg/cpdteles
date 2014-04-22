@@ -84,6 +84,11 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['cgracpr']=trim($_POST['cgracpr']);
                 echo json_encode($daoGrupoAcademico->cargarCursosAcademicos($data));
             break;
+            case 'cargarHorarioProgramado':
+				$data=array();				
+				$data['ccuprpr']=trim($_POST['ccuprpr']);
+                echo json_encode($daoGrupoAcademico->cargarHorarioProgramado($data));
+            break;            
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;
