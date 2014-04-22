@@ -126,7 +126,7 @@ class MySqlGrupoAcademicoDAO{
 		
 		$filtro='';
 		if(strlen($sem)==6){$filtro=" AND g.csemaca='".$sem."' ";}
-		else{$filtro=" AND CONCAT(g.csemaca,' | ',g.cinicio) in ('".$sem."') ";}
+		elseif(trim($sem)!=''){$filtro=" AND CONCAT(g.csemaca,' | ',g.cinicio) in ('".$sem."') ";}
 
 		if($data['fechini']!='' and $data['fechfin']!=''){
 			$filtro.=" AND date(g.finicio) between '".$fechini."' and '".$fechfin."' ";
@@ -468,5 +468,29 @@ class MySqlGrupoAcademicoDAO{
    $db->commitTransaccion();
    return array('rst'=>'1','msj'=>'Cambios guardados correctamente; ');exit();
   }
+
+  public function cargarCursosAcademicos($array){
+  		$array['cgracpr']=str_replace(',',"','",$array['cgracpr']);
+		$sql="	SELECT c.`ccuprpr`,cu.`dcurso`,c.`finipre`,c.`ffinpre`,c.`finivir`,c.`ffinvir`,
+				IFNULL(CONCAT(pe.`dappape`,' ',pe.`dapmape`,', ',pe.`dnomper`),'') AS nombre
+				FROM gracprp g
+				INNER JOIN cuprprp c ON (c.`cgracpr`=g.`cgracpr`)
+				INNER JOIN cursom cu ON (cu.`ccurso`=c.`ccurso`)
+				LEFT JOIN profesm p ON (p.`cprofes`=c.`cprofes`)
+				LEFT JOIN personm pe ON (pe.`cperson`=p.`cperson`)
+				WHERE g.cgracpr IN ('".$array['cgracpr']."')
+				AND trgrupo='R'
+				order by cu.dcurso";
+        $db=creadorConexion::crear('MySql');
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Cursos Academicos cargados','data'=>$data);
+        }
+		else{
+            return array('rst'=>'2','msj'=>'No existen Cursos Academicos','data'=>$data,'sql'=>$sql);
+        }
+	}
 }
 ?>

@@ -20,6 +20,26 @@ var institucionDAO={
             error: this.msjErrorAjax
         });
     },
+    cargarCiclo: function(fxllena,slct_dest,id_slct){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'institucion',
+                accion:'cargarCiclo',
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {
+                if( obj.length!=0 ){
+                    fxllena(obj.data,slct_dest,id_slct);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
     verificaNombre:function(){
         $.ajax({
             url : this.url,

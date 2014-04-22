@@ -316,6 +316,27 @@ var grupoAcademicoDAO={
             error: this.msjErrorAjax
     });
   },
+  cargarCursosAcademicos: function(evento,ids){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'grupo_academico',
+                accion:'cargarCursosAcademicos',
+                cgracpr:ids
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {
+                if( obj.length!=0 ){
+                    evento(obj.data);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
 	msjErrorAjax:function(){
         sistema.msjErrorCerrar('Error General, pongase en contacto con Sistemas');
     }

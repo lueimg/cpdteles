@@ -18,7 +18,7 @@
         <script type="text/javascript" src="../javascript/sistema.js"></script>
         <script type="text/javascript" src="../javascript/templates.js"></script>
 
-        <script src="../javascript/jqGrid/JQEquivalencia.js"></script>
+        <script src="../javascript/jqGrid/JQGridEquivalencia.js"></script>
         <script src="../javascript/dao/DAOinstitucion.js"></script>
         <script src="../javascript/dao/DAOcarrera.js"></script>
         <script src="../javascript/dao/DAOEquiasg.js"></script>
@@ -35,7 +35,7 @@
             <div class="cuerpo">
                 <div class="secc-izq" id="secc-izq" style="width:0px;">
                     <ul class="lca" style="display:none">
-                        <li id="list_matricula" onClick="sistema.activaPanel('list_matricula', 'panel_matricula')" class="active"><span><i class="icon-gray icon-list-alt"></i> Opciones de Grupos de Usuarios <? /*aquui va el menu q se carga en la izquierda*/ ?> </span></li>						
+                        <li id="list_matricula" onClick="sistema.activaPanel('list_matricula', 'panel_matricula')" class="active"><span><i class="icon-gray icon-list-alt"></i> Equivalencia <? /*aquui va el menu q se carga en la izquierda*/ ?> </span></li>						
                     </ul>
                 </div>
                 <div id="secc-divi" class="secc-divi secc-divi-izq"><i class="icon-white icon-der"></i></div>

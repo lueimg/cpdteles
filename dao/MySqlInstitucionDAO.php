@@ -19,6 +19,21 @@ class MySqlInstitucionDAO{
             return array('rst'=>'2','msj'=>'No existen Filiales','data'=>$data,'sql'=>$sql);
         }
     }
+
+    public function cargarCiclo(){       
+        $sql="Select cciclo as id,dciclo as nombre
+              from cicloa 
+              where cestado=1
+              ORDER BY dciclo";
+        $db=creadorConexion::crear('MySql');
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Filiales cargadas','data'=>$data);
+        }else{
+            return array('rst'=>'2','msj'=>'No existen Filiales','data'=>$data,'sql'=>$sql);
+        }
+    }
 	
 	public function cargarPensionG($array){
 		$array['cfilial']=str_replace('\\','',$array['cfilial']);

@@ -8,6 +8,9 @@ class servletInstitucion extends controladorComandos{
 				$array['cfilial']=trim($_POST['cfilial']);
                 echo json_encode($daoInstitucion->cargarFilial($array));
             break;
+             case 'cargarCiclo':
+				echo json_encode($daoInstitucion->cargarCiclo());
+            break;
 			 case 'cargar_pension_g':
 			 	$array=array();
 				$array['cfilial']=$_POST['cfilial'];
