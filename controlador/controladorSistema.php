@@ -36,6 +36,8 @@
 	require_once('../controlador/servletRegistro.php');
     require_once('../controlador/servletBoltole.php');
     require_once('../controlador/servletAmbiente.php');
+    require_once('../controlador/servletDocente.php');
+    require_once('../controlador/servletHorario.php');
     
     require_once('../conexion/creadorConexion.php');
     require_once('../conexion/MySqlConexion.php');
@@ -74,6 +76,8 @@
 	require_once('../dao/MySqlRegistroDAO.php');
     require_once('../dao/MySqlBoltoleDAO.php');
     require_once('../dao/MySqlAmbienteDAO.php');
+    require_once('../dao/MySqlDocenteDAO.php');
+    require_once('../dao/MySqlHorarioDAO.php');
     
     require_once('../dto/dto_usuario.php');    
     

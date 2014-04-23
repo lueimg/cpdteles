@@ -123,5 +123,13 @@ class creadorDAO{
 	public static function getAmbienteDAO(){
 		return new MySqlAmbienteDAO;
 	}
+
+	public static function getDocenteDAO(){
+		return new MySqlDocenteDAO;
+	}
+
+	public static function getHorarioDAO(){
+		return new MySqlHorarioDAO;
+	}
 }
 ?>

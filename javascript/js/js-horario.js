@@ -3,7 +3,12 @@ $(document).ready(function(){
 	$('#nav-reportes').addClass('active');//aplica estilo al menu activo				
 	institucionDAO.cargarCiclo(sistema.llenaSelect,'slct_ciclo','');
 	institucionDAO.cargarInstitucionValidaG(sistema.llenaSelectGrupo,'slct_instituto','','Instituto');
-    institucionDAO.cargarFilialValidadaG(sistema.llenaSelectGrupo,'slct_filial','','Filial');	      
+    institucionDAO.cargarFilialValidadaG(sistema.llenaSelectGrupo,'slct_filial','','Filial');	    
+
+    horarioDAO.cargarDia(sistema.llenaSelect,'slct_dia','');
+    horarioDAO.cargarTipoAmbiente(sistema.llenaSelect,'slct_tipo_ambiente','');
+	horarioDAO.cargarTiempoTolerancia(sistema.llenaSelect,'slct_tiempo_tolerancia','');
+
 	$('#btn_listar').click(function(){VisualizarGrupos()});
 	
 	$("#slct_filial,#slct_instituto").multiselect({
@@ -11,6 +16,8 @@ $(document).ready(function(){
 	}).multiselectfilter();
 
 	$("#btnFormHorario").click(function(){guardarHorario()});
+	$("#btnAgregarHorario").click(function(){AgregarHorario()});
+	
 
 	$(':text[id^="txt_fecha"]').datepicker({
 		dateFormat:'yy-mm-dd',
@@ -20,7 +27,7 @@ $(document).ready(function(){
 		prevText:'Anterior'
 	});
 
-	//jqGridDocente.docente();
+	jqGridDocente.Docente();
 })
 
 VisualizarGrupos=function(){
@@ -77,7 +84,7 @@ VisualizarCursosHTML=function(obj){
 var htm="";	
 var datos="";	
 	for(i=0;i<obj.length;i++){
-	datos=obj[i].dcurso+'_'+obj[i].nombre+'_'+obj[i].cprofes+'_'+obj[i].finipre+'_'+obj[i].ffinpre+'_'+obj[i].finivir+'_'+obj[i].ffinvir;
+	datos=obj[i].dcurso+'_'+obj[i].nombre+'_'+obj[i].cprofes+'_'+obj[i].finipre+'_'+obj[i].ffinpre+'_'+obj[i].finivir+'_'+obj[i].ffinvir+'_'+obj[i].cinstit+'_'+obj[i].cfilial;
 	htm+="<tr id='trg-"+obj[i].ccuprpr+"' class='ui-widget-content jqgrow ui-row-ltr' "+ 
 			 "onClick='sistema.selectorClass(this.id,"+'"'+"lista_cursos"+'"'+");' "+
 			 "onMouseOut='sistema.mouseOut(this.id)' onMouseOver='sistema.mouseOver(this.id)'>";
@@ -114,13 +121,79 @@ ActualizaHorario=function(id,datos){
 	$('#txt_fecha_fin_pre').val(d[4]);
 	$('#txt_fecha_ini_vir').val(d[5]);
 	$('#txt_fecha_fin_vir').val(d[6]);
-
+	$('#cinstit').val(d[7]);
+	$('#cfilial').val(d[8]);
+	horarioDAO.cargarHora(sistema.llenaSelect,'slct_hora','');
 	grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);
 	$("#actualizacion").css("display","");	
 }
 
 VisualizarHorarioProgramadoHtml=function(obj){
 
+}
+
+AgregarHorario=function(){	
+	var tot=0;
+	var htm="";	
+	tot = $("#txt_cant_hor").val()*1 + 1;
+	$("#txt_cant_hor").val(tot);
+	htm=''+
+	'<tr id="trel'+tot+'" class="FormData"> '+                                      
+	    '<td class="t-left">'+ 
+	      '<select id="slct_dia_'+tot+'" style="width:120px">'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '</select>'+ 
+	    '</td>         '+                              
+	    '<td class="t-left">'+ 
+	      '<select id="slct_hora_'+tot+'" class="input-large">'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '</select>'+ 
+	    '</td>         '+                             
+	    '<td class="t-left">'+ 
+	      '<select id="slct_tipo_'+tot+'" style="width:120px">'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '<option value="T">Teórico</option>'+ 
+	      '<option value="P">Práctico</option>'+ 
+	      '</select>'+ 
+	    '</td>'+ 
+	    '<td class="t-left">'+ 
+	      '<select id="slct_tipo_ambiente_'+tot+'" class="input-large" onChange="ActualizaAmbiente(this.value,this.id);">'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '</select>'+ 
+	    '</td>         '+                              
+	    '<td class="t-left">'+ 
+	      '<select id="slct_ambiente_'+tot+'" class="input-large">'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '</select>'+ 
+	    '</td>         '+                                                                       
+	    '<td class="t-left">'+ 
+	      '<select id="slct_tiempo_tolerancia_'+tot+'" style="width:120px">'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '</select>'+ 
+	    '</td>         '+                              
+	    '<td class="t-left">&nbsp;'+ 
+	      '<select id="slct_estado_'+tot+'">'+ 
+	      '<option value="1">Activo</option>'+ 
+	      '<option value="0">Inactivo</option>'+ 
+	      '</select>'+ 
+	    '</td>'+ 
+	    '<td class="t-left"><span class="formBotones" style="">'+ 
+			'<a class="btn btn-azul sombra-3d t-blanco" onclick="$('+"'"+'#trel'+tot+"'"+').remove();" href="javascript:void(0)">'+ 
+			'<i class="icon-white icon-remove"></i>			'+ 
+			'</a>'+ 
+			'</span></td>'+ 
+	'</tr>';
+	$("#detalle_actualizacion").append(htm);
+	$("#slct_dia_"+tot).html($("#slct_dia").html());
+	$("#slct_dia_"+tot).val('');
+	$("#slct_hora_"+tot).html($("#slct_hora").html());
+	$("#slct_hora_"+tot).val('');
+	$("#slct_tipo_ambiente_"+tot).html($("#slct_tipo_ambiente").html());
+	$("#slct_tipo_ambiente_"+tot).val('');
+	$("#slct_ambiente_"+tot).html($("#slct_ambiente").html());
+	$("#slct_ambiente_"+tot).val('');
+	$("#slct_tiempo_tolerancia_"+tot).html($("#slct_tiempo_tolerancia").html());
+	$("#slct_tiempo_tolerancia_"+tot).val('');
 }
 
 guardarHorario=function(){
@@ -136,4 +209,21 @@ ListarDocente=function(){
 	else{
 	$("#mantenimiento_docente").css("display",'none');
 	}
+}
+
+cargar_docente=function(){
+	var id=$("#table_docente").jqGrid("getGridParam",'selrow');
+    if (id) {
+        var data = $("#table_docente").jqGrid('getRowData',id);
+        $('#cprofes').val(id);
+        $('#txt_docente').val(data.dappape+' '+data.dapmape+', '+data.dnomper);
+		        
+		$("#mantenimiento_docente").css("display",'none');
+    }else {
+	    sistema.msjAdvertencia('Seleccione un registro a cargar')
+	}
+}
+
+ActualizaAmbiente=function(valor,id){	
+	horarioDAO.cargarAmbiente(sistema.llenaSelect,'slct_ambiente_'+id.split("_")[3],'',valor);
 }
