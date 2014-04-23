@@ -23,10 +23,11 @@
         <script type="text/javascript" src="../javascript/includes/multiselect/js/jquery.multiselect.filter.min.js"></script>
         <script type="text/javascript" src="../javascript/includes/multiselect/js/jquery.multiselect.min.js"></script>
         
-		<script type="text/javascript" src="../javascript/dao/DAOcarrera.js"></script>
+        <script type="text/javascript" src="../javascript/dao/DAOhorario.js"></script>
         <script type="text/javascript" src="../javascript/dao/DAOgrupoAcademico.js"></script>
-        <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>
-		<script type="text/javascript" src="../javascript/js/js-horario.js"></script>
+        <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>		
+        <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
+        <script type="text/javascript" src="../javascript/js/js-horario.js"></script>
 			
 	</head>
 
@@ -181,14 +182,16 @@
                                 <div class="barra4 contentBarra t-blanco t-left"><i class="icon-white icon-th"></i>CURSO ACADÉMICO</div>
                                 <table cellspacing="1" cellpadding="2" border="0" style="table-layout:fixed" class="EditTable">
                                     <tr>
-                                        <td class="t-left label input-mediun"><b>Curso:</b></td>
+                                        <td class="t-left label input-xlarge"><b>Curso:</b></td>
                                         <td>
                                             <input type="text" id="txt_curso" class="input-large" disabled>
                                             <input type="hidden" id="ccuprpr" value=''>
+                                            <input type="hidden" id="cinstit" value=''>    
+                                            <input type="hidden" id="cfilial" value=''>                                            
                                         </td>                            
                                     </tr>
                                     <tr>
-                                        <td class="t-left label input-mediun"><b>Docente:</b></td>
+                                        <td class="t-left label input-xlarge"><b>Docente:</b></td>
                                         <td>
                                             <input type="text" id="txt_docente" class="input-large" disabled>
                                             <input type="hidden" id="cprofes">
@@ -238,7 +241,7 @@
                                 <table id='detalle_actualizacion'>
                                     <tr>
                                         <td class="t-left label" >
-                                          <b>Dia: </b>
+                                          <b>Dia: </b><input type="hidden" value="1" id="txt_cant_hor" >
                                         </td>
                                         <td class="t-left label" >
                                           <b>Hora: </b>
@@ -259,7 +262,7 @@
                                           <b>Estado: </b>
                                         </td>
                                     </tr>
-                                    <tr class="FormData">                                       
+                                    <tr style="display:none" class="FormData">                                       
                                         <td class="t-left">
                                           <select id="slct_dia" style="width:120px">
                                           <option value="">--Seleccione--</option>
@@ -278,7 +281,7 @@
                                           </select>
                                         </td>
                                         <td class="t-left">
-                                          <select id="slct_tipo_ambiente" style="width:120px">
+                                          <select id="slct_tipo_ambiente" style="width:120px" onChange='ActualizaAmbiente(this.value,this.id);'>
                                           <option value="">--Seleccione--</option>
                                           </select>
                                         </td>                                      
@@ -299,12 +302,19 @@
                                           </select>
                                         </td>
                                     </tr>
+                                </table>
+                                <table>
                                     <tr>
                                         <td colspan="2" align="center">
-                                          <a id="btnFormHorario" class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px">
-                                          <span>Guardar</span><span class="icon-hdd"></span>
+                                          <a id="btnAgregarHorario" class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px">
+                                          <span>Agregar</span><span class="icon-white icon-plus"></span>
                                           </a>
                                         </td>
+                                        <td colspan="2" align="center">
+                                          <a id="btnFormHorario" class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px">
+                                          <span>Guardar</span><span class="icon-white icon-check"></span>
+                                          </a>
+                                        </td>                                        
                                     </tr>
                                 </table>
                             </fieldset>

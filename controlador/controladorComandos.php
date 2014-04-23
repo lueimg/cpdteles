@@ -112,7 +112,13 @@
 					break;
 				case 'ambiente':
 					$classControlador=new servletAmbiente;
-					break;	               
+					break;
+				case 'docente':
+					$classControlador=new servletDocente;
+					break;
+				case 'horario':
+					$classControlador=new servletHorario;
+					break;
 				default:
                     echo json_encode(array('rst'=>3,'msj'=>'Comando no encontrado'));
                     exit();

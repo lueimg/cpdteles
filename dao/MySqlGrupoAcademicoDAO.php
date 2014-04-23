@@ -472,7 +472,8 @@ class MySqlGrupoAcademicoDAO{
   public function cargarCursosAcademicos($array){
   		$array['cgracpr']=str_replace(',',"','",$array['cgracpr']);
 		$sql="	SELECT c.`ccuprpr`,cu.`dcurso`,c.`finipre`,c.`ffinpre`,c.`finivir`,c.`ffinvir`,
-				IFNULL(CONCAT(pe.`dappape`,' ',pe.`dapmape`,', ',pe.`dnomper`),'') AS nombre,IFNULL(c.cprofes,'') cprofes 
+				IFNULL(CONCAT(pe.`dappape`,' ',pe.`dapmape`,', ',pe.`dnomper`),'') AS nombre,IFNULL(c.cprofes,'') cprofes,
+				g.cinstit,g.cfilial 
 				FROM gracprp g
 				INNER JOIN cuprprp c ON (c.`cgracpr`=g.`cgracpr`)
 				INNER JOIN cursom cu ON (cu.`ccurso`=c.`ccurso`)
