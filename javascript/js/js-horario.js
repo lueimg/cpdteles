@@ -16,7 +16,7 @@ $(document).ready(function(){
 	}).multiselectfilter();
 
 	$("#btnFormHorario").click(function(){guardarHorario()});
-	$("#btnAgregarHorario").click(function(){AgregarHorario()});
+	$("#btnAgregarHorario").click(function(){AgregarHorario('')});
 	
 
 	$(':text[id^="txt_fecha"]').datepicker({
@@ -78,6 +78,7 @@ ToogleFiltro();
 ToogleFiltro=function(){
 $('#filtro').toggle("slow");
 $('#horario').toggle("slow");
+$("#actualizacion").css("display","none");
 }
 
 VisualizarCursosHTML=function(obj){
@@ -113,6 +114,9 @@ ActualizaHorario=function(id,datos){
 	var d=new Array();
 	d=datos.split('_');
 
+	$("#detalle_actualizacion .agregado").remove();
+	$("#detalle_actualizacion .fijo").remove();
+
 	$('#ccuprpr').val(id);
 	$('#txt_curso').val(d[0]);
 	$('#txt_docente').val(d[1]);
@@ -124,21 +128,39 @@ ActualizaHorario=function(id,datos){
 	$('#cinstit').val(d[7]);
 	$('#cfilial').val(d[8]);
 	horarioDAO.cargarHora(sistema.llenaSelect,'slct_hora','');
-	grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);
+	grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);	
 	$("#actualizacion").css("display","");	
+
 }
 
 VisualizarHorarioProgramadoHtml=function(obj){
-
+	var pos=0;
+	$.each(obj,function(index,value){
+		AgregarHorario('X');
+		pos=$("#txt_cant_hor").val()*1;
+		$("#slct_dia_"+pos).val(value.cdia);
+		$("#slct_hora_"+pos).val(value.chora);
+		$("#slct_tipo_"+pos).val(value.ctipcla);
+		$("#slct_tipo_ambiente_"+pos).val(value.ctipamb);
+		ActualizaAmbiente(value.ctipamb,'slct_tipo_ambiente_'+pos,value.cambien);
+		$("#slct_tiempo_tolerancia_"+pos).val(value.ctietol);
+		$("#chk_"+pos).attr("value",value.chorpro);
+	});	
 }
 
-AgregarHorario=function(){	
+AgregarHorario=function(ide){
+	var agregado='fijo';
+	var disabled='';
+	if(ide==''){
+		agregado='agregado';
+		disabled='disabled';
+	}	
 	var tot=0;
 	var htm="";	
 	tot = $("#txt_cant_hor").val()*1 + 1;
 	$("#txt_cant_hor").val(tot);
 	htm=''+
-	'<tr id="trel'+tot+'" class="FormData"> '+                                      
+	'<tr id="trel_'+tot+'" class="FormData '+agregado+'"> '+                                      
 	    '<td class="t-left">'+ 
 	      '<select id="slct_dia_'+tot+'" style="width:120px">'+ 
 	      '<option value="">--Seleccione--</option>'+ 
@@ -172,17 +194,23 @@ AgregarHorario=function(){
 	      '</select>'+ 
 	    '</td>         '+                              
 	    '<td class="t-left">&nbsp;'+ 
-	      '<select id="slct_estado_'+tot+'">'+ 
-	      '<option value="1">Activo</option>'+ 
+	      '<select id="slct_estado_'+tot+'" '+disabled+'>'+ 
+	      '<option value="1" selected=selected>Activo</option>'+ 
 	      '<option value="0">Inactivo</option>'+ 
 	      '</select>'+ 
-	    '</td>'+ 
-	    '<td class="t-left"><span class="formBotones" style="">'+ 
-			'<a class="btn btn-azul sombra-3d t-blanco" onclick="$('+"'"+'#trel'+tot+"'"+').remove();" href="javascript:void(0)">'+ 
+	    '</td>';
+	    if(ide==''){
+	    htm+='<td class="t-left"><span class="formBotones" style="">'+ 
+			'<a class="btn btn-azul sombra-3d t-blanco" onclick="$('+"'"+'#trel_'+tot+"'"+').remove();" href="javascript:void(0)">'+ 
 			'<i class="icon-white icon-remove"></i>			'+ 
 			'</a>'+ 
 			'</span></td>'+ 
 	'</tr>';
+	    }
+	    else{
+	    htm+='<td><input type="checkbox" id="chk_'+tot+'"></td></tr>';
+	    }
+	    
 	$("#detalle_actualizacion").append(htm);
 	$("#slct_dia_"+tot).html($("#slct_dia").html());
 	$("#slct_dia_"+tot).val('');
@@ -197,7 +225,125 @@ AgregarHorario=function(){
 }
 
 guardarHorario=function(){
-	$("#actualizacion").css("display","none");		
+	
+	if($("#txt_fecha_ini_pre").val()==''){
+		sistema.msjAdvertencia('Ingrese fecha de Inicio Presencial');
+		$("#txt_fecha_ini_pre").focus();
+	}
+	else if($("#txt_fecha_fin_pre").val()==''){
+		sistema.msjAdvertencia('Ingrese fecha Fin Presencial');
+		$("#txt_fecha_fin_pre").focus();
+	}
+	else if($("#txt_fecha_ini_vir").val()==''){
+		sistema.msjAdvertencia('Ingrese fecha de Inicio Virtual');
+		$("#txt_fecha_ini_vir").focus();
+	}
+	else if($("#txt_fecha_fin_vir").val()==''){
+		sistema.msjAdvertencia('Ingrese fecha Fin Virtual');
+		$("#txt_fecha_fin_vir").focus();
+	}
+	else{
+
+		var error="";		
+		var id="";
+		var datos="";
+		var datos2="";
+		var datosf="";
+
+		datos=$("#detalle_actualizacion .fijo").map(function(index, element) {
+			id=this.id.split("_")[1];
+			if($("#chk_"+id).attr("checked")){			
+	            if($("#slct_dia_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Día",200);
+				$("#slct_dia_"+id).focus();
+				}
+				else if($("#slct_hora_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Hora",200);
+				$("#slct_hora_"+id).focus();
+				}
+				else if($("#slct_tipo_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Tipo Horario",200);
+				$("#slct_tipo_"+id).focus();
+				}
+				else if($("#slct_tipo_ambiente_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Tipo Ambiente",200);
+				$("#slct_tipo_ambiente_"+id).focus();
+				}
+				else if($("#slct_ambiente_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Ambiente",200);
+				$("#slct_ambiente_"+id).focus();
+				}
+				else if($("#slct_tiempo_tolerancia_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Tiempo Tolerancia",200);
+				$("#slct_tiempo_tolerancia_"+id).focus();
+				}
+				else if($("#slct_estado_"+id).val()=='' && error==""){
+				error="ok";
+				sistema.msjAdvertencia("Seleccionar Estado",200);
+				$("#slct_estado_"+id).focus();
+				}
+				else{
+				return $("#slct_dia_"+id).val()+'_'+$("#slct_hora_"+id).val()+'_'+$("#slct_tipo_"+id).val()+'_'+$("#slct_tipo_ambiente_"+id).val()+'_'+$("#slct_ambiente_"+id).val()+'_'+$("#slct_tiempo_tolerancia_"+id).val()+'_'+$("#slct_estado_"+id).val()+'_'+$("#chk_"+id).val();
+				}
+			}
+        }).get().join('|');
+
+		datos2=$("#detalle_actualizacion .agregado").map(function(index, element) {
+			id=this.id.split("_")[1];
+
+            if($("#slct_dia_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Día",200);
+			$("#slct_dia_"+id).focus();
+			}
+			else if($("#slct_hora_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Hora",200);
+			$("#slct_hora_"+id).focus();
+			}
+			else if($("#slct_tipo_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Tipo Horario",200);
+			$("#slct_tipo_"+id).focus();
+			}
+			else if($("#slct_tipo_ambiente_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Tipo Ambiente",200);
+			$("#slct_tipo_ambiente_"+id).focus();
+			}
+			else if($("#slct_ambiente_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Ambiente",200);
+			$("#slct_ambiente_"+id).focus();
+			}
+			else if($("#slct_tiempo_tolerancia_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Tiempo Tolerancia",200);
+			$("#slct_tiempo_tolerancia_"+id).focus();
+			}
+			else if($("#slct_estado_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Estado",200);
+			$("#slct_estado_"+id).focus();
+			}
+			else{
+			return $("#slct_dia_"+id).val()+'_'+$("#slct_hora_"+id).val()+'_'+$("#slct_tipo_"+id).val()+'_'+$("#slct_tipo_ambiente_"+id).val()+'_'+$("#slct_ambiente_"+id).val()+'_'+$("#slct_tiempo_tolerancia_"+id).val();			
+			}
+        }).get().join('|');
+		
+		datosf=datos+'^^'+datos2;
+
+		if(error==""){
+		$("#actualizacion").css("display","none");
+		horarioDAO.guardarHorarios(datosf);
+		}
+	}			
 }
 
 
@@ -220,10 +366,10 @@ cargar_docente=function(){
 		        
 		$("#mantenimiento_docente").css("display",'none');
     }else {
-	    sistema.msjAdvertencia('Seleccione un registro a cargar')
+	    sistema.msjAdvertencia('Seleccione un registro a cargar');
 	}
 }
 
-ActualizaAmbiente=function(valor,id){	
-	horarioDAO.cargarAmbiente(sistema.llenaSelect,'slct_ambiente_'+id.split("_")[3],'',valor);
+ActualizaAmbiente=function(valor,id,selector){	
+	horarioDAO.cargarAmbiente(sistema.llenaSelect,'slct_ambiente_'+id.split("_")[3],selector,valor);
 }

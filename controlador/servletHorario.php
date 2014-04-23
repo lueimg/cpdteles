@@ -23,6 +23,19 @@ class servletHorario extends controladorComandos{
 			case 'cargarTiempoTolerancia':
 				echo json_encode($daoHorario->cargarTiempoTolerancia());
 			break;
+			case 'guardarHorarios':
+				$array=array();
+				$array['ccuprpr']=trim($_POST['ccuprpr']);
+				$array['cprofes']=trim($_POST['cprofes']);
+				$array['finipre']=trim($_POST['finipre']);
+				$array['ffinpre']=trim($_POST['ffinpre']);
+				$array['finivir']=trim($_POST['finivir']);
+				$array['ffinvir']=trim($_POST['ffinvir']);
+				$array['datos']=trim($_POST['datos']);
+				$array['cusuari']=trim($_POST['cusuari']);
+				$array['cfilialx']=trim($_POST['cfilialx']);
+				echo json_encode($daoHorario->guardarHorarios($array));
+			break;
 			default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;

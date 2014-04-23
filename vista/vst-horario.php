@@ -184,7 +184,7 @@
                                     <tr>
                                         <td class="t-left label input-xlarge"><b>Curso:</b></td>
                                         <td>
-                                            <input type="text" id="txt_curso" class="input-large" disabled>
+                                            <input type="text" id="txt_curso" class="input-xlarge" disabled>
                                             <input type="hidden" id="ccuprpr" value=''>
                                             <input type="hidden" id="cinstit" value=''>    
                                             <input type="hidden" id="cfilial" value=''>                                            
@@ -193,7 +193,7 @@
                                     <tr>
                                         <td class="t-left label input-xlarge"><b>Docente:</b></td>
                                         <td>
-                                            <input type="text" id="txt_docente" class="input-large" disabled>
+                                            <input type="text" id="txt_docente" class="input-xlarge" disabled>
                                             <input type="hidden" id="cprofes">
                                             <span class="formBotones">
                                                 <a href="javascript:void(0)" onClick="ListarDocente();" id="btnMantDocente" class="btn btn-azul sombra-3d t-blanco">
