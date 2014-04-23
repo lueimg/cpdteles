@@ -43,7 +43,16 @@
                 <input type="text" id="txt_fecha_final_mat_edit" onChange="sistema.validaFecha('txt_fecha_inicio_mat_edit','txt_fecha_final_mat_edit');" style="width:65px"> 
                 </td>
             </tr>
-            
+            <tr>
+                <td class="t-left label">Fecha de Gracia:</td>
+                <td class="t-left">
+                <input type="text" id="txt_fecha_gra_edit" onChange="sistema.validaFecha('txt_fecha_final_mat_edit','txt_fecha_gra_edit');" style="width:65px">  
+                </td>
+                <td class="t-left label">Fecha Extemporanea:</td>
+                <td class="t-left">
+                <input type="text" id="txt_fecha_ext_edit" onChange="sistema.validaFecha('txt_fecha_gra_edit','txt_fecha_ext_edit');" style="width:65px"> 
+                </td>
+            </tr>
             <tr>
                 <td colspan="4" align="center">
                   <a class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px;width: 70px;" onclick="Actualizar();">

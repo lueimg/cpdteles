@@ -83,6 +83,8 @@
                                                   <th>Fecha Fin Periodo</th>
                                                   <th>Fecha Inicio Matricula</th>
                                                   <th>Fecha Fin Matricula</th>
+                                                  <th>Fecha de Gracia</th>
+                                                  <th>Fecha Extemporanea</th>
                                                   <th>&nbsp;</th>
                                                 </tr>
                                                 </table>
@@ -119,6 +121,8 @@
                                         <td class="t-center label" width="120">FECHA FIN SEM</td>
                                         <td class="t-center label" width="120">FECHA INICIO MATR</td>
                                         <td class="t-center label" width="120">FECHA FIN MATR</td>
+                                        <td class="t-center label" width="120">FECHA GRACIA</td>
+                                        <td class="t-center label" width="120">FECHA EXTEMPORANEA</td>
                                         <td class="t-center label" width="120">ESTADO</td>
                                         <td class="t-center label" width="120">ACCIONES</td>
                                     </tr>

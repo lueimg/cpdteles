@@ -63,6 +63,8 @@ validaSemestre=function(){
 		htm+="<td class='t-left'><input type='text' id='txt_fecha_fsem_1' onChange='sistema.validaFecha("+'"'+"txt_fecha_isem_1"+'","'+"txt_fecha_fsem_1"+'"'+");' style='width:65px'></td>";
 		htm+="<td class='t-left'><input type='text' id='txt_fecha_imat_1' onChange='sistema.validaFecha("+'"'+"txt_fecha_imat_1"+'","'+"txt_fecha_fmat_1"+'"'+");' style='width:65px'></td>";
 		htm+="<td class='t-left'><input type='text' id='txt_fecha_fmat_1' onChange='sistema.validaFecha("+'"'+"txt_fecha_imat_1"+'","'+"txt_fecha_fmat_1"+'"'+");' style='width:65px'></td>";		
+		htm+="<td class='t-left'><input type='text' id='txt_fecha_fgra_1' onChange='sistema.validaFecha("+'"'+"txt_fecha_fmat_1"+'","'+"txt_fecha_fgra_1"+'"'+");' style='width:65px'></td>";		
+		htm+="<td class='t-left'><input type='text' id='txt_fecha_fext_1' onChange='sistema.validaFecha("+'"'+"txt_fecha_fgra_1"+'","'+"txt_fecha_fext_1"+'"'+");' style='width:65px'></td>";		
 		htm+="<td class='t-left'><span class='formBotones' style=''>"+
 			"<a class='btn btn-azul sombra-3d t-blanco' onclick='"+"$("+'"'+"#trinicial"+'"'+").remove()"+"' href='javascript:void(0)'>"+
 			"<i class='icon-white icon-remove'></i>"+			
@@ -102,6 +104,8 @@ AgregarSemestre=function(){
 	htm+="<td class='t-left'><input type='text' id='txt_fecha_fsem_"+tot+"' onChange='sistema.validaFecha("+'"'+"txt_fecha_isem_"+tot+'","'+"txt_fecha_fsem_"+tot+'"'+");' style='width:65px'></td>";
 	htm+="<td class='t-left'><input type='text' id='txt_fecha_imat_"+tot+"' onChange='sistema.validaFecha("+'"'+"txt_fecha_imat_"+tot+'","'+"txt_fecha_fmat_"+tot+'"'+");' style='width:65px'></td>";
 	htm+="<td class='t-left'><input type='text' id='txt_fecha_fmat_"+tot+"' onChange='sistema.validaFecha("+'"'+"txt_fecha_imat_"+tot+'","'+"txt_fecha_fmat_"+tot+'"'+");' style='width:65px'></td>";
+	htm+="<td class='t-left'><input type='text' id='txt_fecha_fgra_"+tot+"' onChange='sistema.validaFecha("+'"'+"txt_fecha_fmat_"+tot+'","'+"txt_fecha_fgra_"+tot+'"'+");' style='width:65px'></td>";
+	htm+="<td class='t-left'><input type='text' id='txt_fecha_fext_"+tot+"' onChange='sistema.validaFecha("+'"'+"txt_fecha_fgra_"+tot+'","'+"txt_fecha_fext_"+tot+'"'+");' style='width:65px'></td>";
 	htm+="<td class='t-left'><span class='formBotones' style=''>"+
 			"<a class='btn btn-azul sombra-3d t-blanco' onclick='"+"$("+'"'+"#trel"+tot+'"'+").remove();' href='javascript:void(0)'>"+
 			"<i class='icon-white icon-remove'></i>"+			
@@ -150,13 +154,23 @@ GuardarCambiosSem=function(){
 					sistema.msjAdvertencia("Debe seleccionar una fecha de Fin de Matricula para el registro " + contador + ".");
 					$("#txt_fecha_fmat_"+codigo).focus();
 					error="ok";
+				}else if($.trim($("#txt_fecha_fgra_"+codigo).val())==""){
+					sistema.msjAdvertencia("Debe seleccionar una fecha de Gracia para el registro " + contador + ".");
+					$("#txt_fecha_fgra_"+codigo).focus();
+					error="ok";
+				}else if($.trim($("#txt_fecha_fext_"+codigo).val())==""){
+					sistema.msjAdvertencia("Debe seleccionar una fecha Extemporanea para el registro " + contador + ".");
+					$("#txt_fecha_fext_"+codigo).focus();
+					error="ok";
 				}else{
 					return  $.trim($("#txt_ano_"+codigo).val()) + "-" + $.trim($("#txt_sem_"+codigo).val()) + "|" +
 							$.trim($("#txt_ini_"+codigo).val()) + "|" +
 							$.trim($("#txt_fecha_isem_"+codigo).val()) + "|" +
 							$.trim($("#txt_fecha_fsem_"+codigo).val()) + "|" +
 							$.trim($("#txt_fecha_imat_"+codigo).val()) + "|" +
-							$.trim($("#txt_fecha_fmat_"+codigo).val());
+							$.trim($("#txt_fecha_fmat_"+codigo).val()) + "|" +
+							$.trim($("#txt_fecha_fgra_"+codigo).val()) + "|" +
+							$.trim($("#txt_fecha_fext_"+codigo).val());
 				}
 			}
 			
@@ -204,6 +218,8 @@ EditarSemestreLLenarDatos = function(obj){
 	$("#txt_fecha_inicio_mat_edit").val(obj.finimat);
     $("#txt_fecha_final_sem_edit").val(obj.ffinsem);
 	$("#txt_fecha_final_mat_edit").val(obj.ffinmat);    
+	$("#txt_fecha_gra_edit").val(obj.fechgra);    
+	$("#txt_fecha_ext_edit").val(obj.fechext);    
 }
 
 listarSemestreHtml = function(obj){
@@ -250,6 +266,8 @@ listarSemestreHtml = function(obj){
 		htm+="<td width='118' class='t-center'>"+value.ffsem+"</td>";
 		htm+="<td width='120' class='t-center'>"+value.fimat+"</td>";
 		htm+="<td width='120' class='t-center'>"+value.ffmat+"</td>";
+		htm+="<td width='120' class='t-center'>"+value.fegra+"</td>";
+		htm+="<td width='120' class='t-center'>"+value.feext+"</td>";
                 htm+="<td width='145' class='t-center'>"+estado.toUpperCase()+"</td>";
                 htm+="<td width='145' class='t-center'>"+editar+accion+"</td>";
 		htm+="</tr>";
@@ -295,6 +313,14 @@ Actualizar=function(){
   else if($("#txt_fecha_final_mat_edit").val()==''){
   sistema.msjAdvertencia("Ingresar Fecha Final Matricula",200);
   $("#txt_fecha_final_mat_edit").focus();
+  }
+   else if($("#txt_fecha_gra_edit").val()==''){
+  sistema.msjAdvertencia("Ingresar Fecha de Gracia",200);
+  $("#txt_fecha_gra_edit").focus();
+  }
+   else if($("#txt_fecha_ext_edit").val()==''){
+  sistema.msjAdvertencia("Ingresar Fecha Extemporanea",200);
+  $("#txt_fecha_ext_edit").focus();
   }
   else{    
     carreraDAO.ModificarSemestre();

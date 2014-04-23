@@ -438,7 +438,9 @@ class MySqlCarreraDAO{
 				AND finisem= '".$r['finisem']."'
 				AND finimat= '".$r['finimat']."'
 				AND ffinsem= '".$r['ffinsem']."'
-				AND ffinmat= '".$r['ffinmat']."'";
+                AND ffinmat= '".$r['ffinmat']."'
+                AND fechgra= '".$r['fechgra']."'
+				AND fechext= '".$r['fechext']."'";
 	        $db->setQuery($sql);
 			$data=$db->loadObjectList();
 			if(count($data)>0){	
@@ -453,7 +455,9 @@ class MySqlCarreraDAO{
 						finisem= '".$r['finisem']."',
 						finimat= '".$r['finimat']."',
 						ffinsem= '".$r['ffinsem']."',
-						ffinmat= '".$r['ffinmat']."',
+                        ffinmat= '".$r['ffinmat']."',
+                        fechgra= '".$r['fechgra']."',
+						fechext= '".$r['fechext']."',
 						fusuari= 'now()',
 						cusuari= '".$r['cusuari']."'
 						WHERE csemaca='".$d[0]."' 
@@ -515,7 +519,9 @@ class MySqlCarreraDAO{
 										  SET finisem= '".$datalimpia[2]."',
 										      ffinsem= '".$datalimpia[3]."',
 										      finimat= '".$datalimpia[4]."',
-										      ffinmat= '".$datalimpia[5]."',
+                                              ffinmat= '".$datalimpia[5]."',
+                                              fechgra= '".$datalimpia[6]."',
+										      fechext= '".$datalimpia[7]."',
 										      fusuari= 'now()',
 										  	  cusuari= '".$r['cusuari']."'
 										  WHERE cfilial='".$cfilial."' 
@@ -535,7 +541,7 @@ class MySqlCarreraDAO{
 									}	
 							}else{
 								
-									$sql="INSERT INTO semacan  (csemaca, cfilial, ctipcar, cmodali, cinicio, cinstit, finisem, ffinsem, finimat, ffinmat, cestado, fusuari,cusuari )
+									$sql="INSERT INTO semacan  (csemaca, cfilial, ctipcar, cmodali, cinicio, cinstit, finisem, ffinsem, finimat, ffinmat , fechgra , fechext, cestado, fusuari,cusuari )
 										  VALUES ('".$datalimpia[0]."',
 												  '".$cfilial."',
 												  '2',
@@ -545,7 +551,9 @@ class MySqlCarreraDAO{
 												  '".$datalimpia[2]."',
 												  '".$datalimpia[3]."',
 												  '".$datalimpia[4]."',
-												  '".$datalimpia[5]."',
+                                                  '".$datalimpia[5]."',
+                                                  '".$datalimpia[6]."',
+												  '".$datalimpia[7]."',
 												  '1',
 												  now(),
 												  '".$r['cusuari']."')";	
@@ -1011,6 +1019,8 @@ s.finisem as fisem,
 s.ffinsem as ffsem, 
 s.finimat as fimat, 
 s.ffinmat as ffmat,
+s.fechgra as fegra,
+s.fechext as feext,
 s.cestado as estado,s.csemaca
 FROM semacan  as s    
     WHERE s.cfilial in (".$data['cfilial'].") AND s.cinstit in (".$data['cinstit'].")"; 

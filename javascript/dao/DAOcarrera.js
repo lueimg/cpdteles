@@ -1012,7 +1012,9 @@ var carreraDAO={
                 finisem:$("#txt_fecha_inicio_sem_edit").val(),
 				ffinsem:$("#txt_fecha_final_sem_edit").val(),
 				finimat:$("#txt_fecha_inicio_mat_edit").val(),
-				ffinmat:$("#txt_fecha_final_mat_edit").val(),
+                ffinmat:$("#txt_fecha_final_mat_edit").val(),
+                fechgra:$("#txt_fecha_gra_edit").val(),
+				fechext:$("#txt_fecha_ext_edit").val(),
 				datos:$("#csemaca").val(),
                 cusuari:$('#hd_idUsuario').val(),				
                 cfilialx:$('#hd_idFilial').val()
