@@ -128,5 +128,94 @@ class MySqlAmbienteDAO{
         return $data;
         
     }
+
+    public function actualizarTipoAmbiente($post){       
+       
+        $db=creadorConexion::crear('MySql');
+        $db->iniciaTransaccion();
+        /****verifico que registro no exista******/
+        $sqlVal="SELECT ctipamb 
+                 FROM tipamba 
+                 where dtipamb='".$post["dtipamb"]."' and ctipamb!='".$post["id"]."' limit 1";
+        $db->setQuery($sqlVal);
+        $data=$db->loadObjectList();
+        if(count($data)>0){echo json_encode(array('rst'=>'2','msg'=>'<b>Tipo Ambiente</b> ya existe'));exit();}
+        /*******/
+        $sql="update tipamba set dtipamb='".$post["dtipamb"]."',dnetiam='".$post['dnetiam']."',cestado='".$post["cestado"]."',cusuari='".$post['cusuari']."',fusuari=now() where ctipamb='".$post["id"]."'";
+        $db->setQuery($sql);
+        if( $db->executeQuery() ) {
+            if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+            }
+            $db->commitTransaccion();
+            return array('rst'=>'1','msg'=>'TipoAmbiente Actualizado');
+        }else{
+            $db->rollbackTransaccion();
+            return array('rst'=>'3','msg'=>'Error al procesar Query');
+        }
+    }
+
+    public function insertarTipoAmbiente($post){
+       
+        $db=creadorConexion::crear('MySql');
+        $db->iniciaTransaccion();
+        /****verifico que registro no exista******/
+        $sqlVal="SELECT ctipamb FROM tipamba where dtipamb='".$post["dtipamb"]."' limit 1";
+        
+        $db->setQuery($sqlVal);
+        $data=$db->loadObjectList();
+        if(count($data)>0){echo json_encode(array('rst'=>'2','msg'=>'<b>Tipo Ambiente</b> ya existe'));exit();}
+        /********************/         
+        
+        $sql="insert into tipamba(dtipamb,dnetiam,cestado,cusuari,fusuari) values('".$post["dtipamb"]."','".$post["dnetiam"]."','".$post["cestado"]."','".$post['cusuari']."',now())";
+        $db->setQuery($sql);
+        if($db->executeQuery()){
+            if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+            }
+            $db->commitTransaccion();
+            return array('rst'=>'1','msg'=>'TipoAmbiente Ingresado');
+        }else{
+            $db->rollbackTransaccion();
+            return array('rst'=>'3','msg'=>'Error al procesar Query');
+        }   
+    }
+
+    public function JQGridCountTipoAmbiente ( $where ) {
+
+       $db=creadorConexion::crear('MySql');
+        $sql=" SELECT COUNT(*) AS count FROM tipamba WHERE 1=1 ".$where;
+        
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        //var_dump($sql);exit();
+        if( count($data)>0 ){
+            return $data;
+        }else{
+            return array(array('COUNT'=>0));
+        }
+    }
+
+    public function JQGRIDRowsTipoAmbiente ( $sidx, $sord, $start, $limit, $where) {
+        $sql = "SELECT ctipamb,dtipamb,dnetiam,
+            CASE
+                WHEN    cestado='1' THEN 'Activo'
+                WHEN    cestado='0' THEN 'Inactivo'
+                ELSE    ''
+            END AS cestado
+            FROM tipamba 
+            WHERE 1=1 ".$where."
+            ORDER BY  ".$sidx." ".$sord."
+            LIMIT ".$limit." OFFSET ".$start;
+
+        $db=creadorConexion::crear('MySql');    
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();        
+        return $data;
+        
+    }
 }
 ?>
