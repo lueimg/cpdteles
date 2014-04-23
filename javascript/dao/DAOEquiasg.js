@@ -27,7 +27,7 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
-    cargarCarreras_asig: function(fxllena,slct_dest,id_slct) {
+    cargarCarreras_asig: function(id , fxllena,slct_dest,id_slct) {
         $.ajax({
             url: this.url,
             type: 'POST',
@@ -36,7 +36,7 @@ var equivalenciaDAO = {
             data: {
                 comando: this.comando,
                 action: 'cargarCarreras',
-                cinstit: $('#slct_instituto_asig').val(),
+                cinstit: $('#slct_instituto_asig_'+id).val(),
                 
                 cusuari: $('#hd_idUsuario').val(),
                 cfilialx: $('#hd_idFilial').val()
@@ -80,7 +80,7 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
-    cargarCurriculas_asig: function(fxllena,slct_dest,id_slct) {
+    cargarCurriculas_asig: function(id,fxllena,slct_dest,id_slct) {
         $.ajax({
             url: this.url,
             type: 'POST',
@@ -89,8 +89,8 @@ var equivalenciaDAO = {
             data: {
                 comando: this.comando,
                 action: 'cargarCurriculas',
-                cinstit: $('#slct_instituto_asig').val(),
-                ccarrer: $('#slct_carrera_asig').val(),
+                cinstit: $('#slct_instituto_asig_'+id).val(),
+                ccarrer: $('#slct_carrera_asig_'+id).val(),
                 
                 cusuari: $('#hd_idUsuario').val(),
                 cfilialx: $('#hd_idFilial').val()
@@ -134,7 +134,7 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
-    cargarModulos_asig: function(fxllena,slct_dest,id_slct) {
+    cargarModulos_asig: function(id,fxllena,slct_dest,id_slct) {
         $.ajax({
             url: this.url,
             type: 'POST',
@@ -144,7 +144,7 @@ var equivalenciaDAO = {
                 comando: this.comando,
                 action: 'cargarModulos',
                 //cinstit: $('#slct_instituto').val(),
-                ccarrer: $('#slct_carrera_asig').val(),
+                ccarrer: $('#slct_carrera_asig_'+id).val(),
                 
                 cusuari: $('#hd_idUsuario').val(),
                 cfilialx: $('#hd_idFilial').val()
@@ -189,7 +189,7 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
-    cargarCursos_asig: function(fxllena,slct_dest,id_slct) {
+    cargarCursos_asig: function(id, fxllena,slct_dest,id_slct) {
         $.ajax({
             url: this.url,
             type: 'POST',
@@ -199,8 +199,8 @@ var equivalenciaDAO = {
                 comando: this.comando,
                 action: 'cargarCursos',
                 //cinstit: $('#slct_instituto').val(),
-                ccurric: $('#slct_curricula_asig').val(),
-                cmodulo: $('#slct_modulo_asig').val(),
+                ccurric: $('#slct_curricula_asig_'+id).val(),
+                cmodulo: $('#slct_modulo_asig_'+id).val(),
                 
                 cusuari: $('#hd_idUsuario').val(),
                 cfilialx: $('#hd_idFilial').val()
@@ -227,16 +227,16 @@ var equivalenciaDAO = {
                 comando:this.comando,
             	action:'addEquivalencia',
                 post:{
-            	comando:this.comando,
-            	action:'addEquivalencia',
-                ccurric:$('#slct_curricula').val(),
-                cmodulo :$('#slct_modulo').val(),
-                ccurso :$("#slct_curso").val() ,
-                ccurria:$('#slct_curricula_asig').val(),
-                cmoduloa :$('#slct_modulo_asig').val(),
-                ccursoa :$("#slct_curso_asig").val() ,
-                estide :$("#slct_tequi").val() ,
-                cusuari:$('#hd_idUsuario').val(),
+                	comando:this.comando,
+                	action:'addEquivalencia',
+                    ccurric:$('#slct_curricula').val(),
+                    cmodulo :$('#slct_modulo').val(),
+                    ccurso :$("#slct_curso").val() ,
+                    ccurria:$('#slct_curricula_asig').val(),
+                    cmoduloa :$('#slct_modulo_asig').val(),
+                    ccursoa :$("#slct_curso_asig").val() ,
+                    estide :$("#slct_tequi").val() ,
+                    cusuari:$('#hd_idUsuario').val(),
 		cfilialx:$('#hd_idFilial').val()
                 }
             },

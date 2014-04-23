@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $("#nav-mantenimientos").addClass("ui-corner-all active");
     institucionDAO.cargarInstitucionValida(sistema.llenaSelect, "slct_instituto", "");
-    institucionDAO.cargarInstitucionValida(sistema.llenaSelect, "slct_instituto_asig", "");
+    
     //carreraDAO.cargarCarrera(sistema.llenaSelect, "slct_carrera", "");
     
     jQGridEquivalencia.Equivalencia();
@@ -31,26 +31,7 @@ $(document).ready(function() {
     });
     
     
-    $("#slct_instituto_asig").change(function(){
-        equivalenciaDAO.cargarCarreras_asig(sistema.llenaSelect, "slct_carrera_asig", "");
-        limpiarSelect("slct_curso_asig");
-        limpiarSelect("slct_modulo_asig");
-        limpiarSelect("slct_curricula_asig");
-    });
-    $("#slct_carrera_asig").change(function(){
-        equivalenciaDAO.cargarCurriculas_asig(sistema.llenaSelect, "slct_curricula_asig", "");
-        equivalenciaDAO.cargarModulos_asig(sistema.llenaSelect, "slct_modulo_asig", "");
-        limpiarSelect("slct_curso_asig");
-    });
     
-    
-    
-    $("#slct_modulo_asig").change(function(){
-        cargarCursos_asig();
-    });
-    $("#slct_curricula_asig").change(function(){
-        cargarCursos_asig();
-    });
     
     
     $('#frmEquivalencia').dialog({
@@ -59,6 +40,11 @@ $(document).ready(function() {
         modal: true,
         width: 'auto', height: 'auto'
     });
+// TEMPLATES
+// LOS TEMPLATES USADOS SE ENCUENTRAN EN FRMEQUIVALENCIA.PHP
+
+window.templatesHtml = {}
+templatesHtml.nuevoCursoActa =  _.template( $("#TemplateCurso").html() );
 
 });
 
@@ -73,17 +59,17 @@ cargarCursos=function(){
     equivalenciaDAO.cargarCursos(sistema.llenaSelect, "slct_curso", "");   
 }
 
-cargarCursos_asig=function(){
+cargarCursos_asig=function(id){
     
-    var modulo =$("#slct_modulo_asig").val();
-    var curricula =$("#slct_curricula_asig").val();
-    equivalenciaDAO.cargarCursos_asig(sistema.llenaSelect, "slct_curso_asig", "");   
+    var modulo =$("#slct_modulo_asig_"+id).val();
+    var curricula =$("#slct_curricula_asig_"+id).val();
+    equivalenciaDAO.cargarCursos_asig(id,sistema.llenaSelect, "slct_curso_asig_"+id, "");   
 }
 
 add_equivalencia_jqgrid = function() {
     $("select").val("");
-    $('#btnFormEquivalencia').attr('onclick', 'nuevoEquivalencia()');
-    $('#spanBtnFormEquivalencia').html('Guardar');
+    // $('#btnFormEquivalencia').attr('onclick', 'nuevoEquivalencia()');
+    // $('#spanBtnFormEquivalencia').html('Guardar');
     $('#frmEquivalencia').dialog('open');
 }
 
@@ -104,6 +90,33 @@ nuevoEquivalencia = function() {
     //si valida todo envia a insertar persona
 //	personalDAO.InsertarPersonal();
 }
+
+GuardarCambiosEquivalencia = function(){
+    //validar que exista al menos 1
+    var cursosActa = $("#frmEquivalencia #cursosActa select").length;
+    // console.log(cursosActa);
+    if(cursosActa == 0){
+        // console.log('agregar equivalencia');
+        sistema.msjAdvertencia('Agrege al menos un curso de Acta',2500)
+        return false;
+    }
+    //REVISAR SELECTS
+    var selects = $("#frmEquivalencia [id^='slct']");
+    for(var i = 0 ; i <= selects.length ; i++){
+        if( !sistema.requeridoSlct($(selects[i]).attr('id')) ){
+            return false;
+            break;
+        }
+    }
+   
+
+    // mapear todos los select de _asig_id
+    
+   // equivalenciaDAO.addEquivalencia();
+
+
+}
+
 
 
 edit_equivalencia_jqgrid=function(){
@@ -166,6 +179,66 @@ delete_equivalencia_jqgrid = function(){
         sistema.msjAdvertencia('Seleccione <b>Equivalencia</b> a Editar')
     }
 }
+
+
+
+AgregarCurso = function(){
+    var tot=0;
+    var htm=""; 
+    tot = $("#txt_cant_cur").val()*1 + 1;
+    $("#txt_cant_cur").val(tot);
+    $("#cursosActa").append(templatesHtml.nuevoCursoActa({id:tot}));
+
+    $('#frmEquivalencia').dialog("option", "position", "center");
+    //SE AGREGAN LOS DATOS
+    institucionDAO.cargarInstitucionValida(sistema.llenaSelect, "slct_instituto_asig_"+tot, "");
+
+    $("#slct_instituto_asig_"+tot).change(function(){
+        equivalenciaDAO.cargarCarreras_asig(tot ,sistema.llenaSelect, "slct_carrera_asig_"+tot, "");
+        limpiarSelect("slct_curso_asig_"+tot);
+        limpiarSelect("slct_modulo_asig_"+tot);
+        limpiarSelect("slct_curricula_asig_"+tot);
+    });
+    $("#slct_carrera_asig_"+tot).change(function(){
+        equivalenciaDAO.cargarCurriculas_asig(tot,sistema.llenaSelect, "slct_curricula_asig_"+tot, "");
+        equivalenciaDAO.cargarModulos_asig(tot,sistema.llenaSelect, "slct_modulo_asig_"+tot, "");
+        limpiarSelect("slct_curso_asig_"+tot);
+    });
+    
+    $("#slct_modulo_asig_"+tot).change(function(){
+        cargarCursos_asig(tot);
+    });
+    $("#slct_curricula_asig_"+tot).change(function(){
+        cargarCursos_asig(tot);
+    });
+
+
+}
+
+
+RemoverCurso = function (i){
+    $(i).parent().parent().parent().remove();
+    $('#frmEquivalencia').dialog("option", "position", "center");
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     

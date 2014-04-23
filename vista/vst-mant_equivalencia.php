@@ -14,7 +14,8 @@
         <script type="text/javascript" src="../javascript/includes/jquery-ui-1.8.18.custom.min.js"></script>
         <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/i18n/grid.locale-es.js" ></script>
         <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/jquery.jqGrid.min.js" ></script>
-
+        <script type="text/javascript" src="../javascript/includes/underscore.js"></script>
+        
         <script type="text/javascript" src="../javascript/sistema.js"></script>
         <script type="text/javascript" src="../javascript/templates.js"></script>
 

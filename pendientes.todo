@@ -1,0 +1,12 @@
+Pendientes:
+ ✔ Fechas en semanaca  :: fecha de gracia y fecha extemporanea @done (14-04-22 23:15)
+ ✔ validacion  fecha matricula <= fecha gracia < fecha extemporanea @done (14-04-22 23:15)
+ Equivalencias:
+  ✔ cambiar primary key a int autoincremental @done (14-04-22 23:42)
+  ✔ Agregar columna grupo a la tabla de equivalencia @done (14-04-22 23:43)
+  ☐ Insertar Grupo 
+  ☐ Listar grupo , agrupado y concatenado todos las actas
+  ☐ Filtro dentro del group_concat con find in set o algo asi
+  ☐ Editar Grupo
+  ☐ Eliminar Grupo
+ Reporte de Horarios:
