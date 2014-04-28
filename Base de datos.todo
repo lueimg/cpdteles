@@ -1,0 +1,18 @@
+cambien int autoincre
+ctipamb  int autoincre
+ctipamb -> se adicionó cestado
+horprop tiene cambien act.
+horprop -> se adicionó cestado.
+
+tietolm -> se adicionó cestado.
+horprop -> se cambio el indice autoincrement
+tietolm -> se cambio el indice autoincrement
+profesm -> se cambio el indice autoincrement
+testpro -> se cambio por cestado
+cuprprp -> se actualizó el cprofes a int
+decomap -> cestado por default es 1
+
+se generó nueva tabla equisag indica las equivalencia de los cursos con cursos para actas
+para semestre se adicionaron 2 fechas , fechgra y fechext.
+
+
