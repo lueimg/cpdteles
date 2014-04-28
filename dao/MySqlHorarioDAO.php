@@ -76,5 +76,77 @@ class MySqlHorarioDAO{
         }
     }
 
+    public function guardarHorarios($array){
+        $db=creadorConexion::crear('MySql');
+
+        $db->iniciaTransaccion();
+        $sql="UPDATE cuprprp
+              SET cprofes='".$array['cprofes']."'
+              ,finipre='".$array['finipre']."'
+              ,ffinpre='".$array['ffinpre']."'
+              ,finivir='".$array['finivir']."'
+              ,ffinvir='".$array['ffinvir']."'
+              ,cusuari='".$array['cusuari']."'
+              ,fusuari=now()
+              WHERE ccuprpr='".$array['ccuprpr']."'";
+
+            $db->setQuery($sql);
+            if(!$db->executeQuery()){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+            }
+            if(!MySqlTransaccionDAO::insertarTransaccion($sql,$array['cfilialx']) ){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sql);exit();
+            }
+
+        $datos=explode("^^",$array['datos']);
+        $detdatact=explode("|",$datos[0]);
+        for($i=0;$i<count($detdatact);$i++){
+            $dd=explode("_",$detdatact[$i]);
+
+            $sqlinsert="UPDATE horprop SET
+                        cdia='".$dd[0]."',
+                        chora='".$dd[1]."',
+                        ctipcla='".$dd[2]."',
+                        cambien='".$dd[4]."',
+                        fusuari=NOW(),
+                        cusuari='".$array['cusuari']."',
+                        ctietol='".$dd[5]."',
+                        cestado='".$dd[6]."'
+                        WHERE chorpro='".$dd[7]."'";
+            $db->setQuery($sqlinsert);
+            if(!$db->executeQuery()){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sqlinsert);exit();
+            }
+            if(!MySqlTransaccionDAO::insertarTransaccion($sqlinsert,$array['cfilialx']) ){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sqlinsert);exit();
+            }
+        }
+
+        $detdatins=explode("|",$datos[1]);
+        for($i=0;$i<count($detdatins);$i++){
+            $dd=explode("_",$detdatins[$i]);
+
+            $sqlinsert="INSERT INTO horprop (cdia,chora,ccurpro,ctipcla,cambien,fusuari,cusuari,ctietol,cestado)
+                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1')";
+            $db->setQuery($sqlinsert);
+            if(!$db->executeQuery()){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sqlinsert);exit();
+            }
+            if(!MySqlTransaccionDAO::insertarTransaccion($sqlinsert,$array['cfilialx']) ){
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sqlinsert);exit();
+            }
+        }
+
+        $db->commitTransaccion();
+        return array('rst'=>'1','msj'=>'Cambios guardados correctamente');exit();                
+            
+    }
+
 }
 ?>

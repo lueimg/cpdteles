@@ -103,6 +103,43 @@ var horarioDAO={
             error: this.msjErrorAjax
         });
     },
+    guardarHorarios: function(d){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'horario',
+                accion:'guardarHorarios',
+                datos:d,
+                ccuprpr:$("#ccuprpr").val(),
+                cprofes:$('#cprofes').val(),
+                finipre:$("#txt_fecha_ini_pre").val(),
+                ffinpre:$("#txt_fecha_fin_pre").val(),
+                finivir:$("#txt_fecha_ini_vir").val(),
+                ffinvir:$("#txt_fecha_fin_vir").val(),
+                cusuari:$('#hd_idUsuario').val(),
+                cfilialx:$('#hd_idFilial').val()
+            },
+            beforeSend : function ( ) {
+                sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                sistema.cierraCargando();
+                if(obj.rst=='1'){
+                    sistema.msjOk(obj.msj); 
+                    var idg=$("#lista_grupos .ui-state-highlight").attr('id');
+                    grupoAcademicoDAO.cargarCursosAcademicos(VisualizarCursosHTML,idg.substring(4).split("-").join(","));
+                }else if(obj.rst=='2'){
+                    sistema.msjAdvertencia(obj.msj,3000);
+                }else{
+                    sistema.msjErrorCerrar(obj.msj);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },  
 	msjErrorAjax:function(){
         sistema.msjErrorCerrar('Error General, pongase en contacto con Sistemas');
     }

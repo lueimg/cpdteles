@@ -56,6 +56,13 @@ class MySqlConexion {
         }
         return true;
     }
+    public function executeQuery_returnid(){
+        if(!($this->resource = $this->conexion->query($this->sql))){
+            return false;
+        }
+        return $this->conexion->insert_id;
+    }
+
     public function alter(){
             if(!($this->resource = mysqli_query($this->sql, $this->conexion))){
                     return false;

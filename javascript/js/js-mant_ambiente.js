@@ -24,6 +24,7 @@ add_ambiente_jqgrid=function(){
 	$("#id_filial_edit").css("display","none");
 	$("#id_filial").css("display","");
 	$('#frmAmbiente input[type="text"],#frmAmbiente select').val('');
+	$("#slct_filial").multiselect("refresh");
 	$('#frmAmbiente input[type="text"],#frmAmbiente select').removeAttr('disabled');	
     $('#id_ambiente').val("");
 	

@@ -38,7 +38,28 @@ class servletAmbiente extends controladorComandos{
 				   $post["cusuari"] =(trim($_POST['cusuari']));
 				   
                     echo json_encode($daoAmbiente->insertarAmbiente($post));
-                    break;				
+                    break;	
+                case 'actualizarTipoAmbiente':
+                   $post = array();				   
+                   $post["id"] = (trim($_POST['id']));
+                   $post["dtipamb"]=(trim($_POST['dtipamb']));
+				   $post["dnetiam"] =(trim($_POST['dnetiam']));
+				   $post["cestado"]=(trim($_POST['cestado']));
+				   $post["cfilialx"] =(trim($_POST['cfilialx']));
+				   $post["cusuari"] =(trim($_POST['cusuari']));
+                    
+                    echo json_encode($daoAmbiente->actualizarTipoAmbiente($post));
+                    break;
+                case 'insertarTipoAmbiente':
+                   $post = array();
+                   $post["dtipamb"]=(trim($_POST['dtipamb']));
+				   $post["dnetiam"] =(trim($_POST['dnetiam']));
+				   $post["cestado"]=(trim($_POST['cestado']));
+				   $post["cfilialx"] =(trim($_POST['cfilialx']));
+				   $post["cusuari"] =(trim($_POST['cusuari']));
+                    
+                    echo json_encode($daoAmbiente->insertarTipoAmbiente($post));
+                    break;			
                 default:
                     echo json_encode(array('rst'=>3,'msg'=>'Action no encontrado'));
             endswitch;
@@ -127,6 +148,63 @@ class servletAmbiente extends controladorComandos{
 								$data[$i]['ntotmaq'],
 								$data[$i]['estado'],
 								$data[$i]['cestado']								
+								)
+							)
+						);
+					}
+					$response["rows"]=$dataRow;
+					echo json_encode($response);
+				break;
+				case 'jqgrid_tipo_ambiente':
+					$page=$_GET["page"];
+					$limit=$_GET["rows"];
+					$sidx=$_GET["sidx"];
+					$sord=$_GET["sord"];
+		
+					$where="";
+					$param=array();
+		
+					if( isset($_GET['dtipamb']) ) {
+						if( trim($_GET['dtipamb'])!='' ) {
+							$where.=" AND dtipamb LIKE '%".trim($_GET['dtipamb'])."%' ";
+						}
+					}
+					
+					if( isset($_GET['dnetiam']) ) {
+						if( trim($_GET['cmodali'])!='' ) {
+							$where.=" AND dnetiam LIKE '%".trim($_GET['dnetiam'])."%' ";
+						}
+					}
+					
+                    if( isset($_GET['cestado']) ) {
+						if( trim($_GET['cestado'])!='' ) {
+							$where.=" AND cestado =  '".trim($_GET['cestado'])."' ";
+						}
+					}
+					
+					if(!$sidx)$sidx=1 ; 
+		
+					$row=$daoAmbiente->JQGridCountTipoAmbiente( $where );
+					$count=$row[0]['count'];
+					if($count>0) {
+							$total_pages=ceil($count/$limit);
+					}else {
+							$limit=0;
+							$total_pages=0;
+					}
+		
+					if($page>$total_pages) $page=$total_pages;
+		
+					$start=$page*$limit-$limit;
+					
+					$response=array("page"=>$page,"total"=>$total_pages,"records"=>$count);
+					$data=$daoAmbiente->JQGRIDRowsTipoAmbiente($sidx, $sord, $start, $limit, $where);
+					$dataRow=array();
+					for($i=0;$i<count($data);$i++){
+						array_push($dataRow, array("id"=>$data[$i]['ctipamb'],"cell"=>array(								
+								$data[$i]['dtipamb'],
+								$data[$i]['dnetiam'],
+								$data[$i]['cestado']
 								)
 							)
 						);

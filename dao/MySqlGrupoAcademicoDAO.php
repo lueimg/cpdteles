@@ -495,8 +495,8 @@ class MySqlGrupoAcademicoDAO{
   }
 
   public function cargarHorarioProgramado($array){  		
-		$sql="	SELECT h.`chorpro`,h.`ccurpro`,h.ctietol,h.`chora`,h.`cdia`,a.`ctipamb`,h.`cambien`,d.`dnomdia` AS dia,
-				CONCAT(ho.`hinici`,'-',ho.`hfin`) AS hora,IF(ctipcla='T','Teorico','Practica') AS tipo,
+		$sql="	SELECT h.`chorpro`,h.`ccurpro`,h.ctietol,h.ctipcla,h.`chora`,h.`cdia`,a.`ctipamb`,h.`cambien`,d.`dnomdia` AS dia,
+				CONCAT(ho.`hinici`,'-',ho.`hfin`) AS hora,IF(h.ctipcla='T','Teorico','Practica') AS tipo,
 				ti.`mintol`,t.`dtipamb`,a.`numamb`
 				FROM horprop h
 				INNER JOIN diasm d ON (d.`cdia`=h.`cdia`)
@@ -504,7 +504,7 @@ class MySqlGrupoAcademicoDAO{
 				INNER JOIN ambienm a ON (a.`cambien`=h.`cambien`)
 				INNER JOIN tipamba t ON (t.`ctipamb`=a.`ctipamb`)
 				INNER JOIN tietolm ti ON (ti.`ctietol`=h.`ctietol`)
-				WHERE h.ccuprpr='".$array['ccuprpr']."'";
+				WHERE h.ccurpro='".$array['ccuprpr']."'";
         $db=creadorConexion::crear('MySql');
 
         $db->setQuery($sql);
