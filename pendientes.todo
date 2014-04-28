@@ -3,7 +3,8 @@ REPORTE DE HORARIOS DE PROGRAMACIÓN:
      ☐ Buscar buscar grupos académicos usar modelo de listado de http://localhost/cpdteles/vista/vst-horario.php . 
      ☐ Solo usar el código para visualizar.  En vez del boton que tiene poner un check para seleccionar grupos.  Debajo de los filtro poner un boton "Exportar" valida que seleccione almenos 1 registro a cargar.
      ☐ Generar Query para el horario, debe tener modelo de horarios de la telesup. El nombre del docente en la parte sup. derecho.
-       
+
+MANTENIMIENTO DE DOCENTE:       
  ☐ Mantenimiento de Docente
      ☐ EL mantenimiento consiste en seleccionar una persona (usa grid paa buscar persona solo el boton del buscador, existe ya modulo echo solo copiar. y cambiar el elevento de seleccionar para copiar el id)  Ver ejemplo de http://localhost/cpdteles/vista/vst-horario.php . Ahí selecciono a un docente ese caso sería para una persona.
      ☐ Validar que la persona(el docente solo se registra 1 vez...) ya que filial e institución solo es referencia donde el docente se ubica, pero puede ser seleccionado a nivel nacional. por eso solo se valida la persona que sea única.
