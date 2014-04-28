@@ -401,9 +401,9 @@ where c.ccurric = '$post'";
         }   
     }
     
-    public function JQGridCountEquivalencia($where) {
+    public function JQGridCountEquivalencia($where = '' , $having= '',$fields = '') {
         $db = creadorConexion::crear('MySql');
-        $sql = " SELECT COUNT(*) AS count 
+        $sql = " SELECT COUNT(*) AS count " . $fields .  "
                 FROM equisag e
                 inner join curricm c on c.ccurric = e.ccurric
                 inner join curricm ca on ca.ccurric = e.ccurria
@@ -412,12 +412,13 @@ where c.ccurric = '$post'";
                 left join moduloa m on m.cmodulo = e.cmodulo
                 left join moduloa ma on ma.cmodulo = e.cmoduloa
                 inner join carrerm car on car.ccarrer = c.ccarrer
-                where e.cestado  = 1 
-                group by e.gruequi " . $where;
+                where e.cestado  = 1 " . $where
+                .  " group by e.gruequi " 
+                .  " having 1 =1  " . $having;
 
         $db->setQuery($sql);
         $data = $db->loadObjectList();
-        // print($sql);exit();
+          // print($sql);exit();
         if (count($data) > 0) {
             return $data;
         } else {
@@ -425,7 +426,7 @@ where c.ccurric = '$post'";
         }
     }
 
-    public function JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where) {
+    public function JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where = '' , $having= '',$fields = '') {
         $sql = "select 
 e.cequisag,
 c.ccurric,
@@ -452,8 +453,11 @@ car.ccarrer carrer
                 inner join carrerm car on car.ccarrer = c.ccarrer
                 where e.cestado  = 1 
                 group by e.gruequi "
-                . $where . " ORDER BY  " . $sidx . " " . $sord . " LIMIT " . $limit . " OFFSET " . $start;
-        // print $sql;    
+                . $where 
+                . " having 1 =1  " . $having
+                . " ORDER BY  " . $sidx . " " . $sord 
+                . " LIMIT " . $limit . " OFFSET " . $start;
+           // print $sql;    
         $db = creadorConexion::crear('MySql');
 
         $db->setQuery($sql);

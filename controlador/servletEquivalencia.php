@@ -76,46 +76,45 @@ class servletEquivalencia extends controladorComandos {
 
         $where = "";
         $param = array();
-
+        $having = "";
+        $fields = "";
         if (isset($_GET['dtitulo'])) {
           if (trim($_GET['dtitulo']) != '') {
-            $where.=" AND c.dtitulo LIKE '%" . trim($_GET['dtitulo']) . "%' ";
+            $having.=" AND c.dtitulo LIKE '%" . trim($_GET['dtitulo']) . "%' ";
+            $fields .= " ,c.dtitulo "; 
           }
         }
 
         if (isset($_GET['dciclo'])) {
           if (trim($_GET['dciclo']) != '') {
-            $where.=" AND m.dmodulo like '%" . trim($_GET['dciclo']) . "%' ";
+            $having.=" AND m.dmodulo like '%" . trim($_GET['dciclo']) . "%' ";
+            $fields .= ' , m.dmodulo ';
           }
         }
 
         if (isset($_GET['dcurso'])) {
           if (trim($_GET['dcurso']) != '') {
-            $where.=" AND cu.dcurso like '%" . trim($_GET['dcurso']) . "%' ";
+            $having.=" AND cu.dcurso like '%" . trim($_GET['dcurso']) . "%' ";
+            $fields .= ' , cu.dcurso ';
+
           }
         }
         
-        if (isset($_GET['dtituloa'])) {
-          if (trim($_GET['dtituloa']) != '') {
-            $where.=" AND ca.dtitulo LIKE '%" . trim($_GET['dtituloa']) . "%' ";
+        if (isset($_GET['titulos'])) {
+          if (trim($_GET['titulos']) != '') {
+            $having.=" AND titulos LIKE '%" . trim($_GET['titulos']) . "%' ";
+            $fields .=  " , GROUP_CONCAT(  CONCAT_WS('   ',ca.dtitulo, ma.dmodulo , cua.dcurso )  SEPARATOR '<br>') titulos ";
+
           }
         }
 
-        if (isset($_GET['dcicloa'])) {
-          if (trim($_GET['dcicloa']) != '') {
-            $where.=" AND ma.dmodulo like '%" . trim($_GET['dcicloa']) . "%' ";
-          }
-        }
-
-        if (isset($_GET['dcursoa'])) {
-          if (trim($_GET['dcursoa']) != '') {
-            $where.=" AND cua.dcurso like '%" . trim($_GET['dcursoa']) . "%' ";
-          }
-        }
+       
         
         if (isset($_GET['estide'])) {
           if (trim($_GET['estide']) != '') {
-            $where.=" AND estide = '" . trim($_GET['estide']) . "' ";
+            $having.=" AND cestide = '" . trim($_GET['estide']) . "' ";
+            $fields .= ' , estide cestide';
+
           }
         }
         
@@ -123,7 +122,7 @@ class servletEquivalencia extends controladorComandos {
         if (!$sidx)
           $sidx = 1;
 
-        $row = $daoEquivalencia->JQGridCountEquivalencia($where);
+        $row = $daoEquivalencia->JQGridCountEquivalencia($where,$having,$fields);
         $count = $row[0]['count'];
         if ($count > 0) {
           $total_pages = ceil($count / $limit);
@@ -138,7 +137,7 @@ class servletEquivalencia extends controladorComandos {
         $start = $page * $limit - $limit;
 
         $response = array("page" => $page, "total" => $total_pages, "records" => $count);
-        $data = $daoEquivalencia->JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where);
+        $data = $daoEquivalencia->JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where, $having,$fields);
         $dataRow = array();
         for ($i = 0; $i < count($data); $i++) {
 
