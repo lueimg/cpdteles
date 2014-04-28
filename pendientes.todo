@@ -1,12 +1,14 @@
-Pendientes:
- ✔ Fechas en semanaca  :: fecha de gracia y fecha extemporanea @done (14-04-22 23:15)
- ✔ validacion  fecha matricula <= fecha gracia < fecha extemporanea @done (14-04-22 23:15)
- Equivalencias:
-  ✔ cambiar primary key a int autoincremental @done (14-04-22 23:42)
-  ✔ Agregar columna grupo a la tabla de equivalencia @done (14-04-22 23:43)
-  ☐ Insertar Grupo 
-  ☐ Listar grupo , agrupado y concatenado todos las actas
-  ☐ Filtro dentro del group_concat con find in set o algo asi
-  ☐ Editar Grupo
-  ☐ Eliminar Grupo
- Reporte de Horarios:
+REPORTE DE HORARIOS DE PROGRAMACIÓN:
+ ☐ Generar Reporte de Horarios (PDF)
+     ☐ Buscar buscar grupos académicos usar modelo de listado de http://localhost/cpdteles/vista/vst-horario.php . 
+     ☐ Solo usar el código para visualizar.  En vez del boton que tiene poner un check para seleccionar grupos.  Debajo de los filtro poner un boton "Exportar" valida que seleccione almenos 1 registro a cargar.
+     ☐ Generar Query para el horario, debe tener modelo de horarios de la telesup. El nombre del docente en la parte sup. derecho.
+       
+ ☐ Mantenimiento de Docente
+     ☐ EL mantenimiento consiste en seleccionar una persona (usa grid paa buscar persona solo el boton del buscador, existe ya modulo echo solo copiar. y cambiar el elevento de seleccionar para copiar el id)  Ver ejemplo de http://localhost/cpdteles/vista/vst-horario.php . Ahí selecciono a un docente ese caso sería para una persona.
+     ☐ Validar que la persona(el docente solo se registra 1 vez...) ya que filial e institución solo es referencia donde el docente se ubica, pero puede ser seleccionado a nivel nacional. por eso solo se valida la persona que sea única.
+     ☐ En caso den de baja al docente visualizarlo  como estado de baja, no excluirlo de la lista como otros casos donde el estado es 0. ahi si quiere cambian el estado a 1 porque no se registrará mas de 1 vez a un docente. 
+     ☐ Al editar solo pueden modificarle su filial e institucion de ubicación. para editar disabled a persona, no habilitar el boton de buscador. 
+
+
+

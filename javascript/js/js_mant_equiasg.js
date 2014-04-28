@@ -113,17 +113,6 @@ GuardarCambiosEquivalencia = function(){
         }
     }
 
-
-    //VALIDAR QUE NO SE REPITAN LOS MISMOS CURSOS
-    var vals = _.map($("[id*=slct_curso_asig_]") , function(i){ return $(i).val() });
-    var vals_total = vals.length;
-    var uniq = _.uniq(vals)
-    var uniq_total = uniq.length;
-    if( uniq_total < vals_total){
-        sistema.msjAdvertencia('Los Cursos Actas a actualizar deben ser diferentes',2500)
-        return false;
-    }
-
     // mapear todos los select de _asig_id
     // var referencia = _.map($("#cursoReferencia select") , function(i){ return $(i).val() });
     // var dataReferencia = referencia.join("|");
