@@ -304,6 +304,8 @@ $codigopago="C";
 		$db->setQuery($sqlcropag);	
 		$cropag=$db->loadObjectList();
 		$fecha_fin_cuota1="";
+		$listacodigos="";// para almacenar en caso el monto pension sea 0	
+
 			foreach($cropag as $r){
 				if($data['testalu']!="RE"){
 					$ccropag=$db->generarCodigo('cropaga','ccropag',11,$data['cusuari']);
@@ -317,7 +319,7 @@ $codigopago="C";
 						$db->rollbackTransaccion();
 						return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sql);exit();
 					}
-				}
+				}				
 				
 				if($r['ccuota']==1){
 				$fecha_fin_cuota1=$r['fvencim'];
@@ -326,11 +328,11 @@ $codigopago="C";
 				$monto_pension=$data['monto_concepto_pension'];
 					if($data['ctaprom']>=$r["ccuota"]){
 					$monto_pension=($data['monto_pago_pension']+$data['monto_deuda_pension']);
-					}			
-				$listacodigos="";// para almacenar en caso el monto pension sea 0	
+					}				
 				$codrec=$db->generarCodigo('recacap','crecaca',13,$data['cusuari']);
-					if($monto_pension==0){
-					$listacodigos+="'".$codrec."',";	
+				
+					if($monto_pension==0){						
+					$listacodigos.="'".$codrec."',";	
 					}
 				$sqlinsrecpen="INSERT INTO recacap (crecaca,cfilial,cdocpag,tdocpag,cperson,cingalu,ccuota,nmonrec,fvencim,tpagant,dmodpag,tpagcaj,nvouche,nctabco,cconcep,cgruaca,tgruaca,cestini,testfin,festini,festfin,cusuari,fusuari,ttiptra,tpago,cfut,cestpag) VALUES('".$codrec."','".$data['cfilial']."','','','".$data['cperson']."','".$cingalu."','".$r['ccuota']."','".$monto_pension."','".$r['fvencim']."','A','C','E','','','".$data['cconcep_pension']."','".$cgruaca."','2','P','P','".$r['fvencim']."','".$r['fvencim']."','".$data['cusuari']."',now(),'I','P','','P')";
 				$db->setQuery($sqlinsrecpen);
@@ -343,7 +345,7 @@ $codigopago="C";
 						return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sqlinsrecpen);exit();
 					}
 				}
-			}
+			}			
 		
 		/*///////////////////INSCRIPCION////////////////////////*/	
 		if($data['tipo_documento_ins']=="B"){
