@@ -46,6 +46,13 @@ class servletEquivalencia extends controladorComandos {
 
         echo json_encode($daoEquivalencia->EditarEquivalencia($post));
         break;
+      case 'GetInstitucionyCarrera':
+        //$post = array();
+        $post = $_POST['ccurric'];
+        //$post["ccarrer"] = (trim($_POST['ccarrer']));
+
+        echo json_encode($daoEquivalencia->GetInstitucionyCarrera($post));
+        break;
       case 'EliminarEquivalencia':
         //$post = array();
         $post = $_POST['post'];
@@ -134,25 +141,38 @@ class servletEquivalencia extends controladorComandos {
         $data = $daoEquivalencia->JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where);
         $dataRow = array();
         for ($i = 0; $i < count($data); $i++) {
-          array_push($dataRow, array("id" => $data[$i]['cequisag'], "cell" => array(
+
+          /*
+e.cequisag,
+c.ccurric,
+c.dtitulo,
+cu.ccurso,
+cu.dcurso,
+m.cmodulo cciclo,
+m.dmodulo dciclo,
+GROUP_CONCAT(  CONCAT_WS('~',ca.ccurric, ma.cmodulo , cua.ccurso )  SEPARATOR ',') codigos ,
+GROUP_CONCAT(  CONCAT_WS('~',ca.dtitulo, ma.dmodulo , cua.dcurso )  SEPARATOR '<br>') titulos,
+e.gruequi grupo,
+IF(estide = 'r','Regular','Irregular') estide,
+estide cestide,
+car.cinstit inst,
+car.ccarrer carrer
+
+          */
+          array_push($dataRow, array("id" => $data[$i]['grupo'], "cell" => array(
                   $data[$i]['dtitulo'],
                   $data[$i]['ccurric'],
                   $data[$i]['dciclo'],
                   $data[$i]['cciclo'],
                   $data[$i]['dcurso'],
                   $data[$i]['ccurso'],
-                  $data[$i]['dtituloa'],
-                  $data[$i]['ccurrica'],
-                  $data[$i]['dcicloa'],
-                  $data[$i]['ccicloa'],
-                  $data[$i]['dcursoa'],
-                  $data[$i]['ccursoa'],
+                  $data[$i]['titulos'],
+                  $data[$i]['codigos'],
                   $data[$i]['estide'],
                   $data[$i]['cestide'],
                   $data[$i]['inst'],
                   $data[$i]['carrer'],
-                  $data[$i]['insta'],
-                  $data[$i]['carrera'],
+                  $data[$i]['grupo'],
               )
                   )
           );

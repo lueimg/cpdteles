@@ -38,6 +38,27 @@ class MySqlEquivalenciaDAO {
         }
         
     }
+
+     public function GetInstitucionyCarrera($post) {
+        $db = creadorConexion::crear('MySql');
+        
+        /*         * **verifico que registro no exista***** */
+        $sqlVal = " select c.ccurric,
+car.cinstit,
+car.ccarrer 
+from curricm c 
+inner join carrerm car on car.ccarrer = c.ccarrer
+where c.ccurric = '$post'";
+        $db->setQuery($sqlVal);
+        $data = $db->loadObjectList();
+
+        if (count($data) > 0) {
+            return array('rst'=>'1','msj'=>'Datos cargados','data'=>$data);
+        }else{
+            return array('rst'=>'2','msj'=>'No existen datos','data'=>$data,'sql'=>$sqlVal);
+        }
+        
+    }
     
     public function cargarCurriculas($post) {
         $db = creadorConexion::crear('MySql');
@@ -78,95 +99,285 @@ class MySqlEquivalenciaDAO {
         $db=creadorConexion::crear('MySql');
         $db->iniciaTransaccion();
         /****verifico que registro no exista******/
-        $sqlVal="SELECT cequisag 
-				 FROM equisag 
-				 WHERE ccurric='".$post["ccurric"]."' 
-				   And ccurso ='".$post["ccurso"]."'
-				   And cmodulo ='".$post["cmodulo"]."'
-				   And ccurria   ='".$post["ccurria"]."'
-				   And ccursoa='".$post["ccursoa"]."'
-				   And cmodulo  ='".$post["cmodulo"]."'
-				   AND estide='".$post["estide"]."' and cestado = 1 limit 1";
+        
+		$actas  = $post["actas"];
+        $actas_array = explode('^', $actas);
+		// print json_encode($actas_array);
+		// exit();
+        $actas_cantidad = count($actas_array);
+
+        //ARMANDO FIND IN SET
+        $find = "";
+        foreach ($actas_array as $value) {
+        	# code...
+        	$data = explode("|", $value);
+        	$filtro = $data[2]."-".$data[3]."-".$data[4];
+        	$find .= " and FIND_IN_SET('$filtro',codigos) > 0 ";
+
+        }
+
+        //ARMANDO QUERY
+        $sqlVal = "
+		select 
+				e.cequisag,
+				c.ccurric,
+				c.dtitulo,
+				cu.ccurso,
+				cu.dcurso,
+				m.cmodulo cciclo,
+				m.dmodulo dciclo,
+				count(*) cant,
+				GROUP_CONCAT(  CONCAT_WS('-',ca.ccurric, ma.cmodulo , cua.ccurso )  SEPARATOR ',') codigos ,
+				GROUP_CONCAT(  CONCAT_WS('		',ca.dtitulo, ma.dmodulo , cua.dcurso )  SEPARATOR '<br>') titulos,
+				e.gruequi grupo,
+				IF(estide = 'r','Regular','Irregular') estide,
+				estide cestide,
+				car.cinstit inst,
+				car.ccarrer carrer
+
+                FROM equisag e
+                inner join curricm c on c.ccurric = e.ccurric
+                inner join curricm ca on ca.ccurric = e.ccurria
+                inner join cursom cu on cu.ccurso = e.ccurso
+                inner join cursom cua on cua.ccurso = e.ccursoa
+                left join moduloa m on m.cmodulo = e.cmodulo
+                left join moduloa ma on ma.cmodulo = e.cmoduloa
+                inner join carrerm car on car.ccarrer = c.ccarrer
+                where e.cestado  = 1 and e.estide = '". $post["estide"] ."'
+                group by e.gruequi 
+				having cant  = $actas_cantidad 
+				 " . $find ;
+
+		// print $sqlVal;
+		// exit();
         $db->setQuery($sqlVal);
         $data=$db->loadObjectList();
 		
-        if(count($data)>0){echo json_encode(array('rst'=>'2','msj'=>'<b>Equivalencia</b> ya existe'));exit();}
+        if(count($data)>0){echo json_encode(array('rst'=>'2','msj'=>'<b>Registro de equivalencia ya existe</b> ya existe'));exit();}
         /********************/	
-		$sqlver1="SELECT RIGHT(CONCAT('000000',CONVERT( IFNULL(MAX(cequisag),'0')+1, CHAR)),9) As cequisag
-				  FROM equisag";
-		$db->setQuery($sqlver1);
-		$cequisag=$db->loadObjectList();	 
-		
-        $sql="INSERT INTO equisag (cequisag, ccurric, ccurso, cmodulo , ccurria, ccursoa, cmoduloa, estide,cestado, cusuari, fusuari, cusuariu, fusuariu) 
-			  VALUES	('".$cequisag[0]['cequisag']."'
-						,'".$post["ccurric"]."'
-						,'".$post["ccurso"]."'
-						,'".$post["cmodulo"]."'
-						,'".$post["ccurria"]."'
-						,'".$post["ccursoa"]."'
-						,'".$post["cmoduloa"]."'
-						,'".$post["estide"]."'
-						,'1'
-						,'".$post["cusuari"]."'
-						,now()"."
-						,'".$post["cusuari"]."'
-						,now())";
+		 
+        //RECEPCION DE DATA
+        $actas  = $post["actas"];
+        $actas_array = explode('^', $actas);
+        $inserts_ids = array();
+        foreach ($actas_array as $acta) {
+            # code...
+            $data_array = explode("|", $acta);
+            $sql = " INSERT INTO equisag set "
+                 ." ccurric = '". $post["ccurric"] ."'" 
+                 ." ,ccurso = '". $post["ccurso"] ."'" 
+                 ." ,cmodulo = '". $post["cmodulo"] ."'" 
+                 ." ,gruequi = '". 0 ."'" 
+                 ." ,ccurria = '". $data_array[2] ."'" 
+                 ." ,cmoduloa = '".$data_array[3] ."'" 
+                 ." ,ccursoa = '". $data_array[4] ."'" 
+                 ." ,estide = '". $post["estide"] ."'" 
+                 ." ,cestado = '". 1 ."'" 
+                 ." ,cusuari = '". $post["cusuari"] ."'" 
+                 ." ,fusuari = now() " 
+                 ." ,cusuariu = '". $post["cusuari"] ."'" 
+                 ." ,fusuariu = now() " 
+            ;
+            // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql);
+            // $sql = "INSERT INTO equisag (ccurric,ccurso,cmodulo,gruequi,ccurria,ccursoa,cmoduloa,estide,cusuari,fusuari,cusuariu,fusuariu) 
+            //                 values( '". $post["ccurric"] ."' ,'". $post["ccurso"] ."','". $post["cmodulo"] ."',0, '". $data_array[2] ."','". $data_array[3] ."'
+            //                     ,'". $data_array[4] ."','". $post["estide"] ."',1,'". $post["cusuari"] ."')";
+
+            $db->setQuery($sql);
+            
+            if($id = $db->executeQuery_returnid()){
+                if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+                    $db->rollbackTransaccion();
+                    return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+                }
+
+                // $db->commitTransaccion();
+                // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql,'id'=>$id);
+                $inserts_ids[] = $id; // GUARDA LOS IDS REGISTRADOS
+
+            }else{
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al procesar Query , no retorno id','sql'=>$sql);
+            }// FIN EXECUTE QUERY
+
+
+            
+
+        }// FIN FOREACH
+        
+        // $db->commitTransaccion();
+        // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql);
+
+        $first_id = $inserts_ids[0];
+        $updates_ids = implode(",", $inserts_ids);
+        $sql = "UPDATE equisag set gruequi = ". $first_id . " where cequisag in ($updates_ids) ";
         $db->setQuery($sql);
-		
+        
         if($db->executeQuery()){
-			if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
-				$db->rollbackTransaccion();
-				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
-			}
-			$db->commitTransaccion();
-            return array('rst'=>'1','msj'=>'Equivalencia Ingresada','sql'=>$sql);
+            if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+             $db->rollbackTransaccion();
+             return array('rst'=>'3','msj'=>'Error al actualizar Datos','sql'=>$sql);exit();
+            }
+            $db->commitTransaccion();
+            return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql,'ids'=>$inserts_ids);
         }else{
-			$db->rollbackTransaccion();
-            return array('rst'=>'3','msj'=>'Error al procesar Query','sql'=>$sql);
-        }   
+            $db->rollbackTransaccion();
+            return array('rst'=>'3','msj'=>'Error al procesar Query updates','sql'=>$sql);
+         } 
+
+
+
+
     }
+
+
+
     
     public function EditarEquivalencia($post){
         $db=creadorConexion::crear('MySql');
         $db->iniciaTransaccion();
         /****verifico que registro no exista******/
-        $sqlVal="SELECT cequisag 
-				 FROM equisag 
-				 WHERE ccurric='".$post["ccurric"]."' 
-				   And ccurso ='".$post["ccurso"]."'
-				   And cmodulo ='".$post["cmodulo"]."'
-				   And ccurria   ='".$post["ccurria"]."'
-				   And ccursoa='".$post["ccursoa"]."'
-				   And cmodulo  ='".$post["cmodulo"]."'
-				   AND estide='".$post["estide"]."' and cestado = 1  and cequisag !='".$post['id']."' limit 1";
+        
+		$actas  = $post["actas"];
+        $actas_array = explode('^', $actas);
+		// print json_encode($actas_array);
+		// exit();
+        $actas_cantidad = count($actas_array);
+
+        //ARMANDO FIND IN SET
+        $find = "";
+        foreach ($actas_array as $value) {
+        	# code...
+        	// $find .= " and FIND_IN_SET('$value',codigos) > 0 ";
+        	$data = explode("|", $value);
+        	$filtro = $data[2]."-".$data[3]."-".$data[4];
+        	$find .= " and FIND_IN_SET('$filtro',codigos) > 0 ";
+        }
+
+        //ARMANDO QUERY
+        $sqlVal = "
+		select 
+				e.cequisag,
+				c.ccurric,
+				c.dtitulo,
+				cu.ccurso,
+				cu.dcurso,
+				m.cmodulo cciclo,
+				m.dmodulo dciclo,
+				count(*) cant,
+				GROUP_CONCAT(  CONCAT_WS('-',ca.ccurric, ma.cmodulo , cua.ccurso )  SEPARATOR ',') codigos ,
+				GROUP_CONCAT(  CONCAT_WS('		',ca.dtitulo, ma.dmodulo , cua.dcurso )  SEPARATOR '<br>') titulos,
+				e.gruequi grupo,
+				IF(estide = 'r','Regular','Irregular') estide,
+				estide cestide,
+				car.cinstit inst,
+				car.ccarrer carrer
+
+                FROM equisag e
+                inner join curricm c on c.ccurric = e.ccurric
+                inner join curricm ca on ca.ccurric = e.ccurria
+                inner join cursom cu on cu.ccurso = e.ccurso
+                inner join cursom cua on cua.ccurso = e.ccursoa
+                left join moduloa m on m.cmodulo = e.cmodulo
+                left join moduloa ma on ma.cmodulo = e.cmoduloa
+                inner join carrerm car on car.ccarrer = c.ccarrer
+                where e.cestado  = 1 and gruequi != '".$post["id"]."' and e.estide = '". $post["estide"] ."'
+                group by e.gruequi 
+				having cant  = $actas_cantidad 
+				 " . $find ;
+
+
         $db->setQuery($sqlVal);
         $data=$db->loadObjectList();
 		
-        if(count($data)>0){echo json_encode(array('rst'=>'2','msj'=>'<b>Equivalencia</b> ya existe'));exit();}
+        if(count($data)>0){echo json_encode(array('rst'=>'2','msj'=>'<b>Registro de equivalencia ya existe</b> ya existe'));exit();}
         /********************/	
-		   $sql="update equisag set 
-						 ccurric = '".$post["ccurric"]."'
-						,ccurso = '".$post["ccurso"]."'
-						,cmodulo = '".$post["cmodulo"]."'
-						,ccurria = '".$post["ccurria"]."'
-						,ccursoa = '".$post["ccursoa"]."'
-						,cmoduloa = '".$post["cmoduloa"]."'
-						,estide = '".$post["estide"]."'
-						,cusuariu = '".$post["cusuari"]."'
-						,fusuariu = now()  where cequisag =  '".$post["id"]."'";
+        //Eliminamos lo existentes del grupo y agregamos los nuevos
+		$sql="update equisag set cestado = 0 , cusuariu ='". $post["cusuari"] ."' , fusuariu = now()   where gruequi =  '".$post["id"]."'";
+		$db->setQuery($sql);
+            
+            if($db->executeQuery()){
+                if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+                    $db->rollbackTransaccion();
+                    return array('rst'=>'3','msj'=>'Error al actualizar antiguos cursos','sql'=>$sql);exit();
+                }
+
+            }else{
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al procesar update Query , no retorno id','sql'=>$sql);
+            }// FIN EXECUTE QUERY
+
+		//AGREGAMOS LOS NUEVOS
+
+		//RECEPCION DE DATA
+        $actas  = $post["actas"];
+        $actas_array = explode('^', $actas);
+        $inserts_ids = array();
+        foreach ($actas_array as $acta) {
+            # code...
+            $data_array = explode("|", $acta);
+            $sql = " INSERT INTO equisag set "
+                 ." ccurric = '". $post["ccurric"] ."'" 
+                 ." ,ccurso = '". $post["ccurso"] ."'" 
+                 ." ,cmodulo = '". $post["cmodulo"] ."'" 
+                 ." ,gruequi = '". 0 ."'" 
+                 ." ,ccurria = '". $data_array[2] ."'" 
+                 ." ,cmoduloa = '".$data_array[3] ."'" 
+                 ." ,ccursoa = '". $data_array[4] ."'" 
+                 ." ,estide = '". $post["estide"] ."'" 
+                 ." ,cestado = '". 1 ."'" 
+                 ." ,cusuari = '". $post["cusuari"] ."'" 
+                 ." ,fusuari = now() " 
+                 ." ,cusuariu = '". $post["cusuari"] ."'" 
+                 ." ,fusuariu = now() " 
+            ;
+            // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql);
+            // $sql = "INSERT INTO equisag (ccurric,ccurso,cmodulo,gruequi,ccurria,ccursoa,cmoduloa,estide,cusuari,fusuari,cusuariu,fusuariu) 
+            //                 values( '". $post["ccurric"] ."' ,'". $post["ccurso"] ."','". $post["cmodulo"] ."',0, '". $data_array[2] ."','". $data_array[3] ."'
+            //                     ,'". $data_array[4] ."','". $post["estide"] ."',1,'". $post["cusuari"] ."')";
+
+            $db->setQuery($sql);
+            
+            if($id = $db->executeQuery_returnid()){
+                if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+                    $db->rollbackTransaccion();
+                    return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+                }
+
+                // $db->commitTransaccion();
+                // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql,'id'=>$id);
+                $inserts_ids[] = $id; // GUARDA LOS IDS REGISTRADOS
+
+            }else{
+                $db->rollbackTransaccion();
+                return array('rst'=>'3','msj'=>'Error al procesar Query , no retorno id','sql'=>$sql);
+            }// FIN EXECUTE QUERY
+        }// FIN FOREACH
+        
+        // $db->commitTransaccion();
+        // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql);
+
+        $first_id = $inserts_ids[0];
+        $updates_ids = implode(",", $inserts_ids);
+        $sql = "UPDATE equisag set gruequi = ". $first_id . " where cequisag in ($updates_ids) ";
         $db->setQuery($sql);
-		
+        
         if($db->executeQuery()){
-			if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
-				$db->rollbackTransaccion();
-				return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
-			}
-			$db->commitTransaccion();
-            return array('rst'=>'1','msj'=>'Equivalencia Actualizada','sql'=>$sql);
+            if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
+             $db->rollbackTransaccion();
+             return array('rst'=>'3','msj'=>'Error al actualizar Datos','sql'=>$sql);exit();
+            }
+            $db->commitTransaccion();
+            return array('rst'=>'1','msj'=>'Equivalencias Actualizadas','sql'=>$sql,'ids'=>$inserts_ids);
         }else{
-			$db->rollbackTransaccion();
-            return array('rst'=>'3','msj'=>'Error al procesar Query','sql'=>$sql);
-        }   
+            $db->rollbackTransaccion();
+            return array('rst'=>'3','msj'=>'Error al procesar Query updates','sql'=>$sql);
+         } 
+
+		/*********/
+
+
+ 
     }
     
     
@@ -174,10 +385,7 @@ class MySqlEquivalenciaDAO {
         $db=creadorConexion::crear('MySql');
         $db->iniciaTransaccion();
         
-		   $sql="update equisag set 
-						cestado = 0
-            ,cusuariu = '".$post["cusuari"]."'
-						,fusuariu = now()  where cequisag =  '".$post["id"]."'";
+		   $sql="update equisag set cestado = 0,cusuariu = '".$post["cusuari"]."',fusuariu = now()  where gruequi =  '".$post["id"]."'";
         $db->setQuery($sql);
 		
         if($db->executeQuery()){
@@ -195,7 +403,8 @@ class MySqlEquivalenciaDAO {
     
     public function JQGridCountEquivalencia($where) {
         $db = creadorConexion::crear('MySql');
-        $sql = " SELECT COUNT(*) AS count FROM equisag e
+        $sql = " SELECT COUNT(*) AS count 
+                FROM equisag e
                 inner join curricm c on c.ccurric = e.ccurric
                 inner join curricm ca on ca.ccurric = e.ccurria
                 inner join cursom cu on cu.ccurso = e.ccurso
@@ -203,12 +412,12 @@ class MySqlEquivalenciaDAO {
                 left join moduloa m on m.cmodulo = e.cmodulo
                 left join moduloa ma on ma.cmodulo = e.cmoduloa
                 inner join carrerm car on car.ccarrer = c.ccarrer
-								inner join carrerm cara on cara.ccarrer = ca.ccarrer
-                where e.cestado  = 1  " . $where;
+                where e.cestado  = 1 
+                group by e.gruequi " . $where;
 
         $db->setQuery($sql);
         $data = $db->loadObjectList();
-        //var_dump($sql);exit();
+        // print($sql);exit();
         if (count($data) > 0) {
             return $data;
         } else {
@@ -218,25 +427,21 @@ class MySqlEquivalenciaDAO {
 
     public function JQGRIDRowsEquivalencia($sidx, $sord, $start, $limit, $where) {
         $sql = "select 
-                e.cequisag,
-                c.ccurric,
-                c.dtitulo,
-                cu.ccurso,
-                cu.dcurso,
-                m.cmodulo cciclo,
-                m.dmodulo dciclo,
-                ca.ccurric  ccurrica,
-                ca.dtitulo  dtituloa,
-                cua.ccurso ccursoa,
-                cua.dcurso dcursoa,
-                ma.cmodulo ccicloa,
-                ma.dmodulo dcicloa,
-                IF(estide = 'r','Regular','Irregular') estide,
-                estide cestide,
-								car.cinstit inst,
-								car.ccarrer carrer,
-								cara.cinstit insta,
-                cara.ccarrer carrera
+e.cequisag,
+c.ccurric,
+c.dtitulo,
+cu.ccurso,
+cu.dcurso,
+m.cmodulo cciclo,
+m.dmodulo dciclo,
+GROUP_CONCAT(  CONCAT_WS('~',ca.ccurric, ma.cmodulo , cua.ccurso )  SEPARATOR ',') codigos ,
+GROUP_CONCAT(  CONCAT_WS('		',ca.dtitulo, ma.dmodulo , cua.dcurso )  SEPARATOR '<br>') titulos,
+e.gruequi grupo,
+IF(estide = 'r','Regular','Irregular') estide,
+estide cestide,
+car.cinstit inst,
+car.ccarrer carrer
+
                 FROM equisag e
                 inner join curricm c on c.ccurric = e.ccurric
                 inner join curricm ca on ca.ccurric = e.ccurria
@@ -245,10 +450,10 @@ class MySqlEquivalenciaDAO {
                 left join moduloa m on m.cmodulo = e.cmodulo
                 left join moduloa ma on ma.cmodulo = e.cmoduloa
                 inner join carrerm car on car.ccarrer = c.ccarrer
-								inner join carrerm cara on cara.ccarrer = ca.ccarrer
-                where e.cestado  = 1 "
+                where e.cestado  = 1 
+                group by e.gruequi "
                 . $where . " ORDER BY  " . $sidx . " " . $sord . " LIMIT " . $limit . " OFFSET " . $start;
-        //print $sql;    
+        // print $sql;    
         $db = creadorConexion::crear('MySql');
 
         $db->setQuery($sql);

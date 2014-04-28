@@ -217,7 +217,7 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
-    addEquivalencia: function(){
+    addEquivalencia: function(actas){
         $.ajax({
             url : this.url,
             type : 'POST',
@@ -229,15 +229,13 @@ var equivalenciaDAO = {
                 post:{
                 	comando:this.comando,
                 	action:'addEquivalencia',
+                    actas: actas,
                     ccurric:$('#slct_curricula').val(),
                     cmodulo :$('#slct_modulo').val(),
                     ccurso :$("#slct_curso").val() ,
-                    ccurria:$('#slct_curricula_asig').val(),
-                    cmoduloa :$('#slct_modulo_asig').val(),
-                    ccursoa :$("#slct_curso_asig").val() ,
                     estide :$("#slct_tequi").val() ,
                     cusuari:$('#hd_idUsuario').val(),
-		cfilialx:$('#hd_idFilial').val()
+		          cfilialx:$('#hd_idFilial').val()
                 }
             },
             beforeSend : function ( ) {
@@ -246,6 +244,7 @@ var equivalenciaDAO = {
             success : function ( obj ) {
                  sistema.cierraCargando();
                 if(obj.rst=='1'){
+                
                     $('#frmEquivalencia').dialog('close');
                     $("#table_hora").trigger('reloadGrid');
                     sistema.msjOk(obj.msj);
@@ -259,7 +258,7 @@ var equivalenciaDAO = {
             error: this.msjErrorAjax
         });
     },
-    EditarEquivalencia: function(){
+    EditarEquivalencia: function(actas){
         $.ajax({
             url : this.url,
             type : 'POST',
@@ -269,13 +268,11 @@ var equivalenciaDAO = {
                 comando:this.comando,
             	action:'EditarEquivalencia',
                 post:{
-                  id :$('#cequiasg').val(),
+                  id :$('#gruequi').val(),
                   ccurric:$('#slct_curricula').val(),
                   cmodulo :$('#slct_modulo').val(),
                   ccurso :$("#slct_curso").val() ,
-                  ccurria:$('#slct_curricula_asig').val(),
-                  cmoduloa :$('#slct_modulo_asig').val(),
-                  ccursoa :$("#slct_curso_asig").val() ,
+                  actas :actas,
                   estide :$("#slct_tequi").val() ,
                   cusuari:$('#hd_idUsuario').val(),
                   cfilialx:$('#hd_idFilial').val()

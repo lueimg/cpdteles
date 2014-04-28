@@ -5,7 +5,7 @@
 
             <tr class="FormData">
                 <td>1. Seccione un curso Refencia
-                    <table>
+                    <table id="cursoReferencia">
                         <tr class="FormData">
                             <td class="t-left label" >
                                 <b>Instituto: </b>
@@ -69,7 +69,7 @@
                 <td>2. Agrege cursos de equivalencia
                 <table id="cursosActa">
 
-                    </table>
+                </table>
                 </td>
             </tr>
 
@@ -83,7 +83,7 @@
                     <span id="spanBtnFormEquivalencia"></span><span class="icon-hdd"></span>
                 </a> -->
 
-                <input type="hidden" value=""id="cequiasg">
+                <input type="hidden" value="" id="gruequi">
                 <span class="formBotones" id="btn_NuevoConcepto">
                     <input type="hidden" value="1" id="txt_cant_cur" >
                     <a href="javascript:void(0)" onClick="AgregarCurso();" class="btn btn-azul sombra-3d t-blanco">
@@ -92,7 +92,7 @@
                     </a>
                 </span>
                 <span class="formBotones">
-                    <a href="javascript:void(0)" onClick="GuardarCambiosEquivalencia();" class="btn btn-azul sombra-3d t-blanco">
+                    <a href="javascript:void(0)" onClick="GuardarCambiosEquivalencia();" class="btn btn-azul sombra-3d t-blanco" id="sendData">
                         <i class="icon-white icon-check"></i>
                         <span>Guardar Cambios</span>
                     </a>
@@ -105,7 +105,7 @@
 
 
 <script type="text/template" id="TemplateCurso">
-    <tr class="FormData" id="CursoAdd">
+    <tr class="FormData curso-acta">
         <td class="t-left label" >
             <b>Instituto: </b>
         </td>

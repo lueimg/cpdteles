@@ -41,8 +41,7 @@ $(document).ready(function() {
         width: 'auto', height: 'auto'
     });
 // TEMPLATES
-// LOS TEMPLATES USADOS SE ENCUENTRAN EN FRMEQUIVALENCIA.PHP
-
+// LOS TEMPLATES USADOS SE ENCUENTRAN EN FRMEQUIVALENCIA.PHP , USANDO LA LIBRERIA UNDERSCORE.JS
 window.templatesHtml = {}
 templatesHtml.nuevoCursoActa =  _.template( $("#TemplateCurso").html() );
 
@@ -67,9 +66,12 @@ cargarCursos_asig=function(id){
 }
 
 add_equivalencia_jqgrid = function() {
+     $("tr.curso-acta").remove();
     $("select").val("");
     // $('#btnFormEquivalencia').attr('onclick', 'nuevoEquivalencia()');
     // $('#spanBtnFormEquivalencia').html('Guardar');
+    $('#sendData').attr('onclick', 'GuardarCambiosEquivalencia()');
+        $('#sendData span').html('Guardar');
     $('#frmEquivalencia').dialog('open');
 }
 
@@ -102,17 +104,52 @@ GuardarCambiosEquivalencia = function(){
     }
     //REVISAR SELECTS
     var selects = $("#frmEquivalencia [id^='slct']");
-    for(var i = 0 ; i <= selects.length ; i++){
+    for(var i = 0 ; i < selects.length ; i++){
         if( !sistema.requeridoSlct($(selects[i]).attr('id')) ){
+            console.log('detenido');
+            console.log($(selects[i]).attr('id'));
             return false;
             break;
         }
     }
-   
+
+
+    //VALIDAR QUE NO SE REPITAN LOS MISMOS CURSOS
+    var vals = _.map($("[id*=slct_curso_asig_]") , function(i){ return $(i).val() });
+    var vals_total = vals.length;
+    var uniq = _.uniq(vals)
+    var uniq_total = uniq.length;
+    if( uniq_total < vals_total){
+        sistema.msjAdvertencia('Los Cursos Actas a actualizar deben ser diferentes',2500)
+        return false;
+    }
 
     // mapear todos los select de _asig_id
+    // var referencia = _.map($("#cursoReferencia select") , function(i){ return $(i).val() });
+    // var dataReferencia = referencia.join("|");
+    // var data = $("#cursosActa .curso-acta");
+    var actas = _.map( $("#cursosActa .curso-acta") , function(i){  
+        var selects = $(i).find('select');
+        var dataselects = _.map( selects  , function(i){ return $(i).val() });
+        var data = dataselects.join("|"); 
+        return data;  
+    });
+
+    //VALIDAR QUE NO SE REPITEN LOS CURSOS ACTAS A GUARDAR
+    var vals_total = actas.length;
+    var uniq = _.uniq(actas)
+    var uniq_total = uniq.length;
+    if( uniq_total < vals_total){
+        sistema.msjAdvertencia('Los Cursos Actas a actualizar deben ser diferentes',2500)
+        return false;
+    }
+
     
-   // equivalenciaDAO.addEquivalencia();
+    var dataActas = actas.join("^");
+    console.log(dataActas);
+    //GUARDANDO GRUPOS
+
+    equivalenciaDAO.addEquivalencia(dataActas);
 
 
 }
@@ -120,31 +157,55 @@ GuardarCambiosEquivalencia = function(){
 
 
 edit_equivalencia_jqgrid=function(){
-  
+  $("tr.curso-acta").remove();
   
    var id = $("#table_hora").jqGrid("getGridParam", 'selrow');
     $("#frmEquivalencia .form i").remove();
     if (id) {
         var data = $("#table_hora").jqGrid('getRowData', id);
-        $('#cequiasg').val(id);
+        $('#gruequi').val(id);
        //CARGANDO DATOS 1 SECCION DE SELECTS 
         $("#slct_instituto").val(data.inst).trigger("change");
         $("#slct_carrera").val(data.carrer).trigger("change");
         $("#slct_curricula").val(data.ccurric).trigger("change");
         $("#slct_modulo").val(data.cciclo).trigger("change");
         $("#slct_curso").val(data.ccurso);
-        
-        //CARGANDO DATOS 1 SECCION DE SELECTS 
-        $("#slct_instituto_asig").val(data.insta).trigger("change");
-        $("#slct_carrera_asig").val(data.carrera).trigger("change");
-        $("#slct_curricula_asig").val(data.ccurrica).trigger("change");
-        $("#slct_modulo_asig").val(data.ccicloa).trigger("change");
-        $("#slct_curso_asig").val(data.ccursoa);
-        
         $("#slct_tequi").val(data.cestide);
         
-        $('#btnFormEquivalencia').attr('onclick', 'modificarEquivalencia()');
-        $('#spanBtnFormEquivalencia').html('Modificar');
+
+        
+        //CARGADO CURSOS
+        // debugger;
+        var codigos = data.codigos;
+        var codigos_array = codigos.split(',');
+        var total_cursos = codigos_array.length;
+
+         codigos_array.forEach(function(item) {
+            
+            // cargando cursos actas
+            var select_id = AgregarCurso();
+            //Rellenar grupo
+            //OBTENER INSTITUCION Y CARRERA DE UNA CURRICULA
+            var data = item.split("~");
+            var get_data = GetInstitucionyCarrera(data[0]);
+             // debugger;
+            var cinstit = get_data.cinstit;
+            var ccarrer = get_data.ccarrer;
+            var ccurric = data[0];
+            var cmodulo = data[1];
+            var ccurso = data[2];
+
+            // llenar datos
+            $("#slct_instituto_asig_"+select_id).val(cinstit).trigger("change");
+            $("#slct_carrera_asig_"+select_id).val(ccarrer).trigger("change");
+            $("#slct_curricula_asig_"+select_id).val(ccurric).trigger("change");
+            $("#slct_modulo_asig_"+select_id).val(cmodulo).trigger("change");
+            $("#slct_curso_asig_"+select_id).val(ccurso);
+
+        });
+
+        $('#sendData').attr('onclick', 'modificarEquivalencia()');
+        $('#sendData span').html('Modificar');
         $('#frmEquivalencia').dialog('open');
     } else {
         sistema.msjAdvertencia('Seleccione <b>Equivalencia</b> a Editar')
@@ -152,18 +213,77 @@ edit_equivalencia_jqgrid=function(){
   
 }
 
-modificarEquivalencia = function(){
-  var a = new Array();
-    a[0] = sistema.requeridoSlct('slct_curso');
-    a[1] = sistema.requeridoSlct('slct_curso_asig');
+GetInstitucionyCarrera = function(curricula){
+    var data = '';
+    $.ajax({
+            url : '../controlador/controladorSistema.php',
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'equivalencia',
+                action:'GetInstitucionyCarrera',
+                ccurric:curricula
+            },
+            success : function ( obj ) {
+             data  = obj.data;
+            }
+        });
+            // debugger;
+        return data[0];
+}
 
-    for (var i = 0; i < 2; i++) {
-        if (!a[i]) {
+
+
+
+modificarEquivalencia = function(){
+  
+    //validar que exista al menos 1
+    var cursosActa = $("#frmEquivalencia #cursosActa select").length;
+    // console.log(cursosActa);
+    if(cursosActa == 0){
+        // console.log('agregar equivalencia');
+        sistema.msjAdvertencia('Agrege al menos un curso de Acta',2500)
+        return false;
+    }
+    //REVISAR SELECTS
+    var selects = $("#frmEquivalencia [id^='slct']");
+    for(var i = 0 ; i < selects.length ; i++){
+        if( !sistema.requeridoSlct($(selects[i]).attr('id')) ){
+            console.log('detenido');
+            console.log($(selects[i]).attr('id'));
             return false;
             break;
         }
     }
-    equivalenciaDAO.EditarEquivalencia();
+
+   
+    // mapear todos los select de _asig_id
+    // var referencia = _.map($("#cursoReferencia select") , function(i){ return $(i).val() });
+    // var dataReferencia = referencia.join("|");
+    // var data = $("#cursosActa .curso-acta");
+    // USANDO EL METODO MAPEO DE UNDERSCORE.JS
+    var actas = _.map( $("#cursosActa .curso-acta") , function(i){  
+        var selects = $(i).find('select');
+        var dataselects = _.map( selects  , function(i){ return $(i).val() });
+        var data = dataselects.join("|"); 
+        return data;  
+    });
+
+    //VALIDAR QUE NO SE REPITEN LOS CURSOS ACTAS A GUARDAR
+    var vals_total = actas.length;
+    var uniq = _.uniq(actas)
+    var uniq_total = uniq.length;
+    if( uniq_total < vals_total){
+        sistema.msjAdvertencia('Los Cursos Actas a actualizar deben ser diferentes',2500)
+        return false;
+    }
+
+
+    var dataActas = actas.join("^");
+
+    // debugger;
+    equivalenciaDAO.EditarEquivalencia(dataActas);
 }
 
 delete_equivalencia_jqgrid = function(){
@@ -212,7 +332,7 @@ AgregarCurso = function(){
         cargarCursos_asig(tot);
     });
 
-
+    return tot;
 }
 
 
