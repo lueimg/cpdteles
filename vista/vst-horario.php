@@ -113,7 +113,8 @@
                                 <div id="v_lista_grupo" style="display:none;">
                                 	<div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table>
-                                        <tr class="" align="center">                                        
+                                        <tr class="" align="center">  
+                                            <td class="t-center label" ><input id="checkall" type="checkbox" onChange="sistema.checkall('lista_grupos','checkall')"></td>                                                                                  
                                             <td class="t-center label" width="70">FILIAL</td>
                                             <td class="t-center label" width="70">INSTITUCION</td>
                                             <td class="t-center label" width="150">CURRICULA</td>

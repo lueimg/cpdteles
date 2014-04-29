@@ -1,6 +1,6 @@
 REPORTE DE HORARIOS DE PROGRAMACIÓN:
  ☐ Generar Reporte de Horarios (PDF)
-     ☐ Buscar buscar grupos académicos usar modelo de listado de http://localhost/cpdteles/vista/vst-horario.php . 
+     ☐ Buscar  grupos académicos usar modelo de listado de http://localhost/cpdteles/vista/vst-horario.php . 
      ☐ Solo usar el código para visualizar.  En vez del boton que tiene poner un check para seleccionar grupos.  Debajo de los filtro poner un boton "Exportar" valida que seleccione almenos 1 registro a cargar.
      ☐ Generar Query para el horario, debe tener modelo de horarios de la telesup. El nombre del docente en la parte sup. derecho.
 

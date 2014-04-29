@@ -1,14 +1,16 @@
-cambien int autoincre
-ctipamb  int autoincre
-ctipamb -> se adicionó cestado
-horprop tiene cambien act.
-horprop -> se adicionó cestado.
+ambienm:
+  cambien int autoincre
+tipamba:
+  ctipamb  int autoincre
+  ctipamb -> se adicionó cestado
+horprop tiene cambien act.:
+  horprop -> se adicionó cestado.
 
 tietolm -> se adicionó cestado.
-horprop -> se cambio el indice autoincrement
 tietolm -> se cambio el indice autoincrement
+horprop -> se cambio el indice autoincrement
 profesm -> se cambio el indice autoincrement
-testpro -> se cambio por cestado
+    testpro -> se cambio por cestado
 cuprprp -> se actualizó el cprofes a int
 decomap -> cestado por default es 1
 
