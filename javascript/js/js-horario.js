@@ -42,6 +42,9 @@ VisualizarGruposHTML=function(obj){
 	htm+="<tr id='trg-"+obj[i].id.split(",").join("-")+"' class='ui-widget-content jqgrow ui-row-ltr' "+ 
 			 "onClick='sistema.selectorClass(this.id,"+'"'+"lista_grupos"+'"'+");' "+
 			 "onMouseOut='sistema.mouseOut(this.id)' onMouseOver='sistema.mouseOver(this.id)'>";
+	htm+="<td width='20' class='t-center'>"+
+			'<input class="check" id="chk-'+ obj[i].id +'" type="checkbox" value='+"'"+ obj[i].id +"'"+'>'+(i+1) +'</td>';		 
+	htm+="<td width='90' class='t-center'>"+obj[i].dfilial+"</td>";
 	htm+="<td width='90' class='t-center'>"+obj[i].dfilial+"</td>";
 	htm+="<td width='100' class='t-center'>"+obj[i].dinstit+"</td>";
 	htm+="<td width='210' class='t-center'>"+obj[i].dcurric+"</td>";
@@ -51,7 +54,7 @@ VisualizarGruposHTML=function(obj){
 	htm+="<td width='160' class='t-center'>"+obj[i].finicio+" / "+obj[i].ffin+"</td>";
 	htm+="<td width='160' class='t-left'>"+obj[i].horario+"</td>";
 	htm+="<td width='30' class='t-left'>"+obj[i].total+"</td>";
-	htm+="<td width='30' class='t-left'>"+
+	htm+="<td width='30' class='t-left view'>"+
 		'	<div style="margin:15px 0px 10px 0px;">'+
 		'		<a onClick="GenerarHorario('+"'"+obj[i].id+"',''"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
         '        	<i class="icon-white icon-zoom-in"></i>'+
@@ -373,3 +376,31 @@ cargar_docente=function(){
 ActualizaAmbiente=function(valor,id,selector){	
 	horarioDAO.cargarAmbiente(sistema.llenaSelect,'slct_ambiente_'+id.split("_")[3],selector,valor);
 }
+
+
+ExportarGrupos = function (){
+	var grupos = _.map($("#lista_grupos tr input:checked") , function(i){ return $(i).val() });
+	if(grupos.length < 1){
+		 sistema.msjAdvertencia('Seleccione un grupo a exportar',2500);
+		 return false;
+	}
+
+	var lista_grupos = grupos.join(',');
+	window.open('../reporte/pdf/PDFreporteHorarios.php?'+ "grupos="+lista_grupos , "_blank");	
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

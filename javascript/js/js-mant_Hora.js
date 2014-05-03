@@ -19,7 +19,7 @@ add_hora_jqgrid=function(){
 	$('#frmHora input[type="text"],#frmHora select').val('');
 	$('#frmHora input[type="text"],#frmHora select').removeAttr('disabled');	
     $('#id_hora').val("");
-	$("#slct_chora").attr("disabled","true");
+	// $("#slct_chora").attr("disabled","false");
 	$("#slct_chora").val('2');
 	$('#btnFormHora').attr('onclick', 'nuevoHora()');
 	$('#spanBtnFormHora').html('Guardar');

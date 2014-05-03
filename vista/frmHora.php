@@ -58,7 +58,7 @@
               <b>Clase Horario: </b>
             </td>
             <td class="t-left">&nbsp;
-              <select id="slct_chora" style="width:70px" disabled="disabled">
+              <select id="slct_chora" style="width:70px">
               <option value="1">Curso</option>
               <option value="2" selected="selected">Grupo</option>
               </select>
