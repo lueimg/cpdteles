@@ -13,6 +13,9 @@ MANTENIMIENTO DE DOCENTE:
      ☐ Validar que la persona(el docente solo se registra 1 vez...) ya que filial e institución solo es referencia donde el docente se ubica, pero puede ser seleccionado a nivel nacional. por eso solo se valida la persona que sea única.
      ☐ En caso den de baja al docente visualizarlo  como estado de baja, no excluirlo de la lista como otros casos donde el estado es 0. ahi si quiere cambian el estado a 1 porque no se registrará mas de 1 vez a un docente. 
      ☐ Al editar solo pueden modificarle su filial e institucion de ubicación. para editar disabled a persona, no habilitar el boton de buscador. 
+     ☐ Guardar Nuevo docente
+     ☐ actualizar docente existente
+     ☐ Dar de baja docente
 
 
 

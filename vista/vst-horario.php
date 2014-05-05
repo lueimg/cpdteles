@@ -29,7 +29,11 @@
         <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>		
         <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
         <script type="text/javascript" src="../javascript/js/js-horario.js"></script>
-			
+			<style>
+        #v_lista_grupo table tr td.chk{
+            display:  none;
+        }
+        </style>
 	</head>
 
 	<body>
@@ -102,12 +106,12 @@
                                     </a>
                                     <span>&nbsp;&nbsp;&nbsp;</span>
                                    
-                                    <span style="margin:15px 0px 10px 0px;">
+                                  <!--   <span style="margin:15px 0px 10px 0px;">
                                         <a id="btn_listar" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)" onClick="ExportarGrupos();">
                                             <i class="icon-white icon-th"></i>
                                             <span>Exportar Seleccionados</span>
                                         </a>
-                                    </span>
+                                    </span> -->
                                     
                                 </div>
                                 <br>
@@ -115,7 +119,7 @@
                                 	<div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table>
                                         <tr class="" align="center">  
-                                            <td class="t-center label" ><input id="checkall" type="checkbox" onChange="sistema.checkall('lista_grupos','checkall')"></td>                                                                                  
+                                            <td class="t-center label chk" ><input id="checkall" type="checkbox" onChange="sistema.checkall('lista_grupos','checkall')"></td>                                                                                  
                                             <td class="t-center label" width="70">FILIAL</td>
                                             <td class="t-center label" width="70">INSTITUCION</td>
                                             <td class="t-center label" width="150">CURRICULA</td>

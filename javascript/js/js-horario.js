@@ -42,7 +42,7 @@ VisualizarGruposHTML=function(obj){
 	htm+="<tr id='trg-"+obj[i].id.split(",").join("-")+"' class='ui-widget-content jqgrow ui-row-ltr' "+ 
 			 "onClick='sistema.selectorClass(this.id,"+'"'+"lista_grupos"+'"'+");' "+
 			 "onMouseOut='sistema.mouseOut(this.id)' onMouseOver='sistema.mouseOver(this.id)'>";
-	htm+="<td width='20' class='t-center'>"+
+	htm+="<td width='20' class='t-center chk'>"+
 			'<input class="check" id="chk-'+ obj[i].id +'" type="checkbox" value='+"'"+ obj[i].id +"'"+'>'+(i+1) +'</td>';		 
 	htm+="<td width='90' class='t-center'>"+obj[i].dfilial+"</td>";
 	htm+="<td width='90' class='t-center'>"+obj[i].dfilial+"</td>";

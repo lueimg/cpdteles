@@ -77,7 +77,12 @@ class servletDocente extends controladorComandos{
                             $data[$i]['dapmape'],
 							$data[$i]['dnomper'],
                             $data[$i]['ndniper'],
-							$data[$i]['fingreso'],							
+							$data[$i]['fingreso'],
+                            $data[$i]['filial'],                          
+                            $data[$i]['cfilial'],                          
+                            $data[$i]['institucion'],                          
+                            $data[$i]['cinstit'],                          
+                            $data[$i]['estado'],  							
                             )
                         )
                     );

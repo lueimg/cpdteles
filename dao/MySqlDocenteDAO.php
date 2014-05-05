@@ -64,6 +64,8 @@ class MySqlDocenteDAO{
 		$sql="  SELECT count(p.cprofes) as count
                 FROM profesm p
                 INNER JOIN personm pe ON (pe.`cperson`=p.`cperson`)
+				left join filialm f on f.cfilial = p.cfilial
+				left join instita i on i.cinstit = p.cinstit
 			    WHERE 1=1 $where";
 		$db->setQuery($sql);
 		$data=$db->loadObjectList();
@@ -75,10 +77,15 @@ class MySqlDocenteDAO{
 	}
 	
 	public function JQGRIDRowsDocente( $sidx, $sord, $start, $limit, $where) {
-	$sql="	SELECT p.`cprofes`,pe.`dappape`,pe.`dapmape`,pe.`dnomper`,pe.`ndniper`,p.`fingreso`
-            FROM profesm p
-            INNER JOIN personm pe ON (pe.`cperson`=p.`cperson`)
-            WHERE 1=1 $where
+	$sql="	SELECT p.`cprofes`,pe.`dappape`,pe.`dapmape`,pe.`dnomper`,pe.`ndniper`,p.`fingreso`,
+			p.cfilial , f.dfilial filial ,
+			p.cinstit , i.dinstit institucion,
+			if(p.cestado= 1 , 'Activo','Inactivo') estado , p.cestado
+			FROM profesm p
+			INNER JOIN personm pe ON (pe.`cperson`=p.`cperson`)
+			left join filialm f on f.cfilial = p.cfilial
+			left join instita i on i.cinstit = p.cinstit
+			WHERE 1=1  $where
             ORDER BY $sidx $sord
             LIMIT $start , $limit ";
         $db=creadorConexion::crear('MySql');
