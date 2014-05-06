@@ -65,6 +65,7 @@
           </tr>
           <tr>
             <td colspan="2" align="center">
+              <input type="hidden" id="cprofes">
               <a href="javascript:void(0)" onClick="GuardarDocente();" id="btnFormCencap" class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px">
               <span id="spanBtnFormCencap">Guardar</span><span class="icon-hdd"></span>
               </a>

@@ -5,17 +5,15 @@ class servletDocente extends controladorComandos{
 		switch ($_POST['accion']){			
 			case 'ActualizarDocente':				
 				$data=array();
-				$data['cprofes']=trim($_POST['cprofes']);
-				$data['cperson']=trim($_POST['cperson']);
-				$data['fingreso']=trim($_POST['fingreso']);
-				$data['cfilialx']=trim($_POST['cfilialx']);
+				$data=$_POST['post'];
 				echo json_encode($daoDocente->ActualizarDocente($data));
 			break;
 			case 'InsertarDocente':				
 				$data=array();
-				$data['cperson']=trim($_POST['cperson']);
-				$data['fingreso']=trim($_POST['fingreso']);
-				$data['cfilialx']=trim($_POST['cfilialx']);
+                $data=$_POST['post'];
+				// $data['cperson']=trim($_POST['cperson']);
+				// $data['fingreso']=trim($_POST['fingreso']);
+				// $data['cfilialx']=trim($_POST['cfilialx']);
 				echo json_encode($daoDocente->InsertarDocente($data));
 			break;
 			default:
@@ -51,7 +49,15 @@ class servletDocente extends controladorComandos{
                 if(isset($_GET['cestado']) && trim($_GET['cestado'])!=''){
                     $where.=" AND p.cestado='".trim($_GET['cestado'])."' ";
                 }
-				
+				if(isset($_GET['estado']) && trim($_GET['estado'])!=''){
+                    $where.=" AND p.cestado='".trim($_GET['estado'])."' ";
+                }
+                if(isset($_GET['filial']) && trim($_GET['filial'])!=''){
+                    $where.=" AND upper(f.dfilial) LIKE '%".strtoupper(trim($_GET['filial']))."%' ";
+                }
+                if(isset($_GET['institucion']) && trim($_GET['institucion'])!=''){
+                    $where.=" AND upper(i.dinstit) LIKE '%".strtoupper(trim($_GET['institucion']))."%' ";
+                }
 				if(!$sidx)$sidx=1 ; 
 
                 $row=$daoDocente->JQGridCountDocente($where);
@@ -82,7 +88,9 @@ class servletDocente extends controladorComandos{
                             $data[$i]['cfilial'],                          
                             $data[$i]['institucion'],                          
                             $data[$i]['cinstit'],                          
-                            $data[$i]['estado'],  							
+                            $data[$i]['estado'],                            
+                            $data[$i]['cestado'],                            
+                            $data[$i]['cperson'],  							
                             )
                         )
                     );

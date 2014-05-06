@@ -44,11 +44,11 @@ var jqGridDocente={
 	},
 	DocenteMante:function(){
 		var gridTU=$('#table_docente').jqGrid({
-			url:'../controlador/controladorSistema.php?comando=docente&accion=jqgrid_docente&cestado=1',
+			url:'../controlador/controladorSistema.php?comando=docente&accion=jqgrid_docente',
 			datatype:this.type,
 			gridview:true,
 			height:232,
-			colNames:['Paterno','Materno','Nombres','DNI','Fecha Ingreso','Filial','cfilial','Institucion','cinstit','estado'],
+			colNames:['Paterno','Materno','Nombres','DNI','Fecha Ingreso','Filial','cfilial','Institucion','cinstit','estado','cestado','cperson'],
 			colModel:[				
 				{name:'dappape',index:'dappape',align:'left',width:150},
 				{name:'dapmape',index:'dapmape',align:'left',width:150},
@@ -59,7 +59,10 @@ var jqGridDocente={
                 {name:'cfilial',index:'cfilial',align:'left',width:100,hidden:true},
                 {name:'institucion',index:'institucion',align:'left',width:100},
                 {name:'cinstit',index:'cinstit',align:'left',width:100,hidden:true},
-				{name:'estado',index:'estado',align:'left',width:100,stype:"select",editoptions:{value:" : ;1:ACTIVO;0:INACTIVO"}}
+				{name:'estado',index:'estado',align:'left',width:100,stype:"select",editoptions:{value:" : ;1:ACTIVO;0:INACTIVO"}},
+                {name:'cestado',index:'cestado',align:'left',width:100,hidden:true},
+                {name:'cperson',index:'cperson',align:'left',width:100,hidden:true}
+
                 
 			],
 			rowNum:10,

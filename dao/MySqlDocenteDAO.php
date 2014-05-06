@@ -3,14 +3,22 @@ class MySqlDocenteDAO{
 	
 	public function InsertarDocente($data){
 	$db=creadorConexion::crear('MySql');
-	$sql="";
+	$sql="select * from profesm where cperson = '".$data["cperson"]."'";
 	$db->setQuery($sql);
     $valsql=$db->loadObjectList();
 		if(count($valsql)>0){
-		return array('rst'=>'2','msj'=>"Docente:".$data['dapepat']." ".$data['dapemat'].", ".$data['dnombre']." existe");exit();
+		return array('rst'=>'2','msj'=>"Docente:".$data['persona']." existe");exit();
 		}
 		else{
-		$sql="INSERT INTO profesm";	
+		$sql="INSERT INTO profesm set "
+		." cperson = '". $data["cperson"] ."',"
+		." cfilial = '". $data["cfilial"] ."',"
+		." cinstit = '". $data["cinstit"] ."',"
+		." cestado = '". $data["cestado"] ."',"
+		." fingreso = '". $data["fingreso"] ."',"
+		." cusuari = '". $data["cusuari"] ."',"
+		." fusuari = NOW()"
+		;	
 		$db->iniciaTransaccion();
 		$db->setQuery($sql);
 			if(!$db->executeQuery()){
@@ -30,16 +38,19 @@ class MySqlDocenteDAO{
 	
 	public function ActualizarDocente($data){
 	$db=creadorConexion::crear('MySql');
-	$sql="";
+	$sql="select * profesm where 1=0";
 	$db->setQuery($sql);
     $valsql=$db->loadObjectList();
 		if(count($valsql)>0){
 		return array('rst'=>'2','msj'=>"Docente:".$data['dapepat']." ".$data['dapemat'].", ".$data['dnombre']." existe");exit();
 		}
 		else{
-		$sql="	UPDATE profesm SET
-                fusuari=now(),
-				ttiptra='M'
+		$sql="	UPDATE profesm SET "
+		." cfilial = '". $data["cfilial"] ."',"
+		." cinstit = '". $data["cinstit"] ."',"
+		." cestado = '". $data["cestado"] ."',"
+                ."fusuari=now()
+				
 				WHERE cprofes='".$data['cprofes']."'";
 		$db=creadorConexion::crear('MySql');
 		$db->iniciaTransaccion();
@@ -80,7 +91,7 @@ class MySqlDocenteDAO{
 	$sql="	SELECT p.`cprofes`,pe.`dappape`,pe.`dapmape`,pe.`dnomper`,pe.`ndniper`,p.`fingreso`,
 			p.cfilial , f.dfilial filial ,
 			p.cinstit , i.dinstit institucion,
-			if(p.cestado= 1 , 'Activo','Inactivo') estado , p.cestado
+			if(p.cestado= 1 , 'Activo','Inactivo') estado , p.cestado, p.cperson
 			FROM profesm p
 			INNER JOIN personm pe ON (pe.`cperson`=p.`cperson`)
 			left join filialm f on f.cfilial = p.cfilial

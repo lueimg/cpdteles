@@ -72,15 +72,94 @@ cargar_persona_jqgrid=function(){
 }
 
 function docente_agregar(){
+
+//LIMPIAR CAMPOS
+$('#slct_filial').val("");
+$('#slct_instituto').val("");
+$("#txt_fecha_ingreso").val("") ;
+$("#cperson").val("") ;
+$("#txt_persona").val("") ;
+$("#slct_estado").val("1") ;
+$("#btnMantPersona").show();
+$("#txt_fecha_ingreso").removeAttr('disabled');
+
+$('#btnFormCencap').attr('onclick', 'GuardarDocente()');
+$('#spanBtnFormCencap').html('Guardar');
 $('#frmProfes').dialog('open');	
 }
 
 function GuardarDocente(){
 	
+	var a = new Array();
+    a[0] = sistema.requeridoSlct('slct_filial');
+    a[1] = sistema.requeridoSlct('slct_instituto');
+    a[1] = sistema.requeridoTxt('txt_fecha_ingreso');
+    a[1] = sistema.requeridoTxt('txt_persona');
+
+    for (var i = 0; i < 2; i++) {
+        if (!a[i]) {
+            return false;
+            break;
+        }
+    }
+
+    
+    profesDAO.InsertarDocente();
+    
+
 }
 
 
 
+function docente_editar(){
+
+	var id = $("#table_docente").jqGrid("getGridParam", 'selrow');
+    $("#frmProfes i").filter(".icon-red").remove();
+    $('#frmProfes').dialog("option", "position", "center");
+
+    if (id) {
+        var data = $("#table_docente").jqGrid('getRowData', id);
+        // console.log(data);
+        // console.log(id);
+        $('#cprofes').val(id);
+       //CARGANDO DATOS 1 SECCION DE SELECTS 
+        $("#slct_filial").val(data.cfilial);
+        $("#slct_instituto").val(data.cinstit);
+        $("#txt_fecha_ingreso").val(data.fingreso);
+        $("#cperson").val(data.cperson);
+        $("#txt_persona").val(data.dappape + ' ,'+ data.dapmape + ' ,'+ data.dnomper);
+        $("#slct_estado").val(data.cestado);
+
+        $("#btnMantPersona").hide();
+        $("#txt_fecha_ingreso").attr("disabled","");
+
+        $('#btnFormCencap').attr('onclick', 'docente_editar_guardar()');
+        $('#spanBtnFormCencap').html('Modificar');
+        $('#frmProfes').dialog('open');
+    } else {
+        sistema.msjAdvertencia('Seleccione <b>Profesor</b> a Editar')
+    }
+}
+
+function docente_editar_guardar(){
+
+var a = new Array();
+    a[0] = sistema.requeridoSlct('slct_filial');
+    a[1] = sistema.requeridoSlct('slct_instituto');
+    a[1] = sistema.requeridoTxt('txt_fecha_ingreso');
+    a[1] = sistema.requeridoTxt('txt_persona');
+
+    for (var i = 0; i < 2; i++) {
+        if (!a[i]) {
+            return false;
+            break;
+        }
+    }
+
+    
+    profesDAO.ActualizarDocente();
+
+}
 
 
 
