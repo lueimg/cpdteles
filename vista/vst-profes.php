@@ -25,7 +25,7 @@
         <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>		
         <script type="text/javascript" src="../javascript/dao/DAOprofes.js"></script>		
         <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
-        <script type="text/javascript" src="../javascript/jqGrid/JQGridPersona.js"></script>
+        <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
         <script src="../javascript/js/js-profes.js"></script>
 	
 	</head>

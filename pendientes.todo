@@ -8,7 +8,7 @@ REPORTE DE HORARIOS DE PROGRAMACIÓN:
 
 
 MANTENIMIENTO DE DOCENTE:       
- ☐ Mantenimiento de Docente
+ ✔ Mantenimiento de Docente @done (14-05-06 10:56)
      ✔ EL mantenimiento consiste en seleccionar una persona (usa grid paa buscar persona solo el boton del buscador, existe ya modulo echo solo copiar. y cambiar el elevento de seleccionar para copiar el id)  Ver ejemplo de http://localhost/cpdteles/vista/vst-horario.php . Ahí selecciono a un docente ese caso sería para una persona. @done (14-05-05 23:57)
      ✔ Validar que la persona(el docente solo se registra 1 vez...) ya que filial e institución solo es referencia donde el docente se ubica, pero puede ser seleccionado a nivel nacional. por eso solo se valida la persona que sea única. @done (14-05-05 23:57)
      ✔ En caso den de baja al docente visualizarlo  como estado de baja, no excluirlo de la lista como otros casos donde el estado es 0. ahi si quiere cambian el estado a 1 porque no se registrará mas de 1 vez a un docente. @done (14-05-06 00:31)

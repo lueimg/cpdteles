@@ -17,10 +17,10 @@ class configMySql{
         $this->host='localhost';
         $this->user='root';
 		//$this->user='root';
-		$this->pass='';
+		$this->pass='123';
         //$this->pass='cpdteles';
 
-        $this->database='cpdteles';
+        $this->database='cpdteles_caja1';
 
     }
 

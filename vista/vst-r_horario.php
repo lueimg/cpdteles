@@ -28,7 +28,7 @@
         <script type="text/javascript" src="../javascript/dao/DAOgrupoAcademico.js"></script>
         <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>		
         <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
-        <script type="text/javascript" src="../javascript/js/js-horario.js"></script>
+        <script type="text/javascript" src="../javascript/js/js-horario2.js"></script>
 		<script>
         $().ready(function(){
            // jQuery("#v_lista_grupo table tr td:nth-last-child(1)").remove();
@@ -59,7 +59,7 @@
 				<div class="secc-der" id="secc-der">
                     
                     <div id="panel_matricula" style="display:block">
-                        <div class="barra1"><i class="icon-gray icon-list-alt"></i> <b>REPORTE DE HORARIOS<?   /*aqui va el titulo q presentara  */ ?></b></div>         
+                        <div class="barra1"><i class="icon-gray icon-list-alt"></i> <b>REPORTE DE HORARIOS PROGRAMADOS<?   /*aqui va el titulo q presentara  */ ?></b></div>         
                         <div class="cont-der">
 							<div class="t-center">
 
