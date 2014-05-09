@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$('#nav-servicios').addClass('active');//aplica estilo al menu activo
 	jqGridPersona.personaIngAlum2();
+	jQGridGrupoAcademico.GrupoAcademico();
 	//$('#table_persona_ingalum').jqGrid('hideCol','finicio');
 })
 
