@@ -1,21 +1,36 @@
-REPORTE DE HORARIOS DE PROGRAMACIÓN:
- ✔ Generar Reporte de Horarios (PDF) @done (14-05-03 17:46)
-     ✔ Buscar  grupos académicos usar modelo de listado de http://localhost/cpdteles/vista/vst-horario.php . @done (14-04-29 16:11)
-     ✔ Solo usar el código para visualizar.  En vez del boton que tiene poner un check para seleccionar grupos.  Debajo de los filtro poner un boton "Exportar" valida que seleccione almenos 1 registro a cargar. @done (14-05-02 11:06)
-     ✔ Generar Query para el horario, debe tener modelo de horarios de la telesup. El nombre del docente en la parte sup. derecho. @done (14-05-02 11:06)
-     ✔ Estilos del exportable @done (14-05-03 17:46)
-     ✔ Tener propia pagina , esta nueva pagina solo debe tener opcion de exportar @done (14-05-03 17:46)
+Registro de infomación para las pruebas de ratificación:
+ ☐ Crear plan curricular para 3 carreras comp, cont y secre
+      Debe contener-> del 2 ciclo y 3 ciclo  con minimo de 5 a 7 cursos de los cuales un minimo de 4 son cursos dependientes de sus ciclos anteriores.
+ ☐ Crear Periodos(Semestres) Académicos
+      Debe crearse semestres para registrar los grupos academicos q se  crearan luego, para ello este semestre debe ser 2014-2, con inicios a, b y c
+ ☐ Crear Grupos Académicos para comp,cont y secre
+      Crear para las 3 carreras sus grupos academicos
+      Los casos son-> comp se les creará del 2 y 3 ciclo ambos con  inicio (a y b) turno mañana  y c turno noche
+      cont -> se le creará solo del 2 ciclo ambos con inicio (a y b) mañana  y c noche
+      secre -> se le creará solo del 2 ciclo solo con el inicio a mañana y  b noche
 
+      Resumen:
+           Estas carreras son del inst telesup
+           Comp | 2 ciclo | A | mañana
+           Comp | 2 ciclo | B | mañana
+           Comp | 2 ciclo | C | noche
+           Comp | 3 ciclo | A | mañana
+           Comp | 3 ciclo | B | mañana
+           Comp | 3 ciclo | C | noche
 
-MANTENIMIENTO DE DOCENTE:       
- ✔ Mantenimiento de Docente @done (14-05-06 10:56)
-     ✔ EL mantenimiento consiste en seleccionar una persona (usa grid paa buscar persona solo el boton del buscador, existe ya modulo echo solo copiar. y cambiar el elevento de seleccionar para copiar el id)  Ver ejemplo de http://localhost/cpdteles/vista/vst-horario.php . Ahí selecciono a un docente ese caso sería para una persona. @done (14-05-05 23:57)
-     ✔ Validar que la persona(el docente solo se registra 1 vez...) ya que filial e institución solo es referencia donde el docente se ubica, pero puede ser seleccionado a nivel nacional. por eso solo se valida la persona que sea única. @done (14-05-05 23:57)
-     ✔ En caso den de baja al docente visualizarlo  como estado de baja, no excluirlo de la lista como otros casos donde el estado es 0. ahi si quiere cambian el estado a 1 porque no se registrará mas de 1 vez a un docente. @done (14-05-06 00:31)
-     ✔ Al editar solo pueden modificarle su filial e institucion de ubicación. para editar disabled a persona, no habilitar el boton de buscador. @done (14-05-06 00:10)
-     ✔ Guardar Nuevo docente @done (14-05-05 23:58)
-     ✔ actualizar docente existente @done (14-05-06 00:31)
-     ✔ Dar de baja docente @done (14-05-06 00:31)
+           Conta | 2 ciclo | A | mañana
+           Conta | 2 ciclo | B | mañana
+           Conta | 2 ciclo | C | noche
 
+           Secre | 2 ciclo | A | mañana
+           Secre | 2 ciclo | B | noche
+
+           11 grupos creados...
+ ☐ Crear Cronograma de pagos para los grupos creados
+      No importa el tema de pagos XD pueden ser todos de 1 cuota y algunos de 5 es para visualizar en la ratificación.
+ ☐ Crear Horarios para los grupos creados 
+      Esto si importa porque aqui se verá el cruce de la horas del curso que el alumno desee llevar. Trata q algunos cursos tanto del inico a y b se repitan la misma hora ejemplo de los 5 o 7 cursos q tenga el grupo almenos 2 se repitan la hora en el inico a y b.
+
+      Bueno con esto todo quedaría bacan!!!! bueno lo quiero para ayer XD ya necesito visualizar algunos para ir validando.
 
 
