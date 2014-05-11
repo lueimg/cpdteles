@@ -103,13 +103,13 @@ foreach ($grupo_info as  $info) {
 $lista_cursos = implode(',', $grupo_cursos);
 $sql = "
 select  dia.dnomdia ,hora.hinici ini , hora.hfin fin,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '02' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')lunes,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '03' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')martes,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '04' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')miercoles,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '05' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')jueves,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '06' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') viernes,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '07' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') sabado,
-group_concat(DISTINCT(select in_ho.ccurpro from horprop in_ho where in_ho.cdia = '01' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') domingo
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '02' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')lunes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '03' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')martes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '04' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')miercoles,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '05' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')jueves,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '06' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') viernes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '07' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') sabado,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '01' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') domingo
 from horprop ho
 left join diasm dia on dia.cdia = ho.cdia
 left join horam hora on hora.chora = ho.chora 

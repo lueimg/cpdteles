@@ -1,15 +1,16 @@
 Registro de infomación para las pruebas de ratificación:
- ☐ Crear plan curricular para 3 carreras comp, cont y secre
+ ✔ Crear plan curricular para 3 carreras comp, cont y secre @done (14-05-09 19:59)
       Debe contener-> del 2 ciclo y 3 ciclo  con minimo de 5 a 7 cursos de los cuales un minimo de 4 son cursos dependientes de sus ciclos anteriores.
- ☐ Crear Periodos(Semestres) Académicos
+ ✔ Crear Periodos(Semestres) Académicos @done (14-05-09 20:05)
       Debe crearse semestres para registrar los grupos academicos q se  crearan luego, para ello este semestre debe ser 2014-2, con inicios a, b y c
- ☐ Crear Grupos Académicos para comp,cont y secre
+      -> SE CREO SOLO PARA 28 DE JULIO
+ ✔ Crear Grupos Académicos para comp,cont y secre @done (14-05-09 21:02)
       Crear para las 3 carreras sus grupos academicos
       Los casos son-> comp se les creará del 2 y 3 ciclo ambos con  inicio (a y b) turno mañana  y c turno noche
       cont -> se le creará solo del 2 ciclo ambos con inicio (a y b) mañana  y c noche
       secre -> se le creará solo del 2 ciclo solo con el inicio a mañana y  b noche
 
-      Resumen:
+      ✔ Resumen: @done (14-05-09 21:02)
            Estas carreras son del inst telesup
            Comp | 2 ciclo | A | mañana
            Comp | 2 ciclo | B | mañana
@@ -26,11 +27,11 @@ Registro de infomación para las pruebas de ratificación:
            Secre | 2 ciclo | B | noche
 
            11 grupos creados...
- ☐ Crear Cronograma de pagos para los grupos creados
+ ✔ Crear Cronograma de pagos para los grupos creados @done (14-05-09 21:02)
       No importa el tema de pagos XD pueden ser todos de 1 cuota y algunos de 5 es para visualizar en la ratificación.
- ☐ Crear Horarios para los grupos creados 
+ ✔ Crear Horarios para los grupos creados @done (14-05-10 21:23)
       Esto si importa porque aqui se verá el cruce de la horas del curso que el alumno desee llevar. Trata q algunos cursos tanto del inico a y b se repitan la misma hora ejemplo de los 5 o 7 cursos q tenga el grupo almenos 2 se repitan la hora en el inico a y b.
 
       Bueno con esto todo quedaría bacan!!!! bueno lo quiero para ayer XD ya necesito visualizar algunos para ir validando.
-
+-> horario estan en sede 28 de julio completo en computacion a y b 
 
