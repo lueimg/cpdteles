@@ -97,6 +97,66 @@ class servletGrupoAcademico extends controladorComandos{
 	public function doGet(){
 		$daoGrupoAcademico=creadorDAO::getGrupoAcademicoDAO();
 		switch ($_GET['accion']){
+			case 'jqgrid_grupo_academico':
+					$page=$_GET["page"];
+					$limit=$_GET["rows"];
+					$sidx=$_GET["sidx"];
+					$sord=$_GET["sord"];
+		
+					$where="";
+					$param=array();
+                                        
+                    if( isset($_GET['dcarrer']) ) {
+						if( trim($_GET['dcarrer'])!='' ) {
+							$where.=" AND ca.dcarrer like '%".trim($_GET['dcarrer'])."%' ";
+						}
+					}                                        
+										
+					if(!$sidx)$sidx=1 ; 
+		
+					$row=$daoGrupoAcademico->JQGridCountGrupoAcademico( $where );
+					$count=$row[0]['count'];
+					if($count>0) {
+							$total_pages=ceil($count/$limit);
+					}else {
+							$limit=0;
+							$total_pages=0;
+					}
+		
+					if($page>$total_pages) $page=$total_pages;
+		
+					$start=$page*$limit-$limit;
+					
+					$response=array("page"=>$page,"total"=>$total_pages,"records"=>$count);
+					$data=$daoGrupoAcademico->JQGRIDRowsGrupoAcademico($sidx, $sord, $start, $limit, $where);
+					$dataRow=array();
+					$totalmatriculados=0;
+					$vacantes=0;
+					$indices=0;
+					for($i=0;$i<count($data);$i++){
+						$totalmatriculados=$total-($mayor*1+$menor*1);
+						$vacantes=$nmetmat-$totalmatriculados-($mayor/2);
+						$indices=round((1-($vacantes/$nmetmat))*100);
+						array_push($dataRow, array("id"=>$data[$i]['id'],"cell"=>array( 
+								$data[$i]['dturno'],
+								$data[$i]['dcarrer'],
+								$data[$i]['csemaca'],
+								$data[$i]['cinicio'],
+                                $data[$i]['finicio'],
+								$data[$i]['horario'],
+								$data[$i]['nmetmat'],
+								$data[$i]['menor'],
+								$data[$i]['mayor'],
+								$data[$i][$totalmatriculados],
+								$data[$i][$vacantes],
+								$data[$i][$indices]
+								)
+							)
+						);
+					}
+					$response["rows"]=$dataRow;
+					echo json_encode($response);
+				break;
 			default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion GET no encontrada'));
 				break;
