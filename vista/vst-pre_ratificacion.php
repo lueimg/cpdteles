@@ -19,6 +19,7 @@
 
 		<script type="text/javascript" src="../javascript/js/js-pre_ratificacion.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
+        <script type="text/javascript" src="../javascript/jqGrid/JQGridGrupoAcademico.js"></script>
         <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>  
     </head>
 

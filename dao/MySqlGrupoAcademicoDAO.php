@@ -75,7 +75,8 @@ class MySqlGrupoAcademicoDAO{
 	public function JQGridCountGrupoAcademico($where){
 		$db=creadorConexion::crear('MySql');
         $sql="SELECT  count(*) as count				
-				FROM gracprp g 						
+				FROM gracprp g 	
+				inner join carrerm c on (g.ccarrer=c.ccarrer)					
 				WHERE g.cesgrpr in ('3')
 				 ".$where."	            
 	            GROUP by g.csemaca,g.cfilial,g.cinstit,g.ccarrer,g.cciclo,g.cinicio,g.cfrecue,g.cturno,g.chora,g.finicio,g.ffin";
@@ -87,7 +88,7 @@ class MySqlGrupoAcademicoDAO{
             return $data;
         }else{
             return array(array('COUNT'=>0));
-        }-
+        }
 	}
 
 	public function JQGRIDRowsGrupoAcademico($sidx, $sord, $start, $limit, $where){		

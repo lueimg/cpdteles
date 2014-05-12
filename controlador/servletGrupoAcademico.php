@@ -108,7 +108,7 @@ class servletGrupoAcademico extends controladorComandos{
                                         
                     if( isset($_GET['dcarrer']) ) {
 						if( trim($_GET['dcarrer'])!='' ) {
-							$where.=" AND ca.dcarrer like '%".trim($_GET['dcarrer'])."%' ";
+							$where.=" AND c.dcarrer like '%".trim($_GET['dcarrer'])."%' ";
 						}
 					}                                        
 										
