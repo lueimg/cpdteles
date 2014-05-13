@@ -60,25 +60,17 @@
                                   <input type="text" id="txt_nombre" class="input-large" disabled>
                                   <input type="hidden" id="txt_cingalu">
                                   <input type="hidden" id="txt_cgracpr">
-                                </td>
-                                <td>
-                                <div style="margin:15px 0px 10px 0px;">
-                                    <a onClick="verPago();" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">
-                                        <i class="icon-white icon-ok-sign"></i>
-                                        <span>Boton</span>
-                                    </a>
-                                </div>
-                                </td>
+                                </td>                                
                               </tr>
                               
                               <tr class="FormData">
-                              	<td>
-                                		<div style="overflow:auto;">
+                              	<td colspan='2'>
+                            		<table><tr><td>
+                                    <div style="overflow:auto;">
                                         <table id="table_grupo_academico"></table>
                                         <div id="pager_table_grupo_academico"></div>
                                     </div>
-                              	</td>
-                                <td>
+                                    </td><td>                                    
                                     <div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table border="1" cellpadding="0" cellspacing="0">
                                         <tr class="" align="center">                              
@@ -88,8 +80,8 @@
                                             <td class="t-center " width="80px">ESTADO</td>
                                         </tr>
                                     </table>
-                                    </div>
-                                    <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 200px">
+                                    </div>                                    
+                                    <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 230px">
                                     <table id="lista_plan" cellspacing="1" cellpadding="1" border="1"> </table>
                                     </div>
                                     <div class="corner_bottom ui-state-default" style="text-align: right;height: 20px;padding: 2px;">
@@ -100,7 +92,8 @@
                                         <span style="display:inline-block;vertical-align:top">
                                         <input id="txtPlanCurricular" class="input_buscar" type="text" style="width: 150px;display: none;" onkeyup="sistema.buscarEnTable(this.value,'lista_plan')">
                                         </span>
-                                    </div>
+                                    </div>  
+                                    </td></tr></table>                                  
                                 </td>
                               </tr>
                             </table>

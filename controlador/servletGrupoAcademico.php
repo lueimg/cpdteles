@@ -96,7 +96,7 @@ class servletGrupoAcademico extends controladorComandos{
 	}
 	public function doGet(){
 		$daoGrupoAcademico=creadorDAO::getGrupoAcademicoDAO();
-		switch ($_GET['accion']){
+		switch ($_GET['action']){
 			case 'jqgrid_grupo_academico':
 					$page=$_GET["page"];
 					$limit=$_GET["rows"];
