@@ -134,22 +134,13 @@ class servletGrupoAcademico extends controladorComandos{
 					$vacantes=0;
 					$indices=0;
 					for($i=0;$i<count($data);$i++){
-						$totalmatriculados=$total-($mayor*1+$menor*1);
-						$vacantes=$nmetmat-$totalmatriculados-($mayor/2);
-						$indices=round((1-($vacantes/$nmetmat))*100);
-						array_push($dataRow, array("id"=>$data[$i]['id'],"cell"=>array( 
-								$data[$i]['dturno'],
+						array_push($dataRow, array("id"=>$data[$i]['id'],"cell"=>array( 								
 								$data[$i]['dcarrer'],
+								$data[$i]['dciclo'],
 								$data[$i]['csemaca'],
 								$data[$i]['cinicio'],
                                 $data[$i]['finicio'],
-								$data[$i]['horario'],
-								$data[$i]['nmetmat'],
-								$data[$i]['menor'],
-								$data[$i]['mayor'],
-								$data[$i][$totalmatriculados],
-								$data[$i][$vacantes],
-								$data[$i][$indices]
+								$data[$i]['horario']								
 								)
 							)
 						);

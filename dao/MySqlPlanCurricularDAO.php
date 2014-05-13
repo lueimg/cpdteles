@@ -38,7 +38,27 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
         }
     }
     
-    
+    public function listarPlanCurricular($post){
+        $sql="  select m.dmodulo,c.dcurso,p.ncredit,
+                    (select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
+                    from cursom cu 
+                    where FIND_IN_SET (cu.ccurso,p.dreqcur)  >  0) as requisito
+                from placurp p
+                inner join moduloa m on (p.cmodulo=m.cmodulo)
+                inner join cursom c on (p.ccurso=c.ccurso)
+                where ccurric='".$post['ccurric']."'
+                and p.cestado='1'
+                order by  m.dmodulo";
+        $db=creadorConexion::crear('MySql');
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Plan Curricular cargado','data'=>$data);
+        }else{
+            return array('rst'=>'2','msj'=>'No existen Plan Curricular','data'=>$data);
+        }
+    }
     
     public function actualizarPlancurricular($post){
        

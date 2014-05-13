@@ -20,7 +20,7 @@ class configMySql{
 		$this->pass='123';
         //$this->pass='cpdteles';
 
-        $this->database='cpdteles_caja1';
+        $this->database='cpdteles_caja';
 
     }
 
