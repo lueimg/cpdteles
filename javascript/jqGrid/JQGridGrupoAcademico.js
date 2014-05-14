@@ -29,7 +29,7 @@ var jQGridGrupoAcademico={
             //rowList:[5,10],
             rownumbers:true,
             pager:'#pager_table_grupo_academico',
-            sortname:'c.dcarrer',
+            sortname:'c.dcarrer,g.cinicio,g.finicio',
             sortorder:'asc',
             loadui: "block"
         });

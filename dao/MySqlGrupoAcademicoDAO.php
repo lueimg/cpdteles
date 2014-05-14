@@ -110,7 +110,7 @@ class MySqlGrupoAcademicoDAO{
 				WHERE g.cesgrpr in ('3')
 				 ".$where."	            
 	            GROUP by g.csemaca,g.cfilial,g.cinstit,g.ccarrer,g.cciclo,g.cinicio,g.cfrecue,g.cturno,g.chora,g.finicio,g.ffin
-				ORDER BY c.dcarrer,g.cinicio,g.finicio				  
+				ORDER BY ".$sidx." ".$sord." 		  
 	            LIMIT ".$limit." OFFSET ".$start;
 
         $db=creadorConexion::crear('MySql');	
