@@ -54,6 +54,32 @@ var curriculaDAO={
             error: this.msjErrorAjax
         });
     },
+
+    listarPlanCurricular: function(evento){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+            comando:'curricula',
+            action:'listarPlanCurricular',            
+            cingalu:$('#txt_cingalu').val()
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {
+                if(obj.rst=='1'){
+        evento(obj.data);
+                }else if(obj.rst=='2'){
+        $("#valPlancurricular .ListaCursos").remove();
+                }else{
+                    //sistema.msjErrorCerrar(obj.msj);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
 	
         GuardarPlancurricular: function(){
             var reqs = "";

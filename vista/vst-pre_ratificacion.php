@@ -21,6 +21,7 @@
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JQGridGrupoAcademico.js"></script>
         <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>  
+        <script type="text/javascript" src="../javascript/dao/DAOplancurricular.js"></script>  
     </head>
 
 	<body>

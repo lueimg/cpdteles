@@ -39,6 +39,15 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
     }
     
     public function listarPlanCurricular($post){
+
+        $sql="  sselect g.ccurric,c.*
+                from ingalum i
+                inner join conmatp c on (i.cingalu=c.cingalu)
+                inner join gracprp g on (c.cgruaca=g.cgracpr)
+                where i.cingalu='003FRASA01400000002'
+                order by fmatric DESC
+                limit 0,1";
+
         $sql="  select m.dmodulo,c.dcurso,p.ncredit,
                     (select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
                     from cursom cu 

@@ -13,7 +13,7 @@ var id=$("#table_persona_ingalum").jqGrid("getGridParam",'selrow');
         $('#txt_cingalu').val(id.split("-")[0]);
 		$('#txt_cgracpr').val(id.split("-")[1]);
 		$('#txt_nombre').val(data.dnomper+" "+data.dappape+" "+data.dapmape);
-
+		
     }else {
 	    sistema.msjAdvertencia('Seleccione <b>Alumno</b>')
 	}

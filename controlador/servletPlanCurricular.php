@@ -8,6 +8,12 @@ class servletPlanCurricular extends controladorComandos{
                     $post["cmod"] =(trim($_POST['cmod']));
                     echo json_encode($daoPlancurricular->cargarPlancurricular($post));
                     break;
+                case 'listarPlanCurricular':
+                	$post=array();
+                	$post["cingalu"] = (trim($_POST['cingalu']));
+                    
+                    echo json_encode($daoPlancurricular->listarPlanCurricular($post));
+                	break;
                 case 'actualizar_plancurricular':
                    $post = array();
 				   
