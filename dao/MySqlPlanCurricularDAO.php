@@ -39,14 +39,16 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
     }
     
     public function listarPlanCurricular($post){
-
-        $sql="  sselect g.ccurric,c.*
+        $db=creadorConexion::crear('MySql');
+        $sql1="  sselect g.ccurric
                 from ingalum i
                 inner join conmatp c on (i.cingalu=c.cingalu)
                 inner join gracprp g on (c.cgruaca=g.cgracpr)
-                where i.cingalu='003FRASA01400000002'
+                where i.cingalu='".$post['cingalu']."'
                 order by fmatric DESC
                 limit 0,1";
+        $db->setQuery($sql1);
+        $data1=$db->loadObjectList();        
 
         $sql="  select m.dmodulo,c.dcurso,p.ncredit,
                     (select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
@@ -55,10 +57,10 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
                 from placurp p
                 inner join moduloa m on (p.cmodulo=m.cmodulo)
                 inner join cursom c on (p.ccurso=c.ccurso)
-                where ccurric='".$post['ccurric']."'
+                where ccurric='".$data1[0]['ccurric']."'
                 and p.cestado='1'
                 order by  m.dmodulo";
-        $db=creadorConexion::crear('MySql');
+        
 
         $db->setQuery($sql);
         $data=$db->loadObjectList();

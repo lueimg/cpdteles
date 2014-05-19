@@ -75,9 +75,10 @@
                                     <div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table border="1" cellpadding="0" cellspacing="0">
                                         <tr class="" align="center">                              
-                                            <td class="t-center " width="55px">CICLO</td>
-                                            <td class="t-center " width="80px" >CURSO</td>
+                                            <td class="t-center " width="50px">CICLO</td>
+                                            <td class="t-center " width="100px" >CURSO</td>
                                             <td class="t-center " width="55px" >CREDITOS</td>
+                                            <td class="t-center " width="150px" >REQUISITOS</td>
                                             <td class="t-center " width="80px">ESTADO</td>
                                         </tr>
                                     </table>

@@ -70,11 +70,7 @@ var curriculaDAO={
             },
             success : function ( obj ) {
                 if(obj.rst=='1'){
-        evento(obj.data);
-                }else if(obj.rst=='2'){
-        $("#valPlancurricular .ListaCursos").remove();
-                }else{
-                    //sistema.msjErrorCerrar(obj.msj);
+                evento(obj.data);
                 }
             },
             error: this.msjErrorAjax
