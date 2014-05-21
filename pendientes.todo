@@ -1,37 +1,34 @@
-Registro de infomación para las pruebas de ratificación:
- ✔ Crear plan curricular para 3 carreras comp, cont y secre @done (14-05-09 19:59)
-      Debe contener-> del 2 ciclo y 3 ciclo  con minimo de 5 a 7 cursos de los cuales un minimo de 4 son cursos dependientes de sus ciclos anteriores.
- ✔ Crear Periodos(Semestres) Académicos @done (14-05-09 20:05)
-      Debe crearse semestres para registrar los grupos academicos q se  crearan luego, para ello este semestre debe ser 2014-2, con inicios a, b y c
-      -> SE CREO SOLO PARA 28 DE JULIO
- ✔ Crear Grupos Académicos para comp,cont y secre @done (14-05-09 21:02)
-      Crear para las 3 carreras sus grupos academicos
-      Los casos son-> comp se les creará del 2 y 3 ciclo ambos con  inicio (a y b) turno mañana  y c turno noche
-      cont -> se le creará solo del 2 ciclo ambos con inicio (a y b) mañana  y c noche
-      secre -> se le creará solo del 2 ciclo solo con el inicio a mañana y  b noche
+ELiminar Botones del mantenimiento de docente cuando se selecciona una persona:
+ ✔ Solo dejar el boton buscar y el check para seleccionar la persona @done (14-05-21 01:33)
+ ☐ Generar Mantenimiento de Docente(copia)
+  Aquí será lo mismo con la diferencia que se agregará un campo mas "pesodoc" que es el peso del docente.
+ Mantenimiento de horarios:
+  ✔ desabilitar el disabled para poder seleccionar grupo ó curso para crear ambas horas. @done (14-05-21 01:38)
 
-      ✔ Resumen: @done (14-05-09 21:02)
-           Estas carreras son del inst telesup
-           Comp | 2 ciclo | A | mañana
-           Comp | 2 ciclo | B | mañana
-           Comp | 2 ciclo | C | noche
-           Comp | 3 ciclo | A | mañana
-           Comp | 3 ciclo | B | mañana
-           Comp | 3 ciclo | C | noche
+ ☐ Reporte de alumnos de matrícula, pagados y no pagados.
+  El reporte tiene que tener una seriedad de filtros, sea por Ode,inst,carrera, cursos
 
-           Conta | 2 ciclo | A | mañana
-           Conta | 2 ciclo | B | mañana
-           Conta | 2 ciclo | C | noche
+  Los alumnos pagados en la lista debe tener 2 titulos, Alumnos pagados y Alumnos pagados con problemas del 30% de inasistencia.
+  Los alumnos no pagados en lista debe tener 2 titulos, Alumnos no pagados y Alumnos no pagado con problemas del 30% de inasistencia.
 
-           Secre | 2 ciclo | A | mañana
-           Secre | 2 ciclo | B | noche
+  La validación del 30% será validado por el negocio de inasistencia para obtener su porcentaje actual.
 
-           11 grupos creados...
- ✔ Crear Cronograma de pagos para los grupos creados @done (14-05-09 21:02)
-      No importa el tema de pagos XD pueden ser todos de 1 cuota y algunos de 5 es para visualizar en la ratificación.
- ✔ Crear Horarios para los grupos creados @done (14-05-10 21:23)
-      Esto si importa porque aqui se verá el cruce de la horas del curso que el alumno desee llevar. Trata q algunos cursos tanto del inico a y b se repitan la misma hora ejemplo de los 5 o 7 cursos q tenga el grupo almenos 2 se repitan la hora en el inico a y b.
+ ☐ Mantenimiento de Usuarios
+  EL usuario debe contener un tope de 8 caracteres.
+  Te refieres a la clave ???????:
 
-      Bueno con esto todo quedaría bacan!!!! bueno lo quiero para ayer XD ya necesito visualizar algunos para ir validando.
--> horario estan en sede 28 de julio completo en computacion a y b 
+ ☐ Tiempo de tolerancia del docente
+  Este se regirá con el módulo de horarios donde se identificará la hora límite de tardanza para llegar a su clase.
+  Los filtros son Ode, Int, Carrera, Cursos.
+  Tendrá que crearse una tabla para manejar estos pesos de tolerancia en base a los filtros para cada horario en su lista de filtro.
 
+ ✔ Reporte de Horario poner título @done (14-05-21 01:46)
+  El titulo será Horarios Programados Académicos
+Lo puse Horario Académico Programado!:
+
+ ☐ Reporte de Carga Horaria del Docente
+  Será una plancha donde irá un listado con las cabeceras:
+  Filial, Institución, Carrera, Curso, Día, Hora
+  ordenado por Día,Hora,Filial, Institución, Carrera, Curso
+
+ ☐ Realizar un checkeo que los estado inactivos no visualicen en los listados.

@@ -176,6 +176,7 @@ font-weight:bold;
 
 }
 </style>
+<div style='text-align:center'><h1>Horario Académico Programado</h1></div>
 
 <table class="cabecera" style='width:100%' cellpadding="2">
 	<tr>

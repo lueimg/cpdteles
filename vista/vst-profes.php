@@ -27,7 +27,14 @@
         <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
         <script src="../javascript/js/js-profes.js"></script>
-	
+	<style>
+	#pg_pager_table_persona .ui-icon-plus,
+	#pg_pager_table_persona .ui-icon-pencil
+	{
+		display:  none;
+	}
+
+	</style>
 	</head>
 
 	<body>
