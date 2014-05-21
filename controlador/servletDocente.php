@@ -58,6 +58,9 @@ class servletDocente extends controladorComandos{
                 if(isset($_GET['institucion']) && trim($_GET['institucion'])!=''){
                     $where.=" AND upper(i.dinstit) LIKE '%".strtoupper(trim($_GET['institucion']))."%' ";
                 }
+                if(isset($_GET['peso']) && trim($_GET['peso'])!=''){
+                    $where.=" AND pesodoc =  '".strtoupper(trim($_GET['peso']))."' ";
+                }
 				if(!$sidx)$sidx=1 ; 
 
                 $row=$daoDocente->JQGridCountDocente($where);
@@ -88,6 +91,7 @@ class servletDocente extends controladorComandos{
                             $data[$i]['cfilial'],                          
                             $data[$i]['institucion'],                          
                             $data[$i]['cinstit'],                          
+                            $data[$i]['pesodoc'],                            
                             $data[$i]['estado'],                            
                             $data[$i]['cestado'],                            
                             $data[$i]['cperson'],  							

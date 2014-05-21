@@ -1,4 +1,4 @@
-<div id="frmProfes" title="MANTENIMIENTO PROFESORES" class="corner_all" style="background: #ffffff;margin:7px;height: auto">
+<div id="frmProfes" title="MANTENIMIENTO PROFESORES" class="corner_all" style="background: #ffffff;margin:7px;height: auto; display:none;">
       <div id="frmErr_mtn" style="display: none" align="center" class="ui-state-error ui-corner-all">Ingrese todos los campos</div>
         <table cellspacing="1" cellpadding="2" border="0" style="table-layout:fixed" class="EditTable">
            <tr class="FormData">
@@ -6,7 +6,7 @@
               <b>Filial</b>
             </td>
             <td class="t-left">&nbsp;
-              <select id="slct_filial">
+              <select id="slct_filial">;
               <option value="">--Seleccione--</option>
               </select>
             </td>
@@ -51,7 +51,15 @@
               </div >                             
             </td>
         </tr>
-        
+        <tr class="FormData  " style="display: none">
+            <td class="t-left label" >
+              <b>Peso</b>
+            </td>
+            <td class="t-left">&nbsp;
+                <input type="text" id="txt_peso" class="input-xsmall" value="0">
+              
+            </td>
+          </tr>
           <tr class="FormData">
             <td class="t-left label" >
               <b>Estado</b>

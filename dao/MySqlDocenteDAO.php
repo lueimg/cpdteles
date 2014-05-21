@@ -49,6 +49,7 @@ class MySqlDocenteDAO{
 		." cfilial = '". $data["cfilial"] ."',"
 		." cinstit = '". $data["cinstit"] ."',"
 		." cestado = '". $data["cestado"] ."',"
+		." pesodoc = '". $data["pesodoc"] ."',"
                 ."fusuari=now()
 				
 				WHERE cprofes='".$data['cprofes']."'";
@@ -91,7 +92,7 @@ class MySqlDocenteDAO{
 	$sql="	SELECT p.`cprofes`,pe.`dappape`,pe.`dapmape`,pe.`dnomper`,pe.`ndniper`,p.`fingreso`,
 			p.cfilial , f.dfilial filial ,
 			p.cinstit , i.dinstit institucion,
-			if(p.cestado= 1 , 'Activo','Inactivo') estado , p.cestado, p.cperson
+			if(p.cestado= 1 , 'Activo','Inactivo') estado , p.cestado, p.cperson, p.pesodoc
 			FROM profesm p
 			INNER JOIN personm pe ON (pe.`cperson`=p.`cperson`)
 			left join filialm f on f.cfilial = p.cfilial

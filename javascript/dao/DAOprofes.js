@@ -386,7 +386,7 @@ var profesDAO = {
                   cprofes:$('#cprofes').val(),
                   cfilial:$('#slct_filial').val(),
                   cinstit :$('#slct_instituto').val(),
-                  // fingreso :$("#txt_fecha_ingreso").val() ,
+                  pesodoc :$("#txt_peso").val() ,
                   // cperson :$("#cperson").val() ,
                   // persona :$("#txt_persona").val() ,
                   cestado :$("#slct_estado").val() ,

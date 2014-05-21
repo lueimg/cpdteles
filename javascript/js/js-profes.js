@@ -20,8 +20,28 @@ $('#frmProfes').dialog({
         width:'auto',height:'auto'
 	});
 
+//validacion para saber si estamos en la pagina profesPeso
+if(typeof systemPage !== "undefined" ){
+    if( systemPage.page === "profesPesp" ){
+        
+        //si estoy en el ambiente de profesPeso
+        //Cargo grid peso
+        jqGridDocente.DocenteMantePeso();
+        //Mostrar campos solo para profesPeso
+        $(".profesPeso").show();
+    }
+    else{
+        jqGridDocente.DocenteMante();
+    }
 
-jqGridDocente.DocenteMante();
+}else{
+
+    jqGridDocente.DocenteMante();
+
+}
+
+
+
 jqGridPersona.persona();
 
 });
@@ -121,6 +141,7 @@ function docente_editar(){
         var data = $("#table_docente").jqGrid('getRowData', id);
         // console.log(data);
         // console.log(id);
+        
         $('#cprofes').val(id);
        //CARGANDO DATOS 1 SECCION DE SELECTS 
         $("#slct_filial").val(data.cfilial);
@@ -129,6 +150,7 @@ function docente_editar(){
         $("#cperson").val(data.cperson);
         $("#txt_persona").val(data.dappape + ' ,'+ data.dapmape + ' ,'+ data.dnomper);
         $("#slct_estado").val(data.cestado);
+        $("#txt_peso").val(data.peso);
 
         $("#btnMantPersona").hide();
         $("#txt_fecha_ingreso").attr("disabled","");
@@ -146,18 +168,19 @@ function docente_editar_guardar(){
 var a = new Array();
     a[0] = sistema.requeridoSlct('slct_filial');
     a[1] = sistema.requeridoSlct('slct_instituto');
-    a[1] = sistema.requeridoTxt('txt_fecha_ingreso');
-    a[1] = sistema.requeridoTxt('txt_persona');
+    a[2] = sistema.requeridoTxt('txt_fecha_ingreso');
+    a[3] = sistema.requeridoTxt('txt_persona');
+    a[4] = sistema.requeridoTxt('txt_peso');
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 5; i++) {
         if (!a[i]) {
             return false;
             break;
         }
     }
 
-    
     profesDAO.ActualizarDocente();
+    
 
 }
 
