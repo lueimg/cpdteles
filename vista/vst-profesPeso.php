@@ -1,4 +1,4 @@
-<?require_once('ifrm-valida-sesion.php')?>	
+<?php require_once('ifrm-valida-sesion.php'); ?>	
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,12 +9,19 @@
 
 		<link rel="stylesheet" type="text/css" href="../css/temas/default/css-sistema.php">
 		<link type="text/css" rel="stylesheet" media="screen" href="../javascript/includes/jqgrid-4.3.2/css/ui.jqgrid.css" />
+		<script type="text/javascript" src="../javascript/includes/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="../javascript/includes/jquery-ui-1.8.18.custom.min.js"></script>
+	    <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/i18n/grid.locale-es.js" ></script>
+	    <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/jquery.jqGrid.min.js" ></script>
 
+		<script type="text/javascript" src="../javascript/sistema.js"></script>
+		<script type="text/javascript" src="../javascript/templates.js"></script>
 		
         <script>
         //Genero variable que me permite diferenciar este contexto
+        //de la vista de profesores normal
         window.systemPage = {}
-        systemPage.page = "profesPesp";
+        systemPage.page = "profesPeso";
 
         </script>
 
@@ -70,13 +77,7 @@
         <div id="capaMensaje" class="capaMensaje" style="display:none"></div>		
 		<hr>
 		<?php require_once('ifrm-footer.php'); ?>	
-		<script type="text/javascript" src="../javascript/includes/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="../javascript/includes/jquery-ui-1.8.18.custom.min.js"></script>
-	    <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/i18n/grid.locale-es.js" ></script>
-	    <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/jquery.jqGrid.min.js" ></script>
-
-		<script type="text/javascript" src="../javascript/sistema.js"></script>
-		<script type="text/javascript" src="../javascript/templates.js"></script>
+		
         
         <script type="text/javascript" src="../javascript/dao/DAOcencap.js"></script>		
 		<script type="text/javascript" src="../javascript/dao/DAOhorario.js"></script>

@@ -1,7 +1,7 @@
 <?php
     session_start();
     date_default_timezone_set('America/Lima');
-    
+    error_reporting(0);
     require_once('../controlador/controladorComandos.php');
 
     require_once('../controlador/servletLogin.php');

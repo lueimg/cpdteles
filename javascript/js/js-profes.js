@@ -22,7 +22,7 @@ $('#frmProfes').dialog({
 
 //validacion para saber si estamos en la pagina profesPeso
 if(typeof systemPage !== "undefined" ){
-    if( systemPage.page === "profesPesp" ){
+    if( systemPage.page === "profesPeso" ){
         
         //si estoy en el ambiente de profesPeso
         //Cargo grid peso
@@ -100,6 +100,7 @@ $("#txt_fecha_ingreso").val("") ;
 $("#cperson").val("") ;
 $("#txt_persona").val("") ;
 $("#slct_estado").val("1") ;
+$("#txt_peso").val("0") ;
 $("#btnMantPersona").show();
 $("#txt_fecha_ingreso").removeAttr('disabled');
 
@@ -113,10 +114,11 @@ function GuardarDocente(){
 	var a = new Array();
     a[0] = sistema.requeridoSlct('slct_filial');
     a[1] = sistema.requeridoSlct('slct_instituto');
-    a[1] = sistema.requeridoTxt('txt_fecha_ingreso');
-    a[1] = sistema.requeridoTxt('txt_persona');
+    a[2] = sistema.requeridoTxt('txt_fecha_ingreso');
+    a[3] = sistema.requeridoTxt('txt_persona');
+    
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 4; i++) {
         if (!a[i]) {
             return false;
             break;

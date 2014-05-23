@@ -3,6 +3,6 @@ nbproject/
 nbproject/*
 .idea/
 .idea/*
-conexion/configMySql.php
+/conexion/configMySql.php
 conexion/configMySql.php
 archivos/cargados/

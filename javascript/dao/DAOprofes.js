@@ -347,6 +347,7 @@ var profesDAO = {
                   fingreso :$("#txt_fecha_ingreso").val() ,
                   cperson :$("#cperson").val() ,
                   persona :$("#txt_persona").val() ,
+                  pesodoc :$("#txt_peso").val() ,
                   cestado :$("#slct_estado").val() ,
                   cusuari:$('#hd_idUsuario').val(),
                   cfilialx:$('#hd_idFilial').val()

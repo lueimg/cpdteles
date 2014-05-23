@@ -1,7 +1,7 @@
 ELiminar Botones del mantenimiento de docente cuando se selecciona una persona:
  ✔ Solo dejar el boton buscar y el check para seleccionar la persona @done (14-05-21 01:33)
 
- ☐ Generar Mantenimiento de Docente(copia)
+ ✔ Generar Mantenimiento de Docente(copia) @done (14-05-23 02:32)
   Aquí será lo mismo con la diferencia que se agregará un campo mas "pesodoc" que es el peso del docente.
   este nuevo mantenimeito solo es para editar o tambien puede crear ???:
  ✔ --> ya esta listo el editar @done (14-05-21 03:16)

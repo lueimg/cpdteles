@@ -51,7 +51,7 @@
               </div >                             
             </td>
         </tr>
-        <tr class="FormData  " style="display: none">
+        <tr class="FormData  profesPeso" style="display: none">
             <td class="t-left label" >
               <b>Peso</b>
             </td>

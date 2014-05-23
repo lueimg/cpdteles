@@ -15,6 +15,7 @@ class MySqlDocenteDAO{
 		." cfilial = '". $data["cfilial"] ."',"
 		." cinstit = '". $data["cinstit"] ."',"
 		." cestado = '". $data["cestado"] ."',"
+		." pesodoc = '". $data["pesodoc"] ."',"
 		." fingreso = '". $data["fingreso"] ."',"
 		." cusuari = '". $data["cusuari"] ."',"
 		." fusuari = NOW()"
