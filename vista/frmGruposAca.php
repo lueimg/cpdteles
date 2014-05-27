@@ -58,6 +58,15 @@
                                             </td>                                            
                                         </tr>
                                         <tr>
+                                          <td colspan='2' class="t-left label" id='mensaje_faltas'>
+                                          </td>                                           
+                                        </tr>
+                                        <tr>
+                                          <td colspan='2' class="t-left label" id='secciones'>
+
+                                          </td>                                           
+                                        </tr>
+                                        <tr>
             <td colspan="4" align="center">
               <a id="btnFormGruposAca" class="button fm-button ui-corner-all fm-button-icon-left" style="margin-top: 10px;width: 70px;">
               <span id="spanBtnFormGruposAca">Actualizar</span><span class="icon-hdd"></span>

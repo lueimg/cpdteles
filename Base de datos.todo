@@ -19,6 +19,12 @@ para semestre se adicionaron 2 fechas , fechgra y fechext.
 
 Estas fechas afectarán a la matrícula y ratificación ayudarán a controlar los pagos y penalidades.
 
+S-----------------------------------------------------------------------------------------------------------S:
+2014-05-21 :: LUIS MORI
+ALTER TABLE profesm 
+ADD COLUMN pesodoc CHAR(2) NULL DEFAULT 0 AFTER cestado;
 
+Archivos creados
+vista/vst-profesPeso.php
 
 

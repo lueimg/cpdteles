@@ -5,33 +5,50 @@ ELiminar Botones del mantenimiento de docente cuando se selecciona una persona:
   Aquí será lo mismo con la diferencia que se agregará un campo mas "pesodoc" que es el peso del docente.
   este nuevo mantenimeito solo es para editar o tambien puede crear ???:
  ✔ --> ya esta listo el editar @done (14-05-21 03:16)
+ ☐ Aqui falta crear tb, debe tener creo q solo es activar ese evento q lo escondist sino me equivoco.
  Mantenimiento de horarios:
   ✔ desabilitar el disabled para poder seleccionar grupo ó curso para crear ambas horas. @done (14-05-21 01:38)
 
- ☐ Reporte de alumnos de matrícula, pagados y no pagados.
+ ✔ Mantenimiento de Usuarios @done (14-05-26 20:41)
+  EL usuario debe contener un tope de 8 caracteres.
+  Te refieres a la clave ???????: ya esta ese era para los usuarios el ing se pajareo
+
+ ✔ Reporte de Horario poner título @done (14-05-21 01:46)
+  El titulo será Horarios Programados Académicos
+Lo puse Horario Académico Programado!:
+
+ ☐ 1) crear seccion a cuprprp por defecto sería "A"
+     Aqui se generará un nuevo campo  en cuprpr seria Sección y Cantidad el cual la cantidad seria segun la division se dé al momento de generar grupo académico.
+
+ ☐ 2) horarios tienen la opcion de modificar su cantidad horas totales para validar sus horarios programados
+   es para el tema del ambiente q contiene una capacidad.
+
+ ☐ 3) Tiempo de tolerancia del docente
+  Este se regirá con el módulo de horarios donde se identificará la hora límite de tardanza para llegar a su clase.
+  Los filtros son Ode, Int, Carrera, Cursos.
+  Tendrá que crearse una tabla para manejar estos pesos de tolerancia en base a los filtros para cada horario en su lista de filtro.
+
+  ☐ 4) Al momento de ratificar validar la cantidad de sección 
+ 
+  ☐ 5) Para bancos solo soltar matricula mas 1ra pension y deudas anteriores para que cancelen los alumnos del 2ciclo para arriba. los del primer ciclo seria 1ra pension y su matricula.
+
+
+  Reportes según Orden:
+
+☐ 1) Reporte de Carga Horaria del Docente
+  Será una plancha donde irá un listado con las cabeceras:
+  Filial, Institución, Carrera, Curso, Día, Hora
+  ordenado por Día,Hora,Filial, Institución, Carrera, Curso
+
+ ☐ 2) Reporte disponibilidad de ambiente
+   indicar los horarios disponibles con colores verde libre , rojo ocupado.  Trama Horaria X Día  y Hora.
+
+ ☐ 3) Reporte de alumnos de matrícula, pagados y no pagados.
   El reporte tiene que tener una seriedad de filtros, sea por Ode,inst,carrera, cursos
 
   Los alumnos pagados en la lista debe tener 2 titulos, Alumnos pagados y Alumnos pagados con problemas del 30% de inasistencia.
   Los alumnos no pagados en lista debe tener 2 titulos, Alumnos no pagados y Alumnos no pagado con problemas del 30% de inasistencia.
 
   La validación del 30% será validado por el negocio de inasistencia para obtener su porcentaje actual.
-
- ☐ Mantenimiento de Usuarios
-  EL usuario debe contener un tope de 8 caracteres.
-  Te refieres a la clave ???????:
-
- ☐ Tiempo de tolerancia del docente
-  Este se regirá con el módulo de horarios donde se identificará la hora límite de tardanza para llegar a su clase.
-  Los filtros son Ode, Int, Carrera, Cursos.
-  Tendrá que crearse una tabla para manejar estos pesos de tolerancia en base a los filtros para cada horario en su lista de filtro.
-
- ✔ Reporte de Horario poner título @done (14-05-21 01:46)
-  El titulo será Horarios Programados Académicos
-Lo puse Horario Académico Programado!:
-
- ☐ Reporte de Carga Horaria del Docente
-  Será una plancha donde irá un listado con las cabeceras:
-  Filial, Institución, Carrera, Curso, Día, Hora
-  ordenado por Día,Hora,Filial, Institución, Carrera, Curso
 
  ☐ Realizar un checkeo que los estado inactivos no visualicen en los listados.
