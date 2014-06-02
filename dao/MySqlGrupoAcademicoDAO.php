@@ -353,7 +353,7 @@ class MySqlGrupoAcademicoDAO{
 						if(count($datac)>0){
 							foreach($datac as $c){
 							$cursos=$db->generarCodigo('cuprprp','ccuprpr',12,$data['usuario']);
-							$sql="INSERT INTO cuprprp (ccuprpr,cgracpr,ccurric,ccurso,finipre,ffinpre,finivir,ffinvir,cusuari,fusuari,cfilial,ncredit) 
+							$sql="INSERT INTO cuprprp (ccuprpr,cgracpr,ccurric,ccurso,finipre,ffinpre,finivir,ffinvir,cusuari,fusuari,cfilial,ncredit,ncapaci,nseccio) 
 								VALUES ('$cursos', 
 								'".$grupos."',
 								'".$datacurric[0]["ccurric"]."',
@@ -365,7 +365,9 @@ class MySqlGrupoAcademicoDAO{
 								'".$data["usuario"]."',
 								now(),
 								'".$filiales[$i]."',
-								'".$c["ncredit"]."')";
+								'".$c["ncredit"]."',
+								'".$data['nmetmat']."',
+								'A')";
 							$db->setQuery($sql);
 								if(!$db->executeQuery()){
 									$db->rollbackTransaccion();
