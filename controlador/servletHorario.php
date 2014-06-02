@@ -27,11 +27,12 @@ class servletHorario extends controladorComandos{
 				$array=array();
 				$array['ccuprpr']=trim($_POST['ccuprpr']);
 				$array['cprofes']=trim($_POST['cprofes']);
-				$array['finipre']=trim($_POST['finipre']);
-				$array['ffinpre']=trim($_POST['ffinpre']);
-				$array['finivir']=trim($_POST['finivir']);
-				$array['ffinvir']=trim($_POST['ffinvir']);
+				$array['finipre']=trim($_POST['finipre'])==''?'null':"'".trim($_POST['ccuprpr'])."'";
+				$array['ffinpre']=trim($_POST['ffinpre'])==''?'null':"'".trim($_POST['ccuprpr'])."'";
+				$array['finivir']=trim($_POST['finivir'])==''?'null':"'".trim($_POST['ccuprpr'])."'";
+				$array['ffinvir']=trim($_POST['ffinvir'])==''?'null':"'".trim($_POST['ccuprpr'])."'";
 				$array['datos']=trim($_POST['datos']);
+				$array['cdetgra']=trim($_POST['cdetgra']);
 				$array['cusuari']=trim($_POST['cusuari']);
 				$array['cfilialx']=trim($_POST['cfilialx']);
 				echo json_encode($daoHorario->guardarHorarios($array));

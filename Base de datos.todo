@@ -3,36 +3,42 @@ Se ordena de forma alfabetico para cualquier cambio indicar fecha si es posible.
 ambienm:
   cambien int autoincre
 
+conmatp 02-06-14:
+  cdetgra -> se agregó para saber q sección pertenece
+
 cuprprp:
-cuprprp -> se actualizó el cprofes a int
+  cuprprp -> se actualizó el cprofes a int
 
 decomap:
-decomap -> cestado por default es 1
+  decomap -> cestado por default es 1
+  cdetgra 02-06-14 -> se adiciono este atributo q es para saber q seccion pertenece
 
 detgrap   01-06.14: 
   Tabla nueva registra el detalle de los grupos sus secciones divisiones y capacidad de cada seccion.
 
 equisag:
-se generó nueva tabla equisag indica las equivalencia de los cursos con cursos para actas
+  se generó nueva tabla equisag indica las equivalencia de los cursos con cursos para actas
 
 horprop tiene cambien act.:
   horprop -> se adicionó cestado.
   horprop -> se cambio el indice autoincrement
+  cprofes 02-06-14 -> se adicionó para saber q profe fue asignado a dicho horario
+  cdetgra 02-06-14 -> se adiciono este atributo q es para saber q seccion pertenece
 
 profesm:
-profesm -> se cambio el indice autoincrement
-    testpro -> se cambio por cestado
-2014-05-21 :: LUIS MORI
-ALTER TABLE profesm 
-ADD COLUMN pesodoc CHAR(2) NULL DEFAULT 0 AFTER cestado;
+  profesm -> se cambio el indice autoincrement
+  testpro -> se cambio por cestado
+  2014-05-21 :: LUIS MORI
+  ALTER TABLE profesm 
+  ADD COLUMN pesodoc CHAR(2) NULL DEFAULT 0 AFTER cestado;
 
 Semacan:
-para semestre se adicionaron 2 fechas , fechgra y fechext.
-Estas fechas afectarán a la matrícula y ratificación ayudarán a controlar los pagos y penalidades.
+  para semestre se adicionaron 2 fechas , fechgra y fechext.  
+  Estas fechas afectarán a la matrícula y ratificación ayudarán a controlar los pagos y penalidades.
 
 tietolm:
-tietolm -> se adicionó cestado.
-tietolm -> se cambio el indice autoincrement
+  tietolm -> se adicionó cestado.
+  tietolm -> se cambio el indice autoincrement
 
 tipamba:
   ctipamb  int autoincre

@@ -156,6 +156,17 @@
                             </legend>
 
                                 <br>
+                                <table cellspacing="1" cellpadding="2" border="0" style="table-layout:fixed" class="EditTable">
+                                    <tr>
+                                        <td class="t-left label input-xlarge"><b>Sección:</b></td>
+                                        <td>
+                                            <select id="slct_detalle_grupo" class="input-large">
+                                                <option value="">.::Selecciona::.</option>
+                                            </select>
+                                        </td>                            
+                                    </tr>
+                                </table>
+
                                 <div id="v_lista_curso" style="display:none;">
                                     <div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table>
@@ -165,7 +176,7 @@
                                             <td class="t-center label" width="60">F. Fin Pre</td>
                                             <td class="t-center label" width="60">F. Ini Vir</td>
                                             <td class="t-center label" width="60">F. Fin Vir</td>
-                                            <td class="t-center label" width="220">DOCENTE</td>                                            
+                                            <td class="t-center label" width="220">DOCENTE REFERENTE</td>                                            
                                             <td class="t-center label" >[/]</td>
                                         </tr>
                                     </table>
@@ -197,7 +208,7 @@
                                         </td>                            
                                     </tr>
                                     <tr>
-                                        <td class="t-left label input-xlarge"><b>Docente:</b></td>
+                                        <td class="t-left label input-xlarge"><b>Docente Referente:</b></td>
                                         <td>
                                             <input type="text" id="txt_docente" class="input-xlarge" disabled>
                                             <input type="hidden" id="cprofes">

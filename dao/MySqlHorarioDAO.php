@@ -82,10 +82,10 @@ class MySqlHorarioDAO{
         $db->iniciaTransaccion();
         $sql="UPDATE cuprprp
               SET cprofes='".$array['cprofes']."'
-              ,finipre='".$array['finipre']."'
-              ,ffinpre='".$array['ffinpre']."'
-              ,finivir='".$array['finivir']."'
-              ,ffinvir='".$array['ffinvir']."'
+              ,finipre=".$array['finipre']."
+              ,ffinpre=".$array['ffinpre']."
+              ,finivir=".$array['finivir']."
+              ,ffinvir=".$array['ffinvir']."
               ,cusuari='".$array['cusuari']."'
               ,fusuari=now()
               WHERE ccuprpr='".$array['ccuprpr']."'";
@@ -130,8 +130,8 @@ class MySqlHorarioDAO{
         for($i=0;$i<count($detdatins);$i++){
             $dd=explode("_",$detdatins[$i]);
 
-            $sqlinsert="INSERT INTO horprop (cdia,chora,ccurpro,ctipcla,cambien,fusuari,cusuari,ctietol,cestado)
-                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1')";
+            $sqlinsert="INSERT INTO horprop (cdia,chora,ccurpro,ctipcla,cambien,fusuari,cusuari,ctietol,cestado,cdetgra)
+                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1','".$array['cdetgra']."')";
             $db->setQuery($sqlinsert);
             if(!$db->executeQuery()){
                 $db->rollbackTransaccion();

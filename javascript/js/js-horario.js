@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	$('#nav-reportes').addClass('active');//aplica estilo al menu activo				
-	institucionDAO.cargarCiclo(sistema.llenaSelect,'slct_ciclo','');
+	institucionDAO.cargarCiclo(sistema.llenaSelect,'slct_ciclo','');	
 	institucionDAO.cargarInstitucionValidaG(sistema.llenaSelectGrupo,'slct_instituto','','Instituto');
     institucionDAO.cargarFilialValidadaG(sistema.llenaSelectGrupo,'slct_filial','','Filial');	    
 
@@ -70,6 +70,7 @@ VisualizarGruposHTML=function(obj){
 }
 
 GenerarHorario=function(ids){
+grupoAcademicoDAO.cargarDetalleGrupo(sistema.llenaSelect,'slct_detalle_grupo','',ids);
 grupoAcademicoDAO.cargarCursosAcademicos(VisualizarCursosHTML,ids);
 ToogleFiltro();
 }
@@ -120,19 +121,25 @@ ActualizaHorario=function(id,datos){
 	$("#detalle_actualizacion .agregado").remove();
 	$("#detalle_actualizacion .fijo").remove();
 
-	$('#ccuprpr').val(id);
-	$('#txt_curso').val(d[0]);
-	$('#txt_docente').val(d[1]);
-	$('#cprofes').val(d[2]);
-	$('#txt_fecha_ini_pre').val(d[3]);
-	$('#txt_fecha_fin_pre').val(d[4]);
-	$('#txt_fecha_ini_vir').val(d[5]);
-	$('#txt_fecha_fin_vir').val(d[6]);
-	$('#cinstit').val(d[7]);
-	$('#cfilial').val(d[8]);
-	horarioDAO.cargarHora(sistema.llenaSelect,'slct_hora','');
-	grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);	
-	$("#actualizacion").css("display","");	
+	if($("#slct_detalle_grupo").val()!=''){
+		$('#ccuprpr').val(id);
+		$('#txt_curso').val(d[0]);
+		$('#txt_docente').val(d[1]);
+		$('#cprofes').val(d[2]);
+		$('#txt_fecha_ini_pre').val(d[3]);
+		$('#txt_fecha_fin_pre').val(d[4]);
+		$('#txt_fecha_ini_vir').val(d[5]);
+		$('#txt_fecha_fin_vir').val(d[6]);
+		$('#cinstit').val(d[7]);
+		$('#cfilial').val(d[8]);
+		horarioDAO.cargarHora(sistema.llenaSelect,'slct_hora','');
+		grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);		
+		$("#actualizacion").css("display","");	
+	}
+	else{
+		sistema.msjAdvertencia('Seleccione Seccion',200);
+		$("#slct_detalle_grupo").focus();
+	}
 
 }
 
@@ -227,25 +234,7 @@ AgregarHorario=function(ide){
 	$("#slct_tiempo_tolerancia_"+tot).val('');
 }
 
-guardarHorario=function(){
-	
-	if($("#txt_fecha_ini_pre").val()==''){
-		sistema.msjAdvertencia('Ingrese fecha de Inicio Presencial');
-		$("#txt_fecha_ini_pre").focus();
-	}
-	else if($("#txt_fecha_fin_pre").val()==''){
-		sistema.msjAdvertencia('Ingrese fecha Fin Presencial');
-		$("#txt_fecha_fin_pre").focus();
-	}
-	else if($("#txt_fecha_ini_vir").val()==''){
-		sistema.msjAdvertencia('Ingrese fecha de Inicio Virtual');
-		$("#txt_fecha_ini_vir").focus();
-	}
-	else if($("#txt_fecha_fin_vir").val()==''){
-		sistema.msjAdvertencia('Ingrese fecha Fin Virtual');
-		$("#txt_fecha_fin_vir").focus();
-	}
-	else{
+guardarHorario=function(){	
 
 		var error="";		
 		var id="";
@@ -346,7 +335,6 @@ guardarHorario=function(){
 		$("#actualizacion").css("display","none");
 		horarioDAO.guardarHorarios(datosf);
 		}
-	}			
 }
 
 
@@ -386,21 +374,5 @@ ExportarGrupos = function (){
 	}
 
 	var lista_grupos = grupos.join(',');
-	window.open('../reporte/pdf/PDFreporteHorarios.php?'+ "grupos="+lista_grupos , "_blank");	
-
-
-
-
+	window.open('../reporte/pdf/PDFreporteHorarios.php?'+ "grupos="+lista_grupos , "_blank");
 }
-
-
-
-
-
-
-
-
-
-
-
-

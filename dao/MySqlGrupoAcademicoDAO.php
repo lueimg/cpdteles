@@ -343,6 +343,23 @@ class MySqlGrupoAcademicoDAO{
 							$db->rollbackTransaccion();
 							return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sql);exit();
 						}
+
+						$sql="INSERT into detgrap (cgracpr,ncapaci,dseccio,fusucre,cusucre) VALUES 
+							('$grupos',							
+							'".$data['nmetmat']."',
+							'A',
+							now(),
+							'".$data['usuario']."');";
+						$db->setQuery($sql);
+						if(!$db->executeQuery()){
+							$db->rollbackTransaccion();
+							return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+						}
+						if(!MySqlTransaccionDAO::insertarTransaccion($sql,$data['cfilialx']) ){
+							$db->rollbackTransaccion();
+							return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql2'=>$sql);exit();
+						}
+
 						$cursos="SELECT ccurso,ncredit 
 								FROM placurp 
 								WHERE cciclo = '".$data['cciclo']."' 
@@ -357,11 +374,23 @@ class MySqlGrupoAcademicoDAO{
 								VALUES ('$cursos', 
 								'".$grupos."',
 								'".$datacurric[0]["ccurric"]."',
-								'".$c["ccurso"]."',
+								'".$c["ccurso"]."',";
+								if($data2[0]['cmodali']=='1'){
+							$sql.="
 								'".$data["finicio"]."',
 								'".$data["ffinal"]."',
+								null,
+								null,";
+								}
+								else{
+							$sql.="
+								null,
+								null,
 								'".$data["finicio"]."',
-								'".$data["ffinal"]."',
+								'".$data["ffinal"]."',";
+								}
+							
+							$sql.="
 								'".$data["usuario"]."',
 								now(),
 								'".$filiales[$i]."',
@@ -554,7 +583,7 @@ class MySqlGrupoAcademicoDAO{
 
   public function cargarCursosAcademicos($array){
   		$array['cgracpr']=str_replace(',',"','",$array['cgracpr']);
-		$sql="	SELECT c.`ccuprpr`,cu.`dcurso`,c.`finipre`,c.`ffinpre`,c.`finivir`,c.`ffinvir`,
+		$sql="	SELECT c.`ccuprpr`,cu.`dcurso`,ifnull(c.`finipre`,'') as finipre,ifnull(c.`ffinpre`,'') as ffinpre,ifnull(c.`finivir`,'') as finivir,ifnull(c.`ffinvir`,'') as ffinvir,
 				IFNULL(CONCAT(pe.`dappape`,' ',pe.`dapmape`,', ',pe.`dnomper`),'') AS nombre,IFNULL(c.cprofes,'') cprofes,
 				g.cinstit,g.cfilial 
 				FROM gracprp g
@@ -587,7 +616,9 @@ class MySqlGrupoAcademicoDAO{
 				INNER JOIN ambienm a ON (a.`cambien`=h.`cambien`)
 				INNER JOIN tipamba t ON (t.`ctipamb`=a.`ctipamb`)
 				INNER JOIN tietolm ti ON (ti.`ctietol`=h.`ctietol`)
-				WHERE h.ccurpro='".$array['ccuprpr']."'";
+				INNER JOIN profesm p ON (h.cprofes=p.cprofes)
+				WHERE h.ccurpro='".$array['ccuprpr']."'
+				AND h.cdetgra='".$array['cdetgra']."'";
         $db=creadorConexion::crear('MySql');
 
         $db->setQuery($sql);
@@ -597,6 +628,23 @@ class MySqlGrupoAcademicoDAO{
         }
 		else{
             return array('rst'=>'2','msj'=>'No existen Horarios','data'=>$data,'sql'=>$sql);
+        }
+  }
+
+  public function cargarDetalleGrupo($array){
+  		$array['cgracpr']=str_replace(',',"','",$array['cgracpr']);
+		$sql="	SELECT cdetgra as id, dseccio as nombre 
+				FROM detgrap
+				WHERE cgracpr in ('".$array['cgracpr']."')";
+        $db=creadorConexion::crear('MySql');
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Secciones cargados','data'=>$data);
+        }
+		else{
+            return array('rst'=>'2','msj'=>'No existen Secciones','data'=>$data,'sql'=>$sql);
         }
   }
   

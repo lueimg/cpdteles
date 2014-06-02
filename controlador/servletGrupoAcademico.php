@@ -30,7 +30,7 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['fechini']=trim($_POST['fechini']);
 				$data['fechfin']=trim($_POST['fechfin']);
                 echo json_encode($daoGrupoAcademico->cargarGrupoAcademico2($data));
-            break;
+            break;            
 			case 'cargarAlumnos':
 				$data=array();
 				$data['id']=trim($_POST['id']);
@@ -82,13 +82,19 @@ class servletGrupoAcademico extends controladorComandos{
       		break;
       		case 'cargarCursosAcademicos':
 				$data=array();				
-				$data['cgracpr']=trim($_POST['cgracpr']);
+				$data['cgracpr']=trim($_POST['cgracpr']);				
                 echo json_encode($daoGrupoAcademico->cargarCursosAcademicos($data));
             break;
             case 'cargarHorarioProgramado':
 				$data=array();				
 				$data['ccuprpr']=trim($_POST['ccuprpr']);
+				$data['cdetgra']=trim($_POST['cdetgra']);
                 echo json_encode($daoGrupoAcademico->cargarHorarioProgramado($data));
+            break;
+            case 'cargarDetalleGrupo':
+				$data=array();
+				$data['cgracpr']=trim($_POST['cgracpr']);				
+                echo json_encode($daoGrupoAcademico->cargarDetalleGrupo($data));
             break;            
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));

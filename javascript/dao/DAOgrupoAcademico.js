@@ -326,7 +326,7 @@ var grupoAcademicoDAO={
             data : {
                 comando:'grupo_academico',
                 accion:'cargarCursosAcademicos',
-                cgracpr:ids
+                cgracpr:ids                
             },
             beforeSend : function ( ) {
             },
@@ -347,13 +347,35 @@ var grupoAcademicoDAO={
             data : {
                 comando:'grupo_academico',
                 accion:'cargarHorarioProgramado',
-                ccuprpr:id
+                ccuprpr:id,
+                cdetgra:$("#slct_detalle_grupo").val().split("|")[0]
             },
             beforeSend : function ( ) {
             },
             success : function ( obj ) {
                 if( obj.length!=0 ){
                     evento(obj.data);
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
+    cargarDetalleGrupo: function(fxllena,slct_dest,id_slct,ids){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'grupo_academico',
+                accion:'cargarDetalleGrupo',
+                cgracpr:ids                
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {
+                if( obj.length!=0 ){
+                    fxllena(obj.data,slct_dest,id_slct);
                 }
             },
             error: this.msjErrorAjax

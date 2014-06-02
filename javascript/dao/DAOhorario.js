@@ -113,6 +113,7 @@ var horarioDAO={
                 comando:'horario',
                 accion:'guardarHorarios',
                 datos:d,
+                cdetgra:$("#slct_detalle_grupo").val().split("|")[0],                
                 ccuprpr:$("#ccuprpr").val(),
                 cprofes:$('#cprofes').val(),
                 finipre:$("#txt_fecha_ini_pre").val(),

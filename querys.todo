@@ -1,0 +1,47 @@
+Ingresar aqui los querys creados para casos especiales para informar sobre cambios serios.!!!  Si gustar puedes guardar querys de otro tipo con detalle!!!.
+
+Actualizar cuprprp:
+  Este query es para limpiar las fechas de presencial o virtual según el caso de cada grupo académico.
+
+  update cuprprp c
+  inner join gracprp g on (c.cgracpr=g.cgracpr)
+  inner join instita i on (i.cinstit=g.cinstit)
+  set  c.finipre=if(i.cmodali='1',c.finipre,null)
+  ,c.ffinpre=if(i.cmodali='1',c.ffinpre,null)
+  ,c.finivir=if(i.cmodali='2',c.finivir,null)
+  ,c.ffinvir=if(i.cmodali='2',c.ffinvir,null)
+
+Actualizar detgrap:
+  Este query actualiza la información sobre las secciones que tendrá un grupo académico.
+
+  insert into detgrap (cgracpr,ncapaci,dseccio,fusucre,cusucre)
+  select g.cgracpr,g.nmetmat,'A',now(),'Jorgito1'
+  from gracprp g
+  left JOIN detgrap d on d.cgracpr=g.cgracpr
+  where d.cgracpr is null
+  AND g.trgrupo='R'
+
+Actualizar conmatp y decomap:
+  Este query es para poner la seccion asignada a cada alumno matriculado.
+
+  update conmatp c
+  inner join detgrap d on c.cgruaca=d.cgracpr
+  set c.cdetgra=d.cdetgra;
+
+  update decomap d 
+  inner join conmatp c on (d.cconmat=c.cconmat)
+  set d.cdetgra=c.cdetgra;
+
+Actualizar horprop:
+  Este query es para actualizar la seccion de ese horario del curso programado.
+
+  update horprop h
+  inner join cuprprp c on c.ccuprpr=h.ccurpro
+  inner join gracprp g on g.cgracpr=c.cgracpr
+  inner join detgrap d on d.cgracpr=g.cgracpr
+  set h.cdetgra=d.cdetgra
+
+  Este query es para ingresar cprofes a los horarios
+  
+  update horprop
+  set cprofes ='2';
