@@ -1,30 +1,39 @@
+Se ordena de forma alfabetico para cualquier cambio indicar fecha si es posible. Gracias
+
 ambienm:
   cambien int autoincre
-tipamba:
-  ctipamb  int autoincre
-  ctipamb -> se adicionó cestado
-horprop tiene cambien act.:
-  horprop -> se adicionó cestado.
 
-tietolm -> se adicionó cestado.
-tietolm -> se cambio el indice autoincrement
-horprop -> se cambio el indice autoincrement
-profesm -> se cambio el indice autoincrement
-    testpro -> se cambio por cestado
+cuprprp:
 cuprprp -> se actualizó el cprofes a int
+
+decomap:
 decomap -> cestado por default es 1
 
+detgrap   01-06.14: 
+  Tabla nueva registra el detalle de los grupos sus secciones divisiones y capacidad de cada seccion.
+
+equisag:
 se generó nueva tabla equisag indica las equivalencia de los cursos con cursos para actas
-para semestre se adicionaron 2 fechas , fechgra y fechext.
 
-Estas fechas afectarán a la matrícula y ratificación ayudarán a controlar los pagos y penalidades.
+horprop tiene cambien act.:
+  horprop -> se adicionó cestado.
+  horprop -> se cambio el indice autoincrement
 
-S-----------------------------------------------------------------------------------------------------------S:
+profesm:
+profesm -> se cambio el indice autoincrement
+    testpro -> se cambio por cestado
 2014-05-21 :: LUIS MORI
 ALTER TABLE profesm 
 ADD COLUMN pesodoc CHAR(2) NULL DEFAULT 0 AFTER cestado;
 
-Archivos creados
-vista/vst-profesPeso.php
+Semacan:
+para semestre se adicionaron 2 fechas , fechgra y fechext.
+Estas fechas afectarán a la matrícula y ratificación ayudarán a controlar los pagos y penalidades.
 
+tietolm:
+tietolm -> se adicionó cestado.
+tietolm -> se cambio el indice autoincrement
 
+tipamba:
+  ctipamb  int autoincre
+  ctipamb -> se adicionó cestado
