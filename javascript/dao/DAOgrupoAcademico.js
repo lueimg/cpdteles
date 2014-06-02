@@ -277,7 +277,7 @@ var grupoAcademicoDAO={
             error: this.msjErrorAjax
         });
     },
-	ActualizarGrupoAcademico: function(dias){
+	ActualizarGrupoAcademico: function(dias,detalle){
   	$.ajax({
 		url : this.url,
 		type : 'POST',
@@ -291,6 +291,7 @@ var grupoAcademicoDAO={
 			chora:$("#slct_horario_edit").val(),
 			nmetmat:$("#txt_meta_mat_edit").val(),
 			dias: dias,
+            valores:detalle,
 			fechainiciosemestre:$("#fechainiciosemestre").val(),
 			fechafinsemestre:$("#fechafinsemestre").val(),
 			finicio:$("#txt_fecha_inicio_edit").val(),

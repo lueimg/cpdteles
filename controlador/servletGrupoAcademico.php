@@ -77,6 +77,7 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['nmetmat']=trim($_POST['nmetmat']);
 				$data['fechafinsemestre']=trim($_POST['fechafinsemestre']);
 				$data['fechainiciosemestre']=trim($_POST['fechainiciosemestre']);
+				$data['valores']=trim($_POST['valores']);
 				echo json_encode($daoGrupoAcademico->ActualizarGrupoAcademico($data));
       		break;
       		case 'cargarCursosAcademicos':

@@ -280,6 +280,31 @@ getFechasSemetreHtml = function(obj){
     $("#fechas_semestre").html(htm);
 }
 
+AgregarSeccion= function(){	
+	var abc="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T";
+	var i=$('#n_capacidad').val();	
+	var htm="";
+	$("#secciones table .btnelimina").css("display","none");
+	htm+="<tr id='tr_elimina_"+i+"'>";
+	htm+="<td>"+abc.split(",")[i]+"</td>";
+	htm+="<td><input type='text' id='txt_capacidad_"+i+"'  value='0' class='input-mini' onkeypress='return sistema.validaNumeros(event)' onKeyUp='validaCapacidadMaxima(this.id);'>";
+	htm+="<td>Activo"+
+			'<a class="btnelimina btn btn-azul sombra-3d t-blanco" onclick="QuitarSeccion('+i+');" href="javascript:void(0)">'+
+				'<i class="icon-white icon-remove-sign"></i>'+
+			'</a>'+
+		 "</td>";
+	htm+="</tr>";
+	$("#secciones table").append(htm);
+	$('#n_capacidad').val(i*1+1);
+}
+
+QuitarSeccion=function(id){
+	var i=id-1;
+	$("#tr_elimina_"+id).remove();
+	$("#tr_elimina_"+i+" .btnelimina").css("display","");
+	$('#n_capacidad').val(id);
+}
+
 abrirEdicionGrupo = function(cgruaca){   
     //CARGAR DATOS DEL GRUPO
     carreraDAO.GetDatosGrupo(cgruaca,EditarGrupoLLenarDatos);   
@@ -302,7 +327,46 @@ EditarGrupoLLenarDatos = function(obj){
     $("#txt_fecha_inicio_edit").val(obj.finicio);
     window.console.log(obj.finicio);
     $("#txt_fecha_final_edit").val(obj.ffin);
-    
+    $("#txt_secc_mat_edit").val(obj.cantidad);
+    var d=obj.detalle_grupo.split("_");
+    var htm="<table border=1><tr>"+
+	    		"<th class='label'>Seccion</th>"+
+	    		"<th class='label'>Capacidad</th>"+
+	    		"<th class='label'>Estado</th>"+
+	    		"</tr>";
+
+    for(i=0;i<d.length;i++){
+    	htm+="<tr>";
+    	htm+="<td>"+d[i].split("|")[1]+"</td>";
+    	htm+="<td><input type='text' id='txt_capacidad_"+i+"' class='input-mini' value='"+d[i].split("|")[0]+"' onkeypress='return sistema.validaNumeros(event)' onKeyUp='validaCapacidadMaxima(this.id);'></td>";
+
+    	htm+="<td><select id='slct_estado_"+i+"'>";
+    			if(d[i].split("|")[2]=='1'){
+    	htm+="		<option value='1' selected=selected>Activo</option>";
+    	htm+="		<option value='0'>Desactivado</option>";
+    			}
+    			else{
+    	htm+="		<option value='1'>Activo</option>";
+    	htm+="		<option value='0' selected=selected>Desactivado</option>";			
+    			}    				
+    	htm+="	  </select></td>";
+    	htm+="</tr>";
+    }
+    htm+="</table>";
+    htm+="<input type='hidden' id='n_capacidad' value='"+d.length+"'>";
+    $("#secciones").html(htm);
+}
+
+validaCapacidadMaxima=function(id){
+	var acu=0;
+	for(i=0;i<$("#n_capacidad").val();i++){
+		acu+=$("#txt_capacidad_"+i).val()*1;
+	}
+
+	if(acu>$("#txt_meta_mat_edit").val()){
+		$("#"+id).val('');
+		sistema.msjAdvertencia("El total:"+acu+" no puede ser mayor a meta matricula:"+$("#txt_meta_mat_edit").val(),200);
+	}
 }
 
 
@@ -359,9 +423,30 @@ ActualizarGrupo=function(){
       return this.value;
       }
         }).get().join("-");
+
+  	var valores="";
+
+  	for(i=0;i<$("#n_capacidad").val();i++){
+		if($("#txt_capacidad_"+i).val()==''){
+			sistema.msjAdvertencia("Ingresar almenos 0 en caso no tener valor",200);
+			$("#txt_capacidad_"+i).focus();
+			error="ok";
+			break;
+		}
+		else{
+			valores+="|";
+			if($("#tr_elimina_"+i+" a").attr("class")){
+				valores+="si-"+$("#txt_capacidad_"+i).val()+"-1";
+			}
+			else{
+				valores+="no-"+$("#txt_capacidad_"+i).val()+"-"+$("#slct_estado_"+i).val();	
+			}
+
+		}
+	}	
     
-    if(error=="" && dias!=""){
-    grupoAcademicoDAO.ActualizarGrupoAcademico(dias);
+    if(error=="" && dias!=""){    	
+    grupoAcademicoDAO.ActualizarGrupoAcademico(dias,valores);
     }
   }
   

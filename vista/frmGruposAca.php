@@ -58,11 +58,16 @@
                                             </td>                                            
                                         </tr>
                                         <tr>
-                                          <td colspan='2' class="t-left label" id='mensaje_faltas'>
-                                          </td>                                           
+                                          <td class="t-left label">Cant. Secciones:</td>
+                                            <td class="t-left">
+                                              <a class="btn btn-azul sombra-3d t-blanco" onclick="AgregarSeccion();" href="javascript:void(0)">
+                                                <i class="icon-white icon-plus"></i>
+                                                <span>Agregar Sección</span>
+                                              </a>  
+                                            </td>                                          
                                         </tr>
                                         <tr>
-                                          <td colspan='2' class="t-left label" id='secciones'>
+                                          <td colspan='2' class="t-center" id='secciones'>
 
                                           </td>                                           
                                         </tr>

@@ -409,6 +409,39 @@ class MySqlGrupoAcademicoDAO{
 			break;
 			}
 		}
+
+		$arraydatos=explode(",",",A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T");
+
+		if($data['valores']!=''){
+
+
+		$valores=explode("|",$data['valores']);
+			for($i=1;$i<count($valores);$i++){
+				$dval=explode("-",$valores[$i]);
+				if($dval[0]=="si"){
+					$sql="insert into detgrap (cgracpr,ncapaci,dseccio,cusucre,fusucre) 
+						  values('".$data["cgruaca"]."','".$dval[1]."','".$arraydatos[$i]."','".$data["usuario"]."',now())";
+				}
+				else{
+					$sql="UPDATE detgrap 
+						  SET ncapaci='".$dval[1]."'
+						  ,cestado='".$dval[2]."'
+						  ,cusumod='".$data['usuario']."'
+						  ,fusumod=now() 
+						  WHERE dseccio='".$arraydatos[$i]."'
+						  AND cgracpr='".$data['cgruaca']."'";
+				}
+				$db->setQuery($sql);	
+			
+				if(!$db->executeQuery()){
+					$db->rollbackTransaccion();
+					return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
+				}
+			}
+
+		}
+
+
 	//if($valorvalidado==true){
 		//DATOS DEL GRUPO ACTUAL
 		$sqlGrupo = "select * from gracprp where cgracpr = '".$data["cgruaca"]."'";
@@ -434,7 +467,8 @@ class MySqlGrupoAcademicoDAO{
 		$db->setQuery($validagrupo);
 		$datag=$db->loadObjectList();		
 			if(count($datag)>0){			
-				return array('rst'=>'2','msj'=>'No modificó; Grupo ya existente','sql'=>$validagrupo);exit();
+				$db->commitTransaccion();
+   				return array('rst'=>'1','msj'=>'Cambios guardados correctamente; ');exit();
 			}
 		//Actualizar curso primero antes de cambiar grupos.	
 		$sql = "UPDATE cuprprp SET  ";

@@ -976,7 +976,11 @@ class MySqlCarreraDAO{
     }
 	
 	public function GetDatosGrupo($cgruaca){
-        $sql="select * from gracprp where cgracpr ='$cgruaca'";
+        $sql="  select g.* , GROUP_CONCAT(concat(d.ncapaci,'|',d.dseccio,'|',d.cestado) SEPARATOR '_') as detalle_grupo,count(d.cgracpr) as cantidad 
+                from gracprp g
+                inner join detgrap d on (g.cgracpr=d.cgracpr)
+                where g.cgracpr='$cgruaca'
+                group by g.cgracpr";
         $db=creadorConexion::crear('MySql');
         $db->setQuery($sql);
         $data=$db->loadObject();
