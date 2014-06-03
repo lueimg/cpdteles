@@ -160,7 +160,7 @@
                                     <tr>
                                         <td class="t-left label input-xlarge"><b>Sección:</b></td>
                                         <td>
-                                            <select id="slct_detalle_grupo" class="input-large">
+                                            <select id="slct_detalle_grupo" class="input-large" onchange="VerificaCambio();">
                                                 <option value="">.::Selecciona::.</option>
                                             </select>
                                         </td>                            
@@ -256,16 +256,8 @@
                                 <br><br>
                                 <div class="barra4 contentBarra t-blanco t-left"><i class="icon-white icon-th"></i>HORARIOS PROGRAMADOS</div>
                                 <table id='detalle_actualizacion'>
+                                    <input type="hidden" value="1" id="txt_cant_hor" > <?php //este es para controlar los horarios dinamicos ?>
                                     <tr>
-                                        <td class="t-left label" >
-                                          <b>Dia: </b><input type="hidden" value="1" id="txt_cant_hor" >
-                                        </td>
-                                        <td class="t-left label" >
-                                          <b>Hora: </b>
-                                        </td>
-                                        <td class="t-left label" >
-                                          <b>Tipo: </b>
-                                        </td>
                                         <td class="t-left label" >
                                           <b>Tipo Ambiente: </b>
                                         </td>
@@ -273,30 +265,25 @@
                                           <b>Ambiente: </b>
                                         </td>
                                         <td class="t-left label" >
+                                          <b>Docente: </b>
+                                        </td>
+                                        <td class="t-left label" >
+                                          <b>Horario: </b>
+                                        </td>                                        
+                                        <td class="t-left label" >
+                                          <b>Tipo: </b>
+                                        </td>                                        
+                                        <td class="t-left label" >
                                           <b>Tiempo Tolerancia: </b>
                                         </td>
                                         <td class="t-left label" >
                                           <b>Estado: </b>
                                         </td>
+                                        <td class="t-left label" >
+                                          <b>[X] </b>
+                                        </td>
                                     </tr>
                                     <tr style="display:none" class="FormData">                                       
-                                        <td class="t-left">
-                                          <select id="slct_dia" style="width:120px">
-                                          <option value="">--Seleccione--</option>
-                                          </select>
-                                        </td>                                      
-                                        <td class="t-left">
-                                          <select id="slct_hora" style="width:120px">
-                                          <option value="">--Seleccione--</option>
-                                          </select>
-                                        </td>                                     
-                                        <td class="t-left">
-                                          <select id="slct_tipo" style="width:120px">
-                                          <option value="">--Seleccione--</option>
-                                          <option value="T">Teórico</option>
-                                          <option value="P">Práctico</option>
-                                          </select>
-                                        </td>
                                         <td class="t-left">
                                           <select id="slct_tipo_ambiente" style="width:120px" onChange='ActualizaAmbiente(this.value,this.id);'>
                                           <option value="">--Seleccione--</option>
@@ -306,7 +293,19 @@
                                           <select id="slct_ambiente" style="width:120px">
                                           <option value="">--Seleccione--</option>
                                           </select>
-                                        </td>                                                                               
+                                        </td>
+                                        <td class="t-left">
+                                          <select id="slct_horario" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          </select>
+                                        </td>                                      
+                                        <td class="t-left">
+                                          <select id="slct_tipo" style="width:120px">
+                                          <option value="">--Seleccione--</option>
+                                          <option value="T">Teórico</option>
+                                          <option value="P">Práctico</option>
+                                          </select>
+                                        </td>                                                                                                                       
                                         <td class="t-left">
                                           <select id="slct_tiempo_tolerancia" style="width:120px">
                                           <option value="">--Seleccione--</option>

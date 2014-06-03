@@ -113,7 +113,8 @@ class MySqlHorarioDAO{
                         fusuari=NOW(),
                         cusuari='".$array['cusuari']."',
                         ctietol='".$dd[5]."',
-                        cestado='".$dd[6]."'
+                        cestado='".$dd[6]."',
+                        cprofes='2'                        
                         WHERE chorpro='".$dd[7]."'";
             $db->setQuery($sqlinsert);
             if(!$db->executeQuery()){
@@ -130,8 +131,8 @@ class MySqlHorarioDAO{
         for($i=0;$i<count($detdatins);$i++){
             $dd=explode("_",$detdatins[$i]);
 
-            $sqlinsert="INSERT INTO horprop (cdia,chora,ccurpro,ctipcla,cambien,fusuari,cusuari,ctietol,cestado,cdetgra)
-                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1','".$array['cdetgra']."')";
+            $sqlinsert="INSERT INTO horprop (cdia,chora,ccurpro,ctipcla,cambien,fusuari,cusuari,ctietol,cestado,cdetgra,cprofes)
+                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1','".$array['cdetgra']."','2')";
             $db->setQuery($sqlinsert);
             if(!$db->executeQuery()){
                 $db->rollbackTransaccion();

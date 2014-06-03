@@ -5,7 +5,7 @@ $(document).ready(function(){
 	institucionDAO.cargarInstitucionValidaG(sistema.llenaSelectGrupo,'slct_instituto','','Instituto');
     institucionDAO.cargarFilialValidadaG(sistema.llenaSelectGrupo,'slct_filial','','Filial');	    
 
-    horarioDAO.cargarDia(sistema.llenaSelect,'slct_dia','');
+    
     horarioDAO.cargarTipoAmbiente(sistema.llenaSelect,'slct_tipo_ambiente','');
 	horarioDAO.cargarTiempoTolerancia(sistema.llenaSelect,'slct_tiempo_tolerancia','');
 
@@ -131,8 +131,7 @@ ActualizaHorario=function(id,datos){
 		$('#txt_fecha_ini_vir').val(d[5]);
 		$('#txt_fecha_fin_vir').val(d[6]);
 		$('#cinstit').val(d[7]);
-		$('#cfilial').val(d[8]);
-		horarioDAO.cargarHora(sistema.llenaSelect,'slct_hora','');
+		$('#cfilial').val(d[8]);		
 		grupoAcademicoDAO.cargarHorarioProgramado(VisualizarHorarioProgramadoHtml,id);		
 		$("#actualizacion").css("display","");	
 	}
@@ -148,8 +147,6 @@ VisualizarHorarioProgramadoHtml=function(obj){
 	$.each(obj,function(index,value){
 		AgregarHorario('X');
 		pos=$("#txt_cant_hor").val()*1;
-		$("#slct_dia_"+pos).val(value.cdia);
-		$("#slct_hora_"+pos).val(value.chora);
 		$("#slct_tipo_"+pos).val(value.ctipcla);
 		$("#slct_tipo_ambiente_"+pos).val(value.ctipamb);
 		ActualizaAmbiente(value.ctipamb,'slct_tipo_ambiente_'+pos,value.cambien);
@@ -161,9 +158,11 @@ VisualizarHorarioProgramadoHtml=function(obj){
 AgregarHorario=function(ide){
 	var agregado='fijo';
 	var disabled='';
+	var disabled2='disabled'
 	if(ide==''){
 		agregado='agregado';
 		disabled='disabled';
+		disabled2='';
 	}	
 	var tot=0;
 	var htm="";	
@@ -171,35 +170,33 @@ AgregarHorario=function(ide){
 	$("#txt_cant_hor").val(tot);
 	htm=''+
 	'<tr id="trel_'+tot+'" class="FormData '+agregado+'"> '+                                      
-	    '<td class="t-left">'+ 
-	      '<select id="slct_dia_'+tot+'" style="width:120px">'+ 
+		'<td class="t-left">'+ 
+	      '<select id="slct_tipo_ambiente_'+tot+'" class="input-large" onChange="ActualizaAmbiente(this.value,this.id);" '+disabled2+'>'+ 
 	      '<option value="">--Seleccione--</option>'+ 
 	      '</select>'+ 
 	    '</td>         '+                              
 	    '<td class="t-left">'+ 
-	      '<select id="slct_hora_'+tot+'" class="input-large">'+ 
+	      '<select id="slct_ambiente_'+tot+'" class="input-large" '+disabled2+'>'+ 
 	      '<option value="">--Seleccione--</option>'+ 
 	      '</select>'+ 
-	    '</td>         '+                             
+	    '</td>         '+ 
 	    '<td class="t-left">'+ 
-	      '<select id="slct_tipo_'+tot+'" style="width:120px">'+ 
+	      '<select id="slct_horario_'+tot+'" style="width:120px" '+disabled2+'>'+ 
+	      '<option value="">--Seleccione--</option>'+ 
+	      '</select>'+ 
+	    '</td>         '+                              
+	    '<td class="t-left">'+ 
+	      '<input type="text" id="txt_dprofes_'+tot+'" style="width:120px" '+disabled2+'>'+'<input type="hidden" id="txt_cprofes_'+tot+'>'+ 	      
+	    '</td>         '+                              
+	    '<td class="t-left">'+ 
+	      '<select id="slct_tipo_'+tot+'" style="width:120px" '+disabled2+'>'+ 
 	      '<option value="">--Seleccione--</option>'+ 
 	      '<option value="T">Teórico</option>'+ 
 	      '<option value="P">Práctico</option>'+ 
 	      '</select>'+ 
-	    '</td>'+ 
+	    '</td>'+ 	                                                                          
 	    '<td class="t-left">'+ 
-	      '<select id="slct_tipo_ambiente_'+tot+'" class="input-large" onChange="ActualizaAmbiente(this.value,this.id);">'+ 
-	      '<option value="">--Seleccione--</option>'+ 
-	      '</select>'+ 
-	    '</td>         '+                              
-	    '<td class="t-left">'+ 
-	      '<select id="slct_ambiente_'+tot+'" class="input-large">'+ 
-	      '<option value="">--Seleccione--</option>'+ 
-	      '</select>'+ 
-	    '</td>         '+                                                                       
-	    '<td class="t-left">'+ 
-	      '<select id="slct_tiempo_tolerancia_'+tot+'" style="width:120px">'+ 
+	      '<select id="slct_tiempo_tolerancia_'+tot+'" style="width:120px" '+disabled2+'>'+ 
 	      '<option value="">--Seleccione--</option>'+ 
 	      '</select>'+ 
 	    '</td>         '+                              
@@ -221,15 +218,9 @@ AgregarHorario=function(ide){
 	    htm+='<td><input type="checkbox" id="chk_'+tot+'"></td></tr>';
 	    }
 	    
-	$("#detalle_actualizacion").append(htm);
-	$("#slct_dia_"+tot).html($("#slct_dia").html());
-	$("#slct_dia_"+tot).val('');
-	$("#slct_hora_"+tot).html($("#slct_hora").html());
-	$("#slct_hora_"+tot).val('');
+	$("#detalle_actualizacion").append(htm);	
 	$("#slct_tipo_ambiente_"+tot).html($("#slct_tipo_ambiente").html());
 	$("#slct_tipo_ambiente_"+tot).val('');
-	$("#slct_ambiente_"+tot).html($("#slct_ambiente").html());
-	$("#slct_ambiente_"+tot).val('');
 	$("#slct_tiempo_tolerancia_"+tot).html($("#slct_tiempo_tolerancia").html());
 	$("#slct_tiempo_tolerancia_"+tot).val('');
 }
@@ -289,22 +280,7 @@ guardarHorario=function(){
 		datos2=$("#detalle_actualizacion .agregado").map(function(index, element) {
 			id=this.id.split("_")[1];
 
-            if($("#slct_dia_"+id).val()=='' && error==""){
-			error="ok";
-			sistema.msjAdvertencia("Seleccionar Día",200);
-			$("#slct_dia_"+id).focus();
-			}
-			else if($("#slct_hora_"+id).val()=='' && error==""){
-			error="ok";
-			sistema.msjAdvertencia("Seleccionar Hora",200);
-			$("#slct_hora_"+id).focus();
-			}
-			else if($("#slct_tipo_"+id).val()=='' && error==""){
-			error="ok";
-			sistema.msjAdvertencia("Seleccionar Tipo Horario",200);
-			$("#slct_tipo_"+id).focus();
-			}
-			else if($("#slct_tipo_ambiente_"+id).val()=='' && error==""){
+            if($("#slct_tipo_ambiente_"+id).val()=='' && error==""){
 			error="ok";
 			sistema.msjAdvertencia("Seleccionar Tipo Ambiente",200);
 			$("#slct_tipo_ambiente_"+id).focus();
@@ -314,6 +290,16 @@ guardarHorario=function(){
 			sistema.msjAdvertencia("Seleccionar Ambiente",200);
 			$("#slct_ambiente_"+id).focus();
 			}
+			else if($("#slct_horario_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Horario",200);
+			$("#slct_horario_"+id).focus();
+			}
+			else if($("#slct_tipo_"+id).val()=='' && error==""){
+			error="ok";
+			sistema.msjAdvertencia("Seleccionar Tipo Horario",200);
+			$("#slct_tipo_"+id).focus();
+			}			
 			else if($("#slct_tiempo_tolerancia_"+id).val()=='' && error==""){
 			error="ok";
 			sistema.msjAdvertencia("Seleccionar Tiempo Tolerancia",200);
@@ -375,4 +361,8 @@ ExportarGrupos = function (){
 
 	var lista_grupos = grupos.join(',');
 	window.open('../reporte/pdf/PDFreporteHorarios.php?'+ "grupos="+lista_grupos , "_blank");
+}
+
+VerificaCambio=function() {
+	$("#actualizacion").css("display","none");
 }
