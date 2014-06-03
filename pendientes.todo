@@ -5,7 +5,7 @@ ELiminar Botones del mantenimiento de docente cuando se selecciona una persona:
   Aquí será lo mismo con la diferencia que se agregará un campo mas "pesodoc" que es el peso del docente.
   este nuevo mantenimeito solo es para editar o tambien puede crear ???:
  ✔ --> ya esta listo el editar @done (14-05-21 03:16)
- ☐ Aqui falta crear tb, debe tener creo q solo es activar ese evento q lo escondist sino me equivoco.
+ ✔ Aqui falta crear tb, debe tener creo q solo es activar ese evento q lo escondist sino me equivoco. @done (14-05-28 17:24)
  Mantenimiento de horarios:
   ✔ desabilitar el disabled para poder seleccionar grupo ó curso para crear ambas horas. @done (14-05-21 01:38)
 
@@ -34,14 +34,22 @@ Lo puse Horario Académico Programado!:
 
 
   Reportes según Orden:
-
+ ☐ 
 ☐ 1) Reporte de Carga Horaria del Docente
   Será una plancha donde irá un listado con las cabeceras:
   Filial, Institución, Carrera, Curso, Día, Hora
   ordenado por Día,Hora,Filial, Institución, Carrera, Curso
+  2 formas:
+  ☐ como horario  , en el cuadro curso  filial institucion, (dimensiones hora y dia)
+  ☐ Plancha
+  ☐ Se puede seleccionar mas de 1 docente pdf
+  ☐ usar grilla modelo pagos
+
 
  ☐ 2) Reporte disponibilidad de ambiente
-   indicar los horarios disponibles con colores verde libre , rojo ocupado.  Trama Horaria X Día  y Hora.
+   indicar los ambientes/horarios disponibles con colores verde libre , rojo ocupado.  Trama Horaria X Día  y Hora.
+   ☐ En excel
+
 
  ☐ 3) Reporte de alumnos de matrícula, pagados y no pagados.
   El reporte tiene que tener una seriedad de filtros, sea por Ode,inst,carrera, cursos
@@ -50,5 +58,12 @@ Lo puse Horario Académico Programado!:
   Los alumnos no pagados en lista debe tener 2 titulos, Alumnos no pagados y Alumnos no pagado con problemas del 30% de inasistencia.
 
   La validación del 30% será validado por el negocio de inasistencia para obtener su porcentaje actual.
+
+
+
+
+
+
+
 
  ☐ Realizar un checkeo que los estado inactivos no visualicen en los listados.
