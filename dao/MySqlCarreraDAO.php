@@ -23,6 +23,18 @@ class MySqlCarreraDAO{
             return array('rst'=>'2','msj'=>'No existe Modalidad','data'=>$data,'sql'=>$sql);
         }
     }
+
+    public function cargaAmbiente($cfilial){
+        $sql="select cambien id , numamb nombre from ambienm where cfilial = $cfilial";
+        $db=creadorConexion::crear('MySql');
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Ambientes cargado','data'=>$data);
+        }else{
+            return array('rst'=>'2','msj'=>'No existe Ambientes','data'=>$data,'sql'=>$sql);
+        }
+    }
 	
 	public function cargarCarrera($ctipcar,/*$cmodali,*/$cinstit,$cfilial){
         $db=creadorConexion::crear('MySql');

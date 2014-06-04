@@ -9,6 +9,10 @@ class servletCarrera extends controladorComandos{
 			case 'cargar_modalidad':				
 				echo json_encode($daoCarrera->cargarModalidad());
 			break;
+			case 'cargaAmbiente':
+				$cfilial=trim($_POST['cfilial']);
+				echo json_encode($daoCarrera->cargaAmbiente($cfilial));
+			break;
 			case 'cargar_carrera':
 				$ctipcar=trim($_POST['ctipcar']);
 				//$cmodali=trim($_POST['cmodali']);

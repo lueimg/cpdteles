@@ -25,8 +25,8 @@
 	<body>
 		<div id="capaOscura" class="capaOscura" style="display:none"></div>
 		<div id="capaCargando" class="capaCargando" style="display:none"><div class="girando"><div class="estrella"></div></div></div>
-		<?require_once('ifrm-header.php')?>	
-		<?require_once('ifrm-nav.php')?>	
+		<?php require_once('ifrm-header.php'); ?>	
+		<?php require_once('ifrm-nav.php'); ?>	
         <div class="contenido">
 			<div class="cuerpo">
 				<div class="secc-izq" id="secc-izq" style="width:0px;">

@@ -1,5 +1,27 @@
 var carreraDAO={
 	url:'../controlador/controladorSistema.php',
+    cargaAmbiente: function(fxllena,slct_dest,id_slct){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'carrera',
+                accion:'cargaAmbiente',
+                cfilial:$("#slct_filial").val(),
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {
+                if( obj.length!=0 ){
+                    fxllena(obj.data,slct_dest,id_slct);                    
+                }
+            },
+            error: this.msjErrorAjax
+        });
+    },
+    
     cargarCarrera: function(fxllena,slct_dest,id_slct){
 		var cfil="";
 		if($("#slct_local_estudio").val()!=""){
