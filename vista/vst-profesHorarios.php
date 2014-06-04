@@ -76,7 +76,7 @@
                     </a>
                 </span>
                 <span class="formBotones">
-                    <a href="javascript:void(0)" onClick="Exportar_listado();" class="btn btn-azul sombra-3d t-blanco" id="sendData">
+                    <a href="javascript:void(0)" onClick="ExportarDocenteListado();" class="btn btn-azul sombra-3d t-blanco" id="sendData">
                         <i class="icon-white icon-check"></i>
                         <span>Exportar Horario en Listado</span>
                     </a>

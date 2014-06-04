@@ -182,7 +182,16 @@ Exportar_grilla = function (){
 }
 
 
+ExportarDocenteListado = function (){
+    
+    var grupos = $('#table_docente').jqGrid('getGridParam','selarrrow');
+    var lista_grupos = grupos.join(',');
+    window.open('../reporte/pdf/PDFProfesHorarioListado.php?'+ "docentes="+lista_grupos , "_blank");   
 
+
+
+
+}
 
 
 
