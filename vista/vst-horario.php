@@ -274,7 +274,7 @@
                                           <b>Tipo: </b>
                                         </td>                                        
                                         <td class="t-left label" >
-                                          <b>Tiempo Tolerancia: </b>
+                                          <b>Tiempo <br>Tolerancia: </b>
                                         </td>
                                         <td class="t-left label" >
                                           <b>Estado: </b>
@@ -334,15 +334,20 @@
                                     </tr>
                                 </table>
                             </fieldset>
-
-
-
                             </div>
                      	</div>
 					</div>
             	</div>
 			</div>
 		</div>
+            <div id="frmDocente" title="BUSCAR DOCENTE" class="corner_all" style="background: #ffffff;margin:7px;height: auto">
+                <div>
+                    <div style="margin-right:3px">
+                        <table id="table_docente2"></table>
+                        <div id="pager_table_docente2"></div>
+                    </div >
+                </div>                
+            </div>
         <div id="capaMensaje" class="capaMensaje" style="display:none"></div>		
 		<hr>
 		<?require_once('ifrm-footer.php')?>	

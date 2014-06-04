@@ -13,6 +13,44 @@ class MySqlHorarioDAO{
         }
     }   
 
+    public function cargarHorarioValidado($array){
+        $sql="  select concat(d.cdia,'-',h.chora) as id,
+                concat(d.dnemdia,' | ',h.hinici,' - ',h.hfin,' | Turno: ',t.dnemtur) as nombre,h2.horario
+                from horam h
+                inner join turnoa t on (t.cturno=h.cturno)
+                inner join diasm d 
+                left join   (
+                            select concat(h.cdia,'-',h.chora) as horario,g.finicio,g.ffin
+                            from horprop h
+                            inner join cuprprp c on (h.ccurpro=c.ccuprpr)
+                            inner join gracprp g on (c.cgracpr=g.cgracpr)
+                            where h.cambien='".$array['cambien']."'
+                            and h.cestado='1'
+                            and CURRENT_DATE() <=g.ffin
+                            UNION
+                            select concat(h.cdia,'-',h.chora) as horario,g.finicio,g.ffin
+                            from horprop h
+                            inner join cuprprp c on (h.ccurpro=c.ccuprpr)
+                            inner join gracprp g on (c.cgracpr=g.cgracpr)
+                            where h.cprofes='".$array['cprofes']."'
+                            and h.cestado='1'
+                            and CURRENT_DATE() <=g.ffin
+                            ) as h2 on (h2.horario=concat(d.cdia,'-',h.chora))
+                where h.cinstit='".$array['cinstit']."'
+                and h.thora='1'
+                and h.cestado='1'
+                and h2.horario is NULL
+                ORDER BY d.cdia,h.hinici,h.hfin;";
+        $db=creadorConexion::crear('MySql');
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Horarios cargados','data'=>$data);
+        }else{
+            return array('rst'=>'2','msj'=>'No existen Horarios','data'=>$data,'sql'=>$sql);
+        }
+    }
+
     public function cargarHora($array){
         $sql="  SELECT h.chora AS id,CONCAT('Turno:',t.`dturno`,' | ',h.hinici,'-',h.hfin) AS nombre
                 FROM horam h
@@ -106,16 +144,12 @@ class MySqlHorarioDAO{
             $dd=explode("_",$detdatact[$i]);
 
             $sqlinsert="UPDATE horprop SET
-                        cdia='".$dd[0]."',
-                        chora='".$dd[1]."',
-                        ctipcla='".$dd[2]."',
-                        cambien='".$dd[4]."',
+                        ctipcla='".$dd[0]."',                        
+                        ctietol='".$dd[1]."',
+                        cestado='".$dd[2]."',
                         fusuari=NOW(),
-                        cusuari='".$array['cusuari']."',
-                        ctietol='".$dd[5]."',
-                        cestado='".$dd[6]."',
-                        cprofes='2'                        
-                        WHERE chorpro='".$dd[7]."'";
+                        cusuari='".$array['cusuari']."'    
+                        WHERE chorpro='".$dd[3]."'";
             $db->setQuery($sqlinsert);
             if(!$db->executeQuery()){
                 $db->rollbackTransaccion();
@@ -132,7 +166,7 @@ class MySqlHorarioDAO{
             $dd=explode("_",$detdatins[$i]);
 
             $sqlinsert="INSERT INTO horprop (cdia,chora,ccurpro,ctipcla,cambien,fusuari,cusuari,ctietol,cestado,cdetgra,cprofes)
-                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1','".$array['cdetgra']."','2')";
+                        VALUES ('".$dd[0]."','".$dd[1]."','".$array['ccuprpr']."','".$dd[2]."','".$dd[4]."',now(),'".$array['cusuari']."','".$dd[5]."','1','".$array['cdetgra']."','".$dd[6]."')";
             $db->setQuery($sqlinsert);
             if(!$db->executeQuery()){
                 $db->rollbackTransaccion();

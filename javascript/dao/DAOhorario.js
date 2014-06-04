@@ -140,7 +140,28 @@ var horarioDAO={
             },
             error: this.msjErrorAjax
         });
-    },  
+    },      
+    cargarHorarioValidado: function(fxllena,slct_dest,id_slct,cprofe,cambie){
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            //async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'horario',
+                accion:'cargarHorarioValidado',
+                cprofes: cprofe,
+                cambien: cambie,
+                cinstit: $("#cinstit").val()
+            },
+            beforeSend : function ( ) {
+            },
+            success : function ( obj ) {                
+                    fxllena(obj.data,slct_dest,id_slct,'');                
+            },
+            error: this.msjErrorAjax
+        });
+    },
 	msjErrorAjax:function(){
         sistema.msjErrorCerrar('Error General, pongase en contacto con Sistemas');
     }

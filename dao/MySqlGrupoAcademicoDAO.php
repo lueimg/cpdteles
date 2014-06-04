@@ -607,16 +607,19 @@ class MySqlGrupoAcademicoDAO{
   }
 
   public function cargarHorarioProgramado($array){  		
-		$sql="	SELECT h.`chorpro`,h.`ccurpro`,h.ctietol,h.ctipcla,h.`chora`,h.`cdia`,a.`ctipamb`,h.`cambien`,d.`dnomdia` AS dia,
-				CONCAT(ho.`hinici`,'-',ho.`hfin`) AS hora,IF(h.ctipcla='T','Teorico','Practica') AS tipo,
-				ti.`mintol`,t.`dtipamb`,a.`numamb`
+		$sql="	SELECT h.`chorpro`,h.`ccurpro`,h.ctietol,h.ctipcla,h.`chora`,h.`cdia`,a.`ctipamb`,h.`cambien`,
+				concat(d.dnemdia,' | ',ho.hinici,' - ',ho.hfin,' | Turno: ',tu.dnemtur) as horario,
+				IF(h.ctipcla='T','Teorico','Practica') AS tipo,ti.`mintol`,t.`dtipamb`,a.`numamb`, 
+				concat(dappape,' ',dapmape,', ',dnomper) as dprofes,h.cprofes
 				FROM horprop h
 				INNER JOIN diasm d ON (d.`cdia`=h.`cdia`)
 				INNER JOIN horam ho ON (ho.`chora`=h.`chora`)
+				inner join turnoa tu on (tu.cturno=ho.cturno)
 				INNER JOIN ambienm a ON (a.`cambien`=h.`cambien`)
 				INNER JOIN tipamba t ON (t.`ctipamb`=a.`ctipamb`)
 				INNER JOIN tietolm ti ON (ti.`ctietol`=h.`ctietol`)
 				INNER JOIN profesm p ON (h.cprofes=p.cprofes)
+				INNER JOIN personm pe ON (pe.cperson=p.cperson)
 				WHERE h.ccurpro='".$array['ccuprpr']."'
 				AND h.cdetgra='".$array['cdetgra']."'";
         $db=creadorConexion::crear('MySql');

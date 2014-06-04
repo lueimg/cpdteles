@@ -37,6 +37,13 @@ class servletHorario extends controladorComandos{
 				$array['cfilialx']=trim($_POST['cfilialx']);
 				echo json_encode($daoHorario->guardarHorarios($array));
 			break;
+			case 'cargarHorarioValidado':
+				$array=array();
+				$array['cambien']=trim($_POST['cambien']);
+				$array['cprofes']=trim($_POST['cprofes']);
+				$array['cinstit']=trim($_POST['cinstit']);
+				echo json_encode($daoHorario->cargarHorarioValidado($array));
+			break;
 			default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;
