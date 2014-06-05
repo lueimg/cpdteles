@@ -164,6 +164,7 @@ VisualizarHorarioProgramadoHtml=function(obj){
 		$("#txt_cprofes_"+pos).val(value.cprofes);
 		ActualizaAmbiente(value.ctipamb,'slct_tipo_ambiente_'+pos,value.cambien);
 		$("#slct_tiempo_tolerancia_"+pos).val(value.ctietol);
+		$("#slct_estado_"+pos).val(value.cestado);
 		$("#chk_"+pos).attr("value",value.chorpro);
 	});	
 }
@@ -325,12 +326,12 @@ guardarHorario=function(){
 			}			
 			else if(general_datos!='' && general_datos.split('A'+$("#slct_horario_"+id).val()+'-'+$("#slct_ambiente_"+id).val()).length>1){					
 			error="ok";
-			sistema.msjAdvertencia("Existe duplicidad en sus registros del horario para el ambiente"+$("#slct_ambiente_"+id).val(),4000);
+			sistema.msjAdvertencia("Existe duplicidad en sus registros del horario para el ambiente",4000);
 			$("#slct_horario_"+id).focus();	
 			}
 			else if(general_datos!='' && general_datos.split('D'+$("#slct_horario_"+id).val()+'-'+$("#txt_cprofes_"+id).val()).length>1){					
 			error="ok";
-			sistema.msjAdvertencia("Existe duplicidad en sus registros del horario para el docente"+$("#slct_ambiente_"+id).val(),4000);
+			sistema.msjAdvertencia("Existe duplicidad en sus registros del horario para el docente",4000);
 			$("#slct_horario_"+id).focus();
 			}			
 				general_datos+='|A'+$("#slct_horario_"+id).val()+'-'+$("#slct_ambiente_"+id).val()+'|D'+$("#slct_horario_"+id).val()+'-'+$("#txt_cprofes_"+id).val();

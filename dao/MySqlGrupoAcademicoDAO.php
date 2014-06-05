@@ -610,7 +610,7 @@ class MySqlGrupoAcademicoDAO{
 		$sql="	SELECT h.`chorpro`,h.`ccurpro`,h.ctietol,h.ctipcla,h.`chora`,h.`cdia`,a.`ctipamb`,h.`cambien`,
 				concat(d.dnemdia,' | ',ho.hinici,' - ',ho.hfin,' | Turno: ',tu.dnemtur) as horario,
 				IF(h.ctipcla='T','Teorico','Practica') AS tipo,ti.`mintol`,t.`dtipamb`,a.`numamb`, 
-				concat(dappape,' ',dapmape,', ',dnomper) as dprofes,h.cprofes
+				concat(dappape,' ',dapmape,', ',dnomper) as dprofes,h.cprofes,h.cestado
 				FROM horprop h
 				INNER JOIN diasm d ON (d.`cdia`=h.`cdia`)
 				INNER JOIN horam ho ON (ho.`chora`=h.`chora`)
