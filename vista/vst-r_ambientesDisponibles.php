@@ -8,6 +8,8 @@
 
 		<link rel="stylesheet" type="text/css" href="../css/temas/default/css-sistema.php">
 		<link type="text/css" rel="stylesheet" media="screen" href="../javascript/includes/jqgrid-4.3.2/css/ui.jqgrid.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="../javascript/includes/multiselect/css/jquery.multiselect.css" />
+        <link type="text/css" rel="stylesheet" media="screen" href="../javascript/includes/multiselect/css/jquery.multiselect.filter.css" />
 
 		<script type="text/javascript" src="../javascript/includes/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="../javascript/includes/jquery-ui-1.8.18.custom.min.js"></script>
@@ -16,7 +18,10 @@
 
 		<script type="text/javascript" src="../javascript/sistema.js"></script>
 		<script type="text/javascript" src="../javascript/templates.js"></script>
+        <script type="text/javascript" src="../javascript/includes/multiselect/js/jquery.multiselect.filter.min.js"></script>
+        <script type="text/javascript" src="../javascript/includes/multiselect/js/jquery.multiselect.min.js"></script>
         
+       
 		<script type="text/javascript" src="../javascript/dao/DAOcarrera.js"></script>
 		<script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>
 		<script type="text/javascript" src="../javascript/js/js-ambdisp.js"></script>
@@ -53,7 +58,12 @@
                                             </td> 
                                           <td class="t-left label">Ambientes:</td>
                                           <td colspan="5" class="t-left">
-                                              <select id="slct_ambiente" class="input-xlarge"><option value="">--Selecione--</option></select>
+                                              <!-- <select id="slct_ambiente" class="input-xlarge"><option value="">--Selecione--</option></select> -->
+                                              <select id="slct_ambiente" class="input-xlarge" style="width: 370px; display: none;" multiple>
+                                                  <optgroup label="Ambiente">
+                                                    <option value="">--Selecione--</option>
+                                                    </optgroup>
+                                                </select>
                                           </td>
                                           
                                       </tr>
@@ -68,39 +78,16 @@
                                       <tr>
                                           <td colspan="6">&nbsp;</td>
                                       </tr>
-                                      <tr id="valModulosTot" style="display:none">
-                                          <td colspan="6">
-                                          	<table width="100%" id="valModulos">
-                                            <tr class="barra4 contentBarra t-blanco t-left">
-                                              <th><i class="icon-white icon-th"></i></th>
-                                              <th>N° Orden</th>
-                                              <th>Descripcion</th>
-                                              <th>Subir Orden</th>
-                                              <th>Actualiza Descripcion</th>
-                                            </tr>
-                                            </table>
-                                          </td>
-                                      </tr>
-                                      <tr id="OperacionModulos" style="display:none">
+                                     
+                                      <tr id="OperacionModulos" style="">
                                           <td colspan="7">
-                                              <span class="formBotones" id="btn_NuevoModulo">
-                                				<a href="javascript:void(0)" onClick="AgregarModulo();" class="btn btn-azul sombra-3d t-blanco">
+                                              <span class="formBotones" id="btn_Exportar">
+                                				        <a href="javascript:void(0)" onClick="ExportarAmbientes();" class="btn btn-azul sombra-3d t-blanco">
                                                 <i class="icon-white icon-plus"></i>
-                                                <span>Agregar Modulo</span>
+                                                <span>Exportar ambientes (Excel)</span>
                                                 </a>
                                            	  </span>
-                                              <span class="formBotones" id="btn_GuardaNuevo" style="display:none">
-                                				<a href="javascript:void(0)" onClick="GuardarNuevoModulo();" class="btn btn-azul sombra-3d t-blanco">
-                                                <i class="icon-white icon-check"></i>
-                                                <span>Guardar Nuevo Modulo</span>
-                                                </a>
-                                           	  </span>
-                                              <span class="formBotones">
-                                				<a href="javascript:void(0)" onClick="DescartaCambiosModulo();" class="btn btn-azul sombra-3d t-blanco">
-                                                <i class="icon-white icon-trash"></i>
-                                                <span>Descartar Cambios</span>
-                                                </a>
-                                           	  </span>
+                                              
                                             </td>
                                           </tr>
                                   </table>

@@ -100,8 +100,15 @@ $grilla[$row['cprofes']][$row['chora']]['dias'][$row['dnomdia']][] = $row['dfili
 $tr_grupo_info = '';
 $tr_cursos = '';
 
-foreach ($grilla as $profes) { // Recorrido Profesor por Profesor
-
+foreach ($grilla as $id => $profes) { // Recorrido Profesor por Profesor
+$sql2 = "select 
+CONCAT(per.dnomper,' ',per.dappape,' ',per.dapmape) as nombre
+from profesm pro
+inner join personm per on pro.cperson = per.cperson
+where pro.cprofes = $id";
+$cn->setQuery($sql2);
+$rs = $cn->loadObject();
+$profesor = $rs->nombre;
 
 $tr_horario = '';
 foreach ($profes as  $row) {
@@ -119,19 +126,7 @@ foreach ($profes as  $row) {
 	. implode('<hr>', $row['dias']['SABADO']) ."</td><td>"
 	. implode('<hr>', $row['dias']['DOMINGO']) ."</td></tr>";
 	
-	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['martes'] ) ."</td><td>"
-	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['miercoles'] ) ."</td><td>"
-	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['jueves'] ) ."</td><td>"
-	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['viernes'] ) ."</td><td>"
-	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['sabado'] ) ."</td><td>"
-	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['domingo'] ) ."</td></tr>";
-	// .$data_cursos[$row['martes']]."</td><td>"
-	// .$data_cursos[$row['miercoles']]."</td><td>"
-	// .$data_cursos[$row['jueves']]."</td><td>"
-	// .$data_cursos[$row['viernes']]."</td></tr>";
-	// print $tr_cursos;
-	// $grupo_cursos [] = "'". $curso["ccuprpr"] . "'";
-	// print $tr_horario;
+
 
 }
 /***********ADD A PAGE************/
@@ -172,6 +167,7 @@ font-weight:bold;
 	
 
 	<h3>Horario:</h3>
+	<h3>Profesor: {$profesor}</h3>
 	<table border="1" style='width:100%' cellpadding="2" >
 	<tr>
 	<th><b>Hora</b></th>
@@ -206,5 +202,5 @@ $pdf->lastPage();
 
 
 //Close and output PDF document
-$pdf->Output('HorariosGrupo.pdf', 'I');
+$pdf->Output('ProfesHorarioGrilla.pdf', 'I');
 ?>

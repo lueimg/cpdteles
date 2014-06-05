@@ -86,13 +86,8 @@ $horarios = $cn->loadObjectList();
 $grilla = array();
 foreach($horarios as $row){
 
-// $grilla[$row['cprofes']][$row['chora']][$row['dnomdia']][] = $row['cfilial'] . ' - ' .$row['cinstit'] . ' - '.$row['ccarrer'] . ' - '.$row['ccurso'];
-
-// $grilla[$row['cprofes']][$row['chora']]['texto']= $row['dhora'];
-// $grilla[$row['cprofes']][$row['chora']]['dias'][$row['dnomdia']][] = $row['dfilial'] . ' - ' .$row['dinstit'] . ' - '.$row['dcarrer'] . ' - '.$row['dcurso'];
-
 //LA DIMENSION SOLO ES DIA
-$grilla[$row['profes']][$row['dnomdia']][] = $row['dhora'] . ' - '.$row['dcurso'] . ' - '.$row['dcarrer']. ' - ' .$row['dinstit'] . $row['dfilial'];
+$grilla[$row['cprofes']][$row['dnomdia']][] = $row['dhora'] . ' - '.$row['dcurso'] . ' - '.$row['dcarrer']. ' - ' .$row['dinstit'] . $row['dfilial'];
 
 }
 
@@ -103,45 +98,26 @@ $grilla[$row['profes']][$row['dnomdia']][] = $row['dhora'] . ' - '.$row['dcurso'
 $tr_grupo_info = '';
 $tr_cursos = '';
 
-foreach ($grilla as $profes) { // Recorrido Profesor por Profesor
-
+foreach ($grilla as $id => $profes) { // Recorrido Profesor por Profesor
+$sql2 = "select 
+CONCAT(per.dnomper,' ',per.dappape,' ',per.dapmape) as nombre
+from profesm pro
+inner join personm per on pro.cperson = per.cperson
+where pro.cprofes = $id";
+$cn->setQuery($sql2);
+$rs = $cn->loadObject();
+$profesor = $rs->nombre;
 
 $tr_horario = '';
+$tr_horario .='<tr><td colspan="2">LUNES</td><td colspan="6">'.implode('<hr>', $profes['LUNES']) . "</td></tr>";
+$tr_horario .='<tr><td colspan="2">MARTES</td><td colspan="6">'.implode('<hr>', $profes['MARTES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">MIERCOLES</td><td colspan="6">'.implode('<hr>', $profes['MIERCOLES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">JUEVES</td><td colspan="6">'.implode('<hr>', $profes['JUEVES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">VIERNES</td><td colspan="6">'.implode('<hr>', $profes['VIERNES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">SABADO</td><td colspan="6">'.implode('<hr>', $profes['SABADO']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">DOMINGO</td><td colspan="6">'.implode('<hr>', $profes['DOMINGO']) . '</td></tr>';
 
-$tr_horario .="<tr><td>LUNES</td><td>".implode('<hr>', $profes['LUNES']) . "</td></tr>";
-$tr_horario .="<tr><td>MARTES</td><td>".implode('<hr>', $profes['MARTES']) . "</td></tr>";
-$tr_horario .="<tr><td>MIERCOLES</td><td>".implode('<hr>', $profes['MIERCOLES']) . "</td></tr>";
-$tr_horario .="<tr><td>JUEVES</td><td>".implode('<hr>', $profes['JUEVES']) . "</td></tr>";
-$tr_horario .="<tr><td>VIERNES</td><td>".implode('<hr>', $profes['VIERNES']) . "</td></tr>";
-$tr_horario .="<tr><td>SABADO</td><td>".implode('<hr>', $profes['SABADO']) . "</td></tr>";
-$tr_horario .="<tr><td>DOMINGO</td><td>".implode('<hr>', $profes['DOMINGO']) . "</td></tr>";
 
-
-// foreach ($profes as  $key => $rows ) {
-// 	# code...
-// 	// print '<pre>';
-// 	// print_r($row);
-// 	// print "</pre>";
-// 	// die();
-// 	$tr_horario .="<tr><td>".$key."</td><td>";
-// 	$tr_horario .= implode('<hr>', $rows);
-// 	$tr_horario .="</td></tr>";
-	
-// 	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['martes'] ) ."</td><td>"
-// 	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['miercoles'] ) ."</td><td>"
-// 	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['jueves'] ) ."</td><td>"
-// 	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['viernes'] ) ."</td><td>"
-// 	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['sabado'] ) ."</td><td>"
-// 	// . str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['domingo'] ) ."</td></tr>";
-// 	// .$data_cursos[$row['martes']]."</td><td>"
-// 	// .$data_cursos[$row['miercoles']]."</td><td>"
-// 	// .$data_cursos[$row['jueves']]."</td><td>"
-// 	// .$data_cursos[$row['viernes']]."</td></tr>";
-// 	// print $tr_cursos;
-// 	// $grupo_cursos [] = "'". $curso["ccuprpr"] . "'";
-// 	// print $tr_horario;
-
-// }
 
 
 /***********ADD A PAGE************/
@@ -177,17 +153,15 @@ font-weight:bold;
 </style>
 <div style='text-align:center'><h1>Horario Académico Programado</h1></div>
 
-
-
-	
-
 	<h3>Horario:</h3>
+	<h3>Profesor: {$profesor}</h3>
 	<table border="1" style='width:100%' cellpadding="2" >
 	<tr>
-		<th style='width:20%'><b>Hora</b></th>
-		<th style='width:80%'><b>Horario</b></th>
+		<td colspan="2" style=''><b>Dia</b></td>
+		<td colspan="6" style=''><b>Horario</b></td>
 	</tr>
 	{$tr_horario}
+
 	</table>
 
 EOD;
@@ -210,5 +184,5 @@ $pdf->lastPage();
 
 
 //Close and output PDF document
-$pdf->Output('HorariosGrupo.pdf', 'I');
+$pdf->Output('ProfeHorarioListado.pdf', 'I');
 ?>
