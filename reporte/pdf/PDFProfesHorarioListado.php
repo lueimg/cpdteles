@@ -75,6 +75,7 @@ inner join filialm fil on fil.cfilial= gra.cfilial
 where  
 cupr.cprofes in ($lista_docentes)
 and ho.cestado = 1
+and gra.ffin >= now()
 and hora.hinici is not null
 order by hora.hinici asc
 ";

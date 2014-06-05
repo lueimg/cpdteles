@@ -21,6 +21,22 @@ $ambientes = $_GET["ambientes"];
 $institucion = $_GET["institucion"];
 $where = ''; 
 
+$sql = "SELECT dfilial from filialm where cfilial='$filial'";
+$cn->setQuery($sql);
+$obj=$cn->loadObject();
+$dfilial = $obj->dfilial;
+
+$tableInstitucion = '';
+if(!empty($institucion)){
+$sql = "select dinstit from instita where cinstit='$institucion'";
+$cn->setQuery($sql);
+$obj=$cn->loadObject();
+$dinstit = $obj->dinstit; 
+$tableInstitucion = '<tr><td colspan="2">Institucion :'.$dinstit.' </td></tr>';
+
+}
+
+
 if(!empty($ambientes))
 	$where .= " and ho.cambien in ($ambientes) ";
 
@@ -41,6 +57,8 @@ select
 ,ins.dinstit
 ,ins.cinstit
 from horprop ho
+inner join cuprprp cupr on cupr.ccuprpr = ho.ccurpro
+inner join gracprp gra on gra.cgracpr = cupr.cgracpr
 inner join diasm dia on dia.cdia = ho.cdia
 inner join horam hora on hora.chora = ho.chora
 inner join instita ins on ins.cinstit = hora.cinstit
@@ -49,6 +67,7 @@ where  1=1
 and amb.cfilial = $filial
 $where
 and ho.cestado = 1
+and gra.ffin >= now()
 order by hora.hinici asc";
 $cn->setQuery($sql);
 $horarios=$cn->loadObjectList();
@@ -81,6 +100,10 @@ foreach ($grilla as  $row) {
 
 
 $html = <<<EOD
+<table>
+<tr><td colspan="2">Filial : {$dfilial}</td></tr>
+{$tableInstitucion}
+</table>
 <table border=1 style="vertical-align:middle">
 <tr><td>Hora</td><td>LUNES</td><td>MARTES</td><td>MIERCOLES</td><td>JUEVES</td><td>VIERNES</td><td>SABADO</td><td>DOMINGO</td></tr>
 {$tr_horario}
