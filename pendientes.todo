@@ -35,20 +35,20 @@ Lo puse Horario Académico Programado!:
 
   Reportes según Orden:
  ☐ 
-☐ 1) Reporte de Carga Horaria del Docente
+✔ 1) Reporte de Carga Horaria del Docente @done (14-06-05 07:33)
   Será una plancha donde irá un listado con las cabeceras:
   Filial, Institución, Carrera, Curso, Día, Hora
   ordenado por Día,Hora,Filial, Institución, Carrera, Curso
   2 formas:
-  ☐ como horario  , en el cuadro curso  filial institucion, (dimensiones hora y dia)
-  ☐ Plancha
-  ☐ Se puede seleccionar mas de 1 docente pdf
-  ☐ usar grilla modelo pagos
+  ✔ como horario  , en el cuadro curso  filial institucion, (dimensiones hora y dia) @done (14-06-05 07:33)
+  ✔ Plancha @done (14-06-05 07:33)
+  ✔ Se puede seleccionar mas de 1 docente pdf @done (14-06-05 07:33)
+  ✔ usar grilla modelo pagos @done (14-06-05 07:33)
 
 
- ☐ 2) Reporte disponibilidad de ambiente
+ ✔ 2) Reporte disponibilidad de ambiente @done (14-06-05 07:33)
    indicar los ambientes/horarios disponibles con colores verde libre , rojo ocupado.  Trama Horaria X Día  y Hora.
-   ☐ En excel
+   ✔ En excel @done (14-06-05 07:33)
 
 
  ☐ 3) Reporte de alumnos de matrícula, pagados y no pagados.

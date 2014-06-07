@@ -51,7 +51,7 @@ $lista_docentes = $_GET['docentes'];
 
 $sql = "
 select  
-cupr.cprofes,
+ho.cprofes,
 hora.chora
 ,CONCAT(hora.hinici,' - ',hora.hfin) dhora
 ,dia.dnomdia 
@@ -73,9 +73,9 @@ inner join carrerm car on car.ccarrer = gra.ccarrer
 inner join instita ins on ins.cinstit = gra.cinstit
 inner join filialm fil on fil.cfilial= gra.cfilial
 where  
-cupr.cprofes in ($lista_docentes)
+ho.cprofes in ($lista_docentes)
 and ho.cestado = 1
-and gra.ffin >= now()
+and gra.ffin >= CURRENT_DATE()
 and hora.hinici is not null
 order by hora.hinici asc
 ";
