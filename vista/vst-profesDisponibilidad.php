@@ -141,7 +141,7 @@
 	</select>
 	</td>
 	<td>
-	<select name="" id="slct_hini_h_<%= id %>">
+	<select name="" id="slct_hini_h_<%= id %>" class="hini">
   <% for(var i= 0 ; i< 24 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
   </select>
   <select name="" id="slct_hini_m_<%= id %>">
@@ -149,7 +149,7 @@
   </select>
   </td>
 	<td>
-	<select name="" id="slct_hfin_h_<%= id %>">
+	<select name="" id="slct_hfin_h_<%= id %>" class="hfin">
   <% for(var i= 0 ; i< 24 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
   </select>
   <select name="" id="slct_hfin_m_<%= id %>">

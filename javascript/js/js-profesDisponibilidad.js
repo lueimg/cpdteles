@@ -71,15 +71,34 @@ function GuardarDisponibilidad(){
     }
 
     //VALIDAR QUE POR REGISTRO HFIN SEA MAYOR QUE HINI
+    var error = 0;
+    $(".newrow").each(function(i){
+        var el = jQuery(this);
+        
+        var hini = el.find(".hini").val();
+        var hfin = el.find(".hfin").val();
+        // debugger;
+        if( (hfin*1) < (hini*1) ){
+            error++;
+        }
+
+    });
+
+    if(error){
+        sistema.msjAdvertencia('La hora Final no puede ser menor a la hora inicio',3500);
+        return false;
+    }
+
 
     //JUNTAR DATOS
     var data = _.map($(".newrow"),function(i){
         var el = $(i);
          var selects = _.map( el.find("select"),function(i){ return $(i).val(); });
-         return el.find("input").val() + "-" + selects.join("-");
+         if( _.reduce( selects , function( r , i){ return (r*1)+ (i*1); })  > 2)
+            return el.find("input").val() + "-" + selects.join("-");
     });
     var datarows = data.join("|");
-
+    console.log(datarows);
     profesDisponibilidadDAO.guardarDisponibilidad(datarows);
     
     $(".newrow").remove();

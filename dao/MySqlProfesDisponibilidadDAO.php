@@ -14,9 +14,15 @@ class MySqlProfesDisponibilidadDAO{
         $inserts_ids = array();
         // print_r($datos_array);
         // die();
+        $registros = 0;
         foreach ($datos_array as $row) {
             # code...
+             if(empty($row))
+                continue;
+
+            $registros++;
             $data_array = explode("-", $row);
+
             if($data_array[0] == 0){
 
                 $sql = " INSERT INTO disprom set "
@@ -57,8 +63,12 @@ class MySqlProfesDisponibilidadDAO{
                 return array('rst'=>'3','msj'=>'Error al procesar Query , no retorno id','sql'=>$sql);
             }// FIN EXECUTE QUERY
         }// FIN FOREACH
-            $db->commitTransaccion();
-            return array('rst'=>'1','msj'=>'Horario Ingresado','sql'=>$sql);
+            if($registros){
+                $db->commitTransaccion();
+                return array('rst'=>'1','msj'=>'Horario Ingresado','sql'=>$sql);
+            }else{
+                return array('rst'=>'1','msj'=>'No hay registros que guardar');
+            }
 
     }//fin public functions
 
