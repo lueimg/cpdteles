@@ -11,6 +11,11 @@ class servletProfesDisponibilidad extends controladorComandos{
                 $data["cusuari"]=trim($_POST['usuario']);
 				echo json_encode($daoProfesDisponibilidad->guardarDisponibilidad($data));
 			break;
+			case 'cargarHorario':
+				$data["cprofes"]=trim($_POST['cprofes']);
+				echo json_encode($daoProfesDisponibilidad->cargarHorario($data));
+				
+			break;
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST servletAsistencia no encontrada'));
 				break;

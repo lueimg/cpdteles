@@ -1,9 +1,12 @@
 $().ready(function(){
 
+$("#HorarioDisponible").hide();
 jqGridDocente.Docente();
 
 window.templatesHtml = {}
 templatesHtml.nuevoRow =  _.template( $("#TemplateDisponible").html() );
+
+
 
 });
 
@@ -12,10 +15,28 @@ templatesHtml.nuevoRow =  _.template( $("#TemplateDisponible").html() );
 function cargar_docente(){
 var id=$("#table_docente").jqGrid("getGridParam",'selrow');
     if (id) {
-        var data = $("#table_docente").jqGrid('getRowData',id);
+         // var data = $("#table_docente").jqGrid('getRowData',id);
+        // console.log(data);
+    var data = profesDisponibilidadDAO.cargarHorario();
+    $(".newrow").remove();
+    data.forEach(function(el){
+        //AGREGO REGISTRO
+        AgregarRow();
+        var indice = $("#txt_cant_dis").val();
+        $("#cdispro_"+indice).val(el.cdispro);
+        $("#slct_dia_"+indice).val(el.cdia);
+        $("#slct_estado_"+indice).val(el.cestado);
+        $("#slct_hini_h_"+indice).val(el.hini.split(":")[0]);
+        $("#slct_hini_m_"+indice).val(el.hini.split(":")[1]);
+        $("#slct_hfin_h_"+indice).val(el.hfin.split(":")[0]);
+        $("#slct_hfin_m_"+indice).val(el.hfin.split(":")[1]);
+        $(".row-"+indice).find("select").attr("disabled","true");
+        $("#slct_estado_"+indice).removeAttr("disabled");
+        $(".newbotones_"+indice).remove();
 
-        
 
+    });
+    $("#HorarioDisponible").show("slow");
 
 
     }else {
@@ -55,16 +76,22 @@ function GuardarDisponibilidad(){
     var data = _.map($(".newrow"),function(i){
         var el = $(i);
          var selects = _.map( el.find("select"),function(i){ return $(i).val(); });
-         return selects.join("-");
+         return el.find("input").val() + "-" + selects.join("-");
     });
     var datarows = data.join("|");
 
     profesDisponibilidadDAO.guardarDisponibilidad(datarows);
+    
+    $(".newrow").remove();
+    $("#HorarioDisponible").hide("slow");
+
 
 }
 
 //QUITA LOS REGISTROS AGREGADOS NO GUARDADOS
 function Cancelar(){
+    $(".newrow").remove();
+    $("#HorarioDisponible").hide();
 
 }
 

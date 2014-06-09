@@ -75,7 +75,7 @@
                             </section>
                         </div>
     				</div>
-    				<table style="width:90%">
+    				<table style="width:90%" id="HorarioDisponible">
     					
     					<tr id="" style="">
                                           <td colspan="6">
@@ -85,6 +85,7 @@
                                               <th>Dia <input type="hidden" name="" id="txt_cant_dis" value="0"></th>
                                               <th>Hora Inicio</th>
                                               <th>Hora Fin</th>
+                                              <th>Estado</th>
                                               <th>Actualiza Descripcion</th>
                                             </tr>
                                             
@@ -128,6 +129,7 @@
 <tr class="newrow row-<%= id %>">
 	<td></td>
 	<td>
+<input type="hidden" value="0" id="cdispro_<%= id %>">
 	<select name="slct_dia_<%= id %>" id="slct_dia_<%= id %>">
 		<option value="01">DOMINGO</option>
 		<option value="02">LUNES</option>
@@ -154,8 +156,14 @@
   <% for(var i= 0 ; i< 60 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
   </select>
   </td>
+  <td>
+  <select name="" id="slct_estado_<%= id %>">
+  <option value="1">Activo</option>
+  <option value="0">Inactivo</option>
+  </select>
+  </td>
 	<td>
-		<span class="formBotones">
+		<span class="formBotones newbotones_<%=id%>">
 			<a href="javascript:void(0)" onClick="removerRow(<%= id %>);" class="btn btn-azul sombra-3d t-blanco">
             <i class="icon-white icon-trash"></i>
             <span></span>

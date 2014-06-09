@@ -17,25 +17,32 @@ class MySqlProfesDisponibilidadDAO{
         foreach ($datos_array as $row) {
             # code...
             $data_array = explode("-", $row);
-            $sql = " INSERT INTO disprom set "
-                 ." cprofes = '". $post["cprofes"] ."'" 
-                 ." ,cdia = '". $data_array[0] ."'" 
-                 ." ,hini = '".$data_array[1].":".$data_array[2] ."'" 
-                 ." ,hfin = '". $data_array[3].":".$data_array[4] ."'" 
-                 ." ,cestado = '". 1 ."'" 
-                 ." ,cusucre = '". $post["cusuari"] ."'" 
-                 ." ,fusucre = now() " 
-                 ." ,cusumod = '". $post["cusuari"] ."'" 
-                 ." ,fusumod = now() " 
-            ;
-            // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql);
-            // $sql = "INSERT INTO equisag (ccurric,ccurso,cmodulo,gruequi,ccurria,ccursoa,cmoduloa,estide,cusuari,fusuari,cusuariu,fusuariu) 
-            //                 values( '". $post["ccurric"] ."' ,'". $post["ccurso"] ."','". $post["cmodulo"] ."',0, '". $data_array[2] ."','". $data_array[3] ."'
-            //                     ,'". $data_array[4] ."','". $post["estide"] ."',1,'". $post["cusuari"] ."')";
+            if($data_array[0] == 0){
+
+                $sql = " INSERT INTO disprom set "
+                     ." cprofes = '". $post["cprofes"] ."'" 
+                     ." ,cdia = '". $data_array[1] ."'" 
+                     ." ,hini = '".$data_array[2].":".$data_array[3] ."'" 
+                     ." ,hfin = '". $data_array[4].":".$data_array[5] ."'" 
+                     ." ,cestado = '". $data_array[6] ."'" 
+                     ." ,cusucre = '". $post["cusuari"] ."'" 
+                     ." ,fusucre = now() " 
+                     ." ,cusumod = '". $post["cusuari"] ."'" 
+                     ." ,fusumod = now() ";
+            }else{
+                    $sql = " UPDATE  disprom set "
+                     ." cestado = '". $data_array[6] ."'" 
+                     //." ,cusucre = '". $post["cusuari"] ."'" 
+                     //." ,fusucre = now() " 
+                     ." ,cusumod = '". $post["cusuari"] ."'" 
+                     ." ,fusumod = now() "
+                     ." WHERE cdispro=".$data_array[0]
+                     ;
+            }
+
 
             $db->setQuery($sql);
-            
-            if($id = $db->executeQuery_returnid()){
+            if($db->executeQuery()){
                 if(!MySqlTransaccionDAO::insertarTransaccion($sql,$post['cfilialx']) ){
                     $db->rollbackTransaccion();
                     return array('rst'=>'3','msj'=>'Error al Registrar Datos','sql'=>$sql);exit();
@@ -43,7 +50,7 @@ class MySqlProfesDisponibilidadDAO{
 
                 // $db->commitTransaccion();
                 // return array('rst'=>'1','msj'=>'Equivalencias Ingresadas','sql'=>$sql,'id'=>$id);
-                $inserts_ids[] = $id; // GUARDA LOS IDS REGISTRADOS
+                //$inserts_ids[] = $id; // GUARDA LOS IDS REGISTRADOS
 
             }else{
                 $db->rollbackTransaccion();
@@ -51,11 +58,21 @@ class MySqlProfesDisponibilidadDAO{
             }// FIN EXECUTE QUERY
         }// FIN FOREACH
             $db->commitTransaccion();
-            return array('rst'=>'1','msj'=>'Horario Ingresado','sql'=>$sql,'ids'=>$inserts_ids);
+            return array('rst'=>'1','msj'=>'Horario Ingresado','sql'=>$sql);
 
     }//fin public functions
 
-    
+    public function cargarHorario($post){
+        $sql="select * from disprom where cprofes = ".$post['cprofes'];
+        $db=creadorConexion::crear('MySql');
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Horarios cargados','data'=>$data,'sql'=>$sql);
+        }else{
+            return array('rst'=>'2','msj'=>'No se encontraron horarios','data'=>$data,'sql'=>$sql);
+        }
+    }
     
 }
 ?>
