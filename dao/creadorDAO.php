@@ -131,6 +131,9 @@ class creadorDAO{
 	public static function getHorarioDAO(){
 		return new MySqlHorarioDAO;
 	}
+	public static function getProfesDisponibilidadDAO(){
+		return new MySqlProfesDisponibilidadDAO;
+	}
 
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
     session_start();
     date_default_timezone_set('America/Lima');
-    error_reporting(0);
+    // error_reporting(0);
     require_once('../controlador/controladorComandos.php');
 
     require_once('../controlador/servletLogin.php');
@@ -38,6 +38,7 @@
     require_once('../controlador/servletAmbiente.php');
     require_once('../controlador/servletDocente.php');
     require_once('../controlador/servletHorario.php');
+    require_once('../controlador/servletProfesDisponibilidad.php');   
     
     require_once('../conexion/creadorConexion.php');
     require_once('../conexion/MySqlConexion.php');
@@ -78,6 +79,7 @@
     require_once('../dao/MySqlAmbienteDAO.php');
     require_once('../dao/MySqlDocenteDAO.php');
     require_once('../dao/MySqlHorarioDAO.php');
+    require_once('../dao/MySqlProfesDisponibilidadDAO.php');
     
     require_once('../dto/dto_usuario.php');    
     

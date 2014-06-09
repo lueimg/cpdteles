@@ -119,6 +119,9 @@
 				case 'horario':
 					$classControlador=new servletHorario;
 					break;
+				case 'profesDisponibilidad':
+					$classControlador=new servletProfesDisponibilidad;
+					break;
 				default:
                     echo json_encode(array('rst'=>3,'msj'=>'Comando no encontrado'));
                     exit();

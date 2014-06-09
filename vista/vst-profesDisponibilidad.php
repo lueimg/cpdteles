@@ -12,24 +12,25 @@
 
 		<script type="text/javascript" src="../javascript/includes/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="../javascript/includes/jquery-ui-1.8.18.custom.min.js"></script>
-                <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/i18n/grid.locale-es.js" ></script>
-                <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/jquery.jqGrid.min.js" ></script>
+    <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/i18n/grid.locale-es.js" ></script>
+    <script type="text/javascript" src="../javascript/includes/jqgrid-4.3.2/js/jquery.jqGrid.min.js" ></script>
 		
 		<script type="text/javascript" src="../javascript/includes/underscore.js"></script>
-        <script type="text/javascript" src="../javascript/includes/backbone.js"></script>
+    <script type="text/javascript" src="../javascript/includes/backbone.js"></script>
 
 		<script type="text/javascript" src="../javascript/sistema.js"></script>
 		<script type="text/javascript" src="../javascript/templates.js"></script>
         
-        <script type="text/javascript" src="../javascript/dao/DAOcencap.js"></script>		
+    <script type="text/javascript" src="../javascript/dao/DAOcencap.js"></script>		
 		<script type="text/javascript" src="../javascript/dao/DAOhorario.js"></script>
 		<script type="text/javascript" src="../javascript/dao/DAOpersona.js"></script>
-        <script type="text/javascript" src="../javascript/dao/DAOgrupoAcademico.js"></script>
-        <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>		
-        <script type="text/javascript" src="../javascript/dao/DAOprofes.js"></script>		
-        <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
-        <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
-        <script src="../javascript/js/js-profesDisponibilidad.js"></script>
+    <script type="text/javascript" src="../javascript/dao/DAOgrupoAcademico.js"></script>
+    <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>    
+    <script type="text/javascript" src="../javascript/dao/DAOProfesDisponibilidad.js"></script>		
+    <script type="text/javascript" src="../javascript/dao/DAOprofes.js"></script>		
+    <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
+    <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
+    <script src="../javascript/js/js-profesDisponibilidad.js"></script>
 	<style>
 	#pg_pager_table_persona .ui-icon-plus,
 	#pg_pager_table_persona .ui-icon-pencil
@@ -81,26 +82,27 @@
                                           	<table width="100%" id="diasDisponibles">
                                             <tr class="barra4 contentBarra t-blanco t-left">
                                               <th><i class="icon-white icon-th"></i></th>
-                                              <th>Dia</th>
+                                              <th>Dia <input type="hidden" name="" id="txt_cant_dis" value="0"></th>
                                               <th>Hora Inicio</th>
                                               <th>Hora Fin</th>
                                               <th>Actualiza Descripcion</th>
                                             </tr>
+                                            
                                             </table>
                                           </td>
                                       </tr>
-                                      <tr id="OperacionModulos" style="display:none">
+                                      <tr id="OperacionModulos" style="">
                                           <td colspan="7">
                                               <span class="formBotones" id="btn_NuevoModulo">
                                 				<a href="javascript:void(0)" onClick="AgregarRow();" class="btn btn-azul sombra-3d t-blanco">
                                                 <i class="icon-white icon-plus"></i>
-                                                <span>Agregar Modulo</span>
+                                                <span>Agregar mas horas</span>
                                                 </a>
                                            	  </span>
-                                              <span class="formBotones" id="btn_GuardaNuevo" style="display:none">
+                                              <span class="formBotones" id="btn_GuardaNuevo" style="d">
                                 				<a href="javascript:void(0)" onClick="GuardarDisponibilidad();" class="btn btn-azul sombra-3d t-blanco">
                                                 <i class="icon-white icon-check"></i>
-                                                <span>Guardar Nuevo Modulo</span>
+                                                <span>Guardar Horario Disponible</span>
                                                 </a>
                                            	  </span>
                                               <span class="formBotones">
@@ -116,9 +118,52 @@
             	</div>
 			</div>
 		</div>
-        <?PHP require_once('frmProfes.php')?>        
+        <?php require_once('frmProfes.php'); ?>        
         <div id="capaMensaje" class="capaMensaje" style="display:none"></div>		
 		<hr>
-		<?require_once('ifrm-footer.php')?>	
+		<?php require_once('ifrm-footer.php'); ?>	
+
+<script type="text/template" id="TemplateDisponible">
+
+<tr class="newrow row-<%= id %>">
+	<td></td>
+	<td>
+	<select name="slct_dia_<%= id %>" id="slct_dia_<%= id %>">
+		<option value="01">DOMINGO</option>
+		<option value="02">LUNES</option>
+		<option value="03">MARTES</option>
+		<option value="04">MIERCOLES</option>
+		<option value="05">JUEVES</option>
+		<option value="06">VIERNES</option>
+		<option value="07">SABADO</option>
+	</select>
+	</td>
+	<td>
+	<select name="" id="slct_hini_h_<%= id %>">
+  <% for(var i= 0 ; i< 24 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  </select>
+  <select name="" id="slct_hini_m_<%= id %>">
+  <% for(var i= 0 ; i< 60 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  </select>
+  </td>
+	<td>
+	<select name="" id="slct_hfin_h_<%= id %>">
+  <% for(var i= 0 ; i< 24 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  </select>
+  <select name="" id="slct_hfin_m_<%= id %>">
+  <% for(var i= 0 ; i< 60 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  </select>
+  </td>
+	<td>
+		<span class="formBotones">
+			<a href="javascript:void(0)" onClick="removerRow(<%= id %>);" class="btn btn-azul sombra-3d t-blanco">
+            <i class="icon-white icon-trash"></i>
+            <span></span>
+            </a>
+       	  </span>
+	</td>
+	</tr>
+</script>
+
 	</body>
 </html>
