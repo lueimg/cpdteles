@@ -152,7 +152,8 @@ var horarioDAO={
                 accion:'cargarHorarioValidado',
                 cprofes: cprofe,
                 cambien: cambie,
-                cinstit: $("#cinstit").val()
+                cinstit: $("#cinstit").val(),
+                dias   : $("#diasdelgrupo").val()
             },
             beforeSend : function ( ) {
             },

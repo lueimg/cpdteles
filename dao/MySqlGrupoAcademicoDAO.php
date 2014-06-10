@@ -650,6 +650,23 @@ class MySqlGrupoAcademicoDAO{
             return array('rst'=>'2','msj'=>'No existen Secciones','data'=>$data,'sql'=>$sql);
         }
   }
+
+  public function cargarDiasdelGrupo($array){
+  		$array['cgracpr']=str_replace(',',"','",$array['cgracpr']);
+		$sql="	SELECT replace(cfrecue,'-',',') as dias
+				FROM gracprp
+				WHERE cgracpr in ('".$array['cgracpr']."')";
+        $db=creadorConexion::crear('MySql');
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Dias del Grupo cargados','data'=>$data[0]['dias']);
+        }
+		else{
+            return array('rst'=>'2','msj'=>'No existen Secciones','data'=>$data,'sql'=>$sql);
+        }
+  }
   
 }
 ?>

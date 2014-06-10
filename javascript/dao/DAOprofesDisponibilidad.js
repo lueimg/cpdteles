@@ -1,5 +1,5 @@
 var profesDisponibilidadDAO={
-	url:'../controlador/controladorSistema.php',
+    url:'../controlador/controladorSistema.php',
 	guardarDisponibilidad : function(datos){
 		$.ajax({
             url : this.url,

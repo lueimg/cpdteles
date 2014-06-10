@@ -340,6 +340,7 @@
             	</div>
 			</div>
 		</div>
+        <input type="hidden" id="diasdelgrupo" value="">
             <div id="frmDocente" title="BUSCAR DOCENTE" class="corner_all" style="background: #ffffff;margin:7px;height: auto">
                 <div>
                     <div style="margin-right:3px">

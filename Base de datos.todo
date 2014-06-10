@@ -50,7 +50,7 @@ disprom:
   `cprofes` int(11) DEFAULT NULL,
   `hini` char(5) DEFAULT NULL,
   `hfin` char(5) DEFAULT NULL,
-  `cdia` int(2) DEFAULT NULL,
+  `cdia` char(2) DEFAULT NULL,
   `cestado` char(1) DEFAULT '1',
   `cusucre` int(11) DEFAULT NULL,
   `fusucre` datetime DEFAULT NULL,

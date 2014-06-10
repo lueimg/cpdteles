@@ -80,6 +80,7 @@ VisualizarGruposHTML=function(obj){
 
 GenerarHorario=function(ids){
 grupoAcademicoDAO.cargarDetalleGrupo(sistema.llenaSelect,'slct_detalle_grupo','',ids);
+grupoAcademicoDAO.cargarDiasdelGrupo(ids);
 grupoAcademicoDAO.cargarCursosAcademicos(VisualizarCursosHTML,ids);
 ToogleFiltro();
 }
@@ -165,6 +166,10 @@ VisualizarHorarioProgramadoHtml=function(obj){
 		ActualizaAmbiente(value.ctipamb,'slct_tipo_ambiente_'+pos,value.cambien);
 		$("#slct_tiempo_tolerancia_"+pos).val(value.ctietol);
 		$("#slct_estado_"+pos).val(value.cestado);
+		if(value.cestado!='1'){
+			$("#slct_estado_"+pos).attr('disabled','true');
+			$("#chk_"+pos).remove();
+		}
 		$("#chk_"+pos).attr("value",value.chorpro);
 	});	
 }
@@ -207,7 +212,7 @@ AgregarHorario=function(ide){
 	      }
 	htm+='</td>         '+                              
 	    '<td class="t-left">'+ 
-	      '<select id="slct_horario_'+tot+'" style="width:120px" '+disabled2+'>'+ 
+	      '<select id="slct_horario_'+tot+'" style="width:120px" >'+ 
 	      '<option value="">--Seleccione--</option>'+ 
 	      '</select>'+ 
 	    '</td>         '+  

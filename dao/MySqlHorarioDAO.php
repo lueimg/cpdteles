@@ -15,32 +15,55 @@ class MySqlHorarioDAO{
 
     public function cargarHorarioValidado($array){
         $sql="  select concat(d.cdia,'-',h.chora) as id,
-                concat(d.dnemdia,' | ',h.hinici,' - ',h.hfin,' | Turno: ',t.dnemtur) as nombre,h2.horario
-                from horam h
+                concat(d.dnemdia,' | ',h.hinici,' - ',h.hfin,' | Turno: ',t.dnemtur) as nombre,
+                h2.horario as horario,d.cdia as cdia,td.cdia,td.hini,td.hfin,
+                if(h.hinici>=td.hini and h.hfin<=td.hfin,'ok','') as rpta, 
+                h3.hinici,h3.hfin,
+                if((h3.hfin>=h.hinici  and h3.hfin<=h.hfin)
+                    or (h3.hinici>=h.hinici  and h3.hinici<=h.hfin)
+                  or (h.hinici>=h3.hinici and h.hfin<=h3.hfin),'ok','') as rpta2
+                from horam h 
                 inner join turnoa t on (t.cturno=h.cturno)
                 inner join diasm d 
-                left join   (
-                            select concat(h.cdia,'-',h.chora) as horario,g.finicio,g.ffin
+                inner join disprom td on (td.cdia=d.cdia and td.cestado='1')
+                left join (
+                            select ho.hinici,ho.hfin,h.cdia
                             from horprop h
+                            inner join horam ho on (ho.chora=h.chora)
                             inner join cuprprp c on (h.ccurpro=c.ccuprpr)
-                            inner join gracprp g on (c.cgracpr=g.cgracpr)
-                            where h.cambien='".$array['cambien']."'
-                            and h.cestado='1'
-                            and CURRENT_DATE() <=g.ffin
-                            UNION
-                            select concat(h.cdia,'-',h.chora) as horario,g.finicio,g.ffin
-                            from horprop h
-                            inner join cuprprp c on (h.ccurpro=c.ccuprpr)
-                            inner join gracprp g on (c.cgracpr=g.cgracpr)
-                            where h.cprofes='".$array['cprofes']."'
-                            and h.cestado='1'
-                            and CURRENT_DATE() <=g.ffin
-                            ) as h2 on (h2.horario=concat(d.cdia,'-',h.chora))
+                            where (h.cprofes='".$array['cprofes']."' or h.cambien='".$array['cambien']."') 
+                            and ho.cinstit!='".$array['cinstit']."'
+                            and h.cestado='1'           
+                ) h3 on (h3.cdia=d.cdia and ((h3.hfin>=h.hinici  and h3.hfin<=h.hfin)
+                                        or (h3.hinici>=h.hinici  and h3.hinici<=h.hfin)
+                                        or (h.hinici>=h3.hinici and h.hfin<=h3.hfin)))
+                left join (
+                                        select concat(h.cdia,'-',h.chora) as horario,g.finicio,g.ffin
+                                        from horprop h
+                                        inner join cuprprp c on (h.ccurpro=c.ccuprpr)
+                                        inner join gracprp g on (c.cgracpr=g.cgracpr)
+                                        where h.cambien='".$array['cambien']."'
+                                        and h.cestado='1'
+                                        and CURRENT_DATE() <=g.ffin
+                                        UNION
+                                        select concat(h.cdia,'-',h.chora) as horario,g.finicio,g.ffin
+                                        from horprop h
+                                        inner join cuprprp c on (h.ccurpro=c.ccuprpr)
+                                        inner join gracprp g on (c.cgracpr=g.cgracpr)
+                                        where h.cprofes='".$array['cprofes']."'
+                                        and h.cestado='1'
+                                        and CURRENT_DATE() <=g.ffin
+                                                ) as h2 on (h2.horario=concat(d.cdia,'-',h.chora))
                 where h.cinstit='".$array['cinstit']."'
                 and h.thora='1'
                 and h.cestado='1'
+                and FIND_IN_SET(d.cdia ,'".$array['dias']."') > 0
                 and h2.horario is NULL
-                ORDER BY d.cdia,h.hinici,h.hfin;";
+                and (h.hinici>=td.hini and h.hfin<=td.hfin)
+                and h3.hinici is NULL
+                GROUP BY d.cdia,h.hinici,h.hfin
+                ORDER BY d.cdia,h.hinici,h.hfin";       
+
         $db=creadorConexion::crear('MySql');
         $db->setQuery($sql);
         $data=$db->loadObjectList();

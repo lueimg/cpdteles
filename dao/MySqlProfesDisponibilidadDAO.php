@@ -65,7 +65,7 @@ class MySqlProfesDisponibilidadDAO{
         }// FIN FOREACH
             if($registros){
                 $db->commitTransaccion();
-                return array('rst'=>'1','msj'=>'Horario Ingresado','sql'=>$sql);
+                return array('rst'=>'1','msj'=>'Horario Ingresado');
             }else{
                 return array('rst'=>'1','msj'=>'No hay registros que guardar');
             }

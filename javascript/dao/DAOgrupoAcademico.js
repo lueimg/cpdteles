@@ -1,5 +1,25 @@
 var grupoAcademicoDAO={
 	url:'../controlador/controladorSistema.php',
+    cargarDiasdelGrupo:function(ids){
+        $.ajax({
+            url : this.url,
+            type : 'POST',            
+            dataType : 'json',
+            data : {
+                comando:'grupo_academico',
+                accion:'cargarDiasdelGrupo',                
+                cgracpr:ids             
+            },
+            beforeSend : function ( ) {
+                sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                sistema.cierraCargando(); 
+                $("#diasdelgrupo").val(obj.data);
+            },
+            error: this.msjErrorAjax
+        });
+    },
 	cargarGrupoAcademicoMatri:function(evento){
 		var cfil="";
 		var cins="";var cmod="";

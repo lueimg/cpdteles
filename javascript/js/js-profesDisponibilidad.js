@@ -78,7 +78,7 @@ function GuardarDisponibilidad(){
         var hini = el.find(".hini").val();
         var hfin = el.find(".hfin").val();
         // debugger;
-        if( (hfin*1) < (hini*1) ){
+        if( hfin*1 < hini*1 ){
             error++;
         }
 

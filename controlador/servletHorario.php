@@ -42,6 +42,7 @@ class servletHorario extends controladorComandos{
 				$array['cambien']=trim($_POST['cambien']);
 				$array['cprofes']=trim($_POST['cprofes']);
 				$array['cinstit']=trim($_POST['cinstit']);
+				$array['dias']=trim($_POST['dias']);
 				echo json_encode($daoHorario->cargarHorarioValidado($array));
 			break;
 			default:

@@ -26,7 +26,7 @@
 		<script type="text/javascript" src="../javascript/dao/DAOpersona.js"></script>
     <script type="text/javascript" src="../javascript/dao/DAOgrupoAcademico.js"></script>
     <script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>    
-    <script type="text/javascript" src="../javascript/dao/DAOProfesDisponibilidad.js"></script>		
+    <script type="text/javascript" src="../javascript/dao/DAOprofesDisponibilidad.js"></script>		
     <script type="text/javascript" src="../javascript/dao/DAOprofes.js"></script>		
     <script type="text/javascript" src="../javascript/jqGrid/JQGridDocente.js"></script>
     <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
@@ -142,18 +142,18 @@
 	</td>
 	<td>
 	<select name="" id="slct_hini_h_<%= id %>" class="hini">
-  <% for(var i= 0 ; i< 24 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  <% for(var i= 0 ; i< 24 ; i++){   %><option value="<% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %>"><% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %></option><%  } %>
   </select>
   <select name="" id="slct_hini_m_<%= id %>">
-  <% for(var i= 0 ; i< 60 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  <% for(var i= 0 ; i< 60 ; i++){   %><option value="<% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %>"><% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %></option><%  } %>
   </select>
   </td>
 	<td>
 	<select name="" id="slct_hfin_h_<%= id %>" class="hfin">
-  <% for(var i= 0 ; i< 24 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  <% for(var i= 0 ; i< 24 ; i++){   %><option value="<% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %>"><% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %></option><%  } %>
   </select>
   <select name="" id="slct_hfin_m_<%= id %>">
-  <% for(var i= 0 ; i< 60 ; i++){   %><option value="<%= i %>"><%= i %></option><%  } %>
+  <% for(var i= 0 ; i< 60 ; i++){   %><option value="<% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %>"><% if(i<10){ %><%= '0'+i %><% } else{ %><%= i %><% } %></option><%  } %>
   </select>
   </td>
   <td>
