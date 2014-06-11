@@ -88,13 +88,13 @@ foreach ($horarios as $row ) {
 
 foreach ($grilla as  $row) {
 	$tr_horario .="<tr><td>".$row['texto']."</td><td>"
-	. implode('<br>', $row['dias']['LUNES']) ."</td><td>"
-	. implode('<br>', $row['dias']['MARTES']) ."</td><td>"
-	. implode('<br>', $row['dias']['MIERCOLES']) ."</td><td>"
-	. implode('<br>', $row['dias']['JUEVES']) ."</td><td>"
-	. implode('<br>', $row['dias']['VIERNES']) ."</td><td>"
-	. implode('<br>', $row['dias']['SABADO']) ."</td><td>"
-	. implode('<br>', $row['dias']['DOMINGO']) ."</td></tr>";
+	. @implode('<br>', $row['dias']['LUNES']) ."</td><td>"
+	. @implode('<br>', $row['dias']['MARTES']) ."</td><td>"
+	. @implode('<br>', $row['dias']['MIERCOLES']) ."</td><td>"
+	. @implode('<br>', $row['dias']['JUEVES']) ."</td><td>"
+	. @implode('<br>', $row['dias']['VIERNES']) ."</td><td>"
+	. @implode('<br>', $row['dias']['SABADO']) ."</td><td>"
+	. @implode('<br>', $row['dias']['DOMINGO']) ."</td></tr>";
 	
 }
 
