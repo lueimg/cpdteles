@@ -119,13 +119,13 @@ foreach ($profes as  $row) {
 	// print "</pre>";
 	// die();
 	$tr_horario .="<tr><td>".$row['texto']."</td><td>"
-	. implode('<hr>', $row['dias']['LUNES']) ."</td><td>"
-	. implode('<hr>', $row['dias']['MARTES']) ."</td><td>"
-	. implode('<hr>', $row['dias']['MIERCOLES']) ."</td><td>"
-	. implode('<hr>', $row['dias']['JUEVES']) ."</td><td>"
-	. implode('<hr>', $row['dias']['VIERNES']) ."</td><td>"
-	. implode('<hr>', $row['dias']['SABADO']) ."</td><td>"
-	. implode('<hr>', $row['dias']['DOMINGO']) ."</td></tr>";
+	. @implode('<hr>', $row['dias']['LUNES']) ."</td><td>"
+	. @implode('<hr>', $row['dias']['MARTES']) ."</td><td>"
+	. @implode('<hr>', $row['dias']['MIERCOLES']) ."</td><td>"
+	. @implode('<hr>', $row['dias']['JUEVES']) ."</td><td>"
+	. @implode('<hr>', $row['dias']['VIERNES']) ."</td><td>"
+	. @implode('<hr>', $row['dias']['SABADO']) ."</td><td>"
+	. @implode('<hr>', $row['dias']['DOMINGO']) ."</td></tr>";
 	
 
 

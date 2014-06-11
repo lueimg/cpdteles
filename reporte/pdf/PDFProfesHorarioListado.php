@@ -110,13 +110,13 @@ $rs = $cn->loadObject();
 $profesor = $rs->nombre;
 
 $tr_horario = '';
-$tr_horario .='<tr><td colspan="2">LUNES</td><td colspan="6">'.implode('<hr>', $profes['LUNES']) . "</td></tr>";
-$tr_horario .='<tr><td colspan="2">MARTES</td><td colspan="6">'.implode('<hr>', $profes['MARTES']) . '</td></tr>';
-$tr_horario .='<tr><td colspan="2">MIERCOLES</td><td colspan="6">'.implode('<hr>', $profes['MIERCOLES']) . '</td></tr>';
-$tr_horario .='<tr><td colspan="2">JUEVES</td><td colspan="6">'.implode('<hr>', $profes['JUEVES']) . '</td></tr>';
-$tr_horario .='<tr><td colspan="2">VIERNES</td><td colspan="6">'.implode('<hr>', $profes['VIERNES']) . '</td></tr>';
-$tr_horario .='<tr><td colspan="2">SABADO</td><td colspan="6">'.implode('<hr>', $profes['SABADO']) . '</td></tr>';
-$tr_horario .='<tr><td colspan="2">DOMINGO</td><td colspan="6">'.implode('<hr>', $profes['DOMINGO']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">LUNES</td><td colspan="6">'.@implode('<hr>', $profes['LUNES']) . "</td></tr>";
+$tr_horario .='<tr><td colspan="2">MARTES</td><td colspan="6">'.@implode('<hr>', $profes['MARTES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">MIERCOLES</td><td colspan="6">'.@implode('<hr>', $profes['MIERCOLES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">JUEVES</td><td colspan="6">'.@implode('<hr>', $profes['JUEVES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">VIERNES</td><td colspan="6">'.@implode('<hr>', $profes['VIERNES']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">SABADO</td><td colspan="6">'.@implode('<hr>', $profes['SABADO']) . '</td></tr>';
+$tr_horario .='<tr><td colspan="2">DOMINGO</td><td colspan="6">'.@implode('<hr>', $profes['DOMINGO']) . '</td></tr>';
 
 
 
