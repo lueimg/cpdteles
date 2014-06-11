@@ -25,7 +25,7 @@ class MySqlHorarioDAO{
                 from horam h 
                 inner join turnoa t on (t.cturno=h.cturno)
                 inner join diasm d 
-                inner join disprom td on (td.cdia=d.cdia and td.cestado='1')
+                inner join disprom td on (td.cdia=d.cdia and td.cestado='1' and td.cprofes='".$array['cprofes']."')
                 left join (
                             select ho.hinici,ho.hfin,h.cdia
                             from horprop h

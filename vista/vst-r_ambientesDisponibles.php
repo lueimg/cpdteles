@@ -24,7 +24,7 @@
        
 		<script type="text/javascript" src="../javascript/dao/DAOcarrera.js"></script>
 		<script type="text/javascript" src="../javascript/dao/DAOinstitucion.js"></script>
-		<script type="text/javascript" src="../javascript/js/js-ambdisp.js"></script>
+		<script type="text/javascript" src="../javascript/js/js-ambDisp.js"></script>
     </head>
 
 	<body>
