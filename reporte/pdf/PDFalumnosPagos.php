@@ -52,6 +52,9 @@ $cursos = explode(',', $cursos);
 $detalle = $_GET['detalle'];
 $detalle = explode('_', $detalle);
 
+$sec = $_GET['sec'];
+$let = $_GET['let'];
+
 
 $tr_grupo_info = '';
 $tr_cursos = '';
@@ -68,7 +71,7 @@ inner join conmatp co on co.cconmat = de.cconmat
 inner join recacap re on re.cingalu = co.cingalu 
 left join recacap re2 on re2.cingalu = co.cingalu and re2.testfin = 'P'
 inner join personm pe on pe.cperson = re.cperson
-where de.ccurpro = '$curso' 
+where de.ccurpro = '$curso' and de.cdetgra = $sec
 group by co.cingalu
 order by nombre asc
 ";
@@ -106,6 +109,7 @@ $html = <<<EOD
 <div style='text-align:center'><h1>Listado de ALumnos</h1></div>
 
 	<h3>Curso: {$detalle[0]}</h3>
+	<h3>Seccion: {$let}</h3>
 	<table border="1" style='width:100%' cellpadding="2" >
 	<tr><td ><b>Alumnos Aprobados</b></td></tr>
 	{$tr_alumnosaprobados}

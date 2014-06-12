@@ -146,6 +146,16 @@
                             	</div><!--fin listado de grupos-->
                                 <br>
                                 <div id="v_lista_curso" style="display:none;">
+                                    <table cellspacing="1" cellpadding="2" border="0" style="table-layout:fixed" class="EditTable">
+                                    <tr>
+                                        <td class="t-left label input-xlarge"><b>Sección:</b></td>
+                                        <td>
+                                            <select id="slct_detalle_grupo" class="input-large" onchange="VerificaCambio();">
+                                                <option value="">.::Selecciona::.</option>
+                                            </select>
+                                        </td>                            
+                                    </tr>
+                                </table>
                                     <div class="corner_top ui-state-default" style="font-weight:bold">
                                     <table>
                                         <tr class="" align="center">                                        

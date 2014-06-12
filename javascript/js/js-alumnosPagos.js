@@ -73,6 +73,8 @@ VisualizarDetalle=function(ids){
 	$("#v_lista_alumnos").css("display","none");
 	// grupoAcademicoDAO.cargarAlumnos(VisualizarDetalleHTML,ids);
 	grupoAcademicoDAO.cargarCursosAcademicos(VisualizarCursosHTML,ids);
+	grupoAcademicoDAO.cargarDetalleGrupo(sistema.llenaSelect,'slct_detalle_grupo','',ids);
+
 
 }
 VisualizarCursosHTML=function(obj){
@@ -100,6 +102,7 @@ var datos="";
 	}
 	if(obj.length>0){
 	$("#v_lista_curso").css("display","");
+
 	}
 	$("#lista_cursos").html(htm);
 }
@@ -143,19 +146,35 @@ ExportarGrupo=function(grupo,alumno){
 }
 
 ExportarCurso = function (curso,detalle){
-	
 
+	if($("#slct_detalle_grupo").val()!=''){
 	var cursos = curso
-	window.open('../reporte/pdf/PDFalumnosPagos.php?'+ "cursos="+cursos+"&detalle="+detalle , "_blank");
+	window.open('../reporte/pdf/PDFalumnosPagos.php?'
+		+ "cursos="+cursos
+		+"&detalle="+detalle
+		+"&sec="+$("#slct_detalle_grupo").val() 
+		+"&let="+$("#slct_detalle_grupo").find("option:selected").text() 
+		, "_blank");	
+	}else{
+		sistema.msjAdvertencia('Seleccione Seccion',200);
+		$("#slct_detalle_grupo").focus();
+	}
+
+	
 }
 
-ExportarGrupoG=function(){
-	var cfilial=$("#slct_filial").val().join(",");
-	var cinstit=$("#slct_instituto").val().join(",");
-	var fechini=$("#txt_fecha_inicio").val();
-    var fechfin=$("#txt_fecha_fin").val();
-	var csemaca=$("#slct_semestre").val();
-	var cciclo=$("#slct_ciclo").val();
-	window.location='../reporte/excel/EXCELcontrolpago.php?cfilial='
-                	+cfilial+'&cinstit='+cinstit+'&csemaca='+csemaca+'&cciclo='+cciclo+'&fechini='+fechini+'&fechfin='+fechfin;
+
+
+VerificaCambio=function() {
+	$("#actualizacion").css("display","none");
 }
+
+
+
+
+
+
+
+
+
+
