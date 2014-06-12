@@ -59,3 +59,6 @@ disprom:
   PRIMARY KEY (`cdispro`)
 ) ENGINE=`InnoDB` AUTO_INCREMENT=1;
 
+creacion de indice en recacap:
+  create INDEX  ingalu on recacap (cingalu)
+
