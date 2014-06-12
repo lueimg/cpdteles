@@ -88,9 +88,9 @@ $tr_alumnoscondeudas = '';
 foreach($alumnos as $row){
 //LA DIMENSION SOLO ES DIA
 	if($row['deudor'] == 'c'){
-		$tr_alumnosaprobados .= "<tr><td>". $row['nombre']."</td></tr>";
+		$tr_alumnosaprobados .= "<tr><td>". $row['nombre']."</td><td></td></tr>";
 	}else{
-		$tr_alumnoscondeudas .= "<tr><td>". $row['nombre']."</td></tr>";
+		$tr_alumnoscondeudas .= "<tr><td>". $row['nombre']."</td><td></td></tr>";
 
 	}
 
@@ -111,11 +111,14 @@ $html = <<<EOD
 	<h3>Curso: {$detalle[0]}</h3>
 	<h3>Seccion: {$let}</h3>
 	<table border="1" style='width:100%' cellpadding="2" >
-	<tr><td ><b>Alumnos Aprobados</b></td></tr>
+	<tr><td ><b>Alumnos Aprobados</b></td>
+	<td><b>Firma del alumno</b></td>
+	</tr>
 	{$tr_alumnosaprobados}
 	</table>
+	<p></p>
 	<table border="1" style='width:100%' cellpadding="2" >
-	<tr><td ><b>Alumnos con deudas</b></td></tr>
+	<tr><td ><b>Alumnos con deudas</b></td><td><b>Firma del alumno</b></td></tr>
 	{$tr_alumnoscondeudas}
 	</table>
 	<p></p>

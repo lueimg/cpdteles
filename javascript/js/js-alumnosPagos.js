@@ -55,11 +55,6 @@ VisualizarGruposHTML=function(obj){
         '        	<i class="icon-white icon-search"></i>'+
         '       </a>'+
         ' 	</div>'+
-		'	<div style="margin:15px 0px 10px 0px;">'+
-		'		<a onClick="ExportarGrupo('+"'"+obj[i].id+"',''"+')" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)">'+
-        '        	<i class="icon-white icon-folder-open"></i>'+
-        '       </a>'+
-        ' 	</div>'+
 		'</td>';
 	htm+="</tr>";
 	}
