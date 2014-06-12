@@ -118,6 +118,13 @@ $html = <<<EOD
 	<tr><td ><b>Alumnos con deudas</b></td></tr>
 	{$tr_alumnoscondeudas}
 	</table>
+	<p></p>
+	<p></p>
+	<br>
+	<div style=''>
+	___________________ <br>
+	Firma del encargado
+	</div>
 
 EOD;
 
