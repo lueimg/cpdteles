@@ -17,13 +17,13 @@ ELiminar Botones del mantenimiento de docente cuando se selecciona una persona:
   El titulo será Horarios Programados Académicos
 Lo puse Horario Académico Programado!:
 
- ☐ 1) crear seccion a cuprprp por defecto sería "A"
+ ✔ 1) crear seccion a cuprprp por defecto sería "A" @done (14-06-12 18:08)
      Aqui se generará un nuevo campo  en cuprpr seria Sección y Cantidad el cual la cantidad seria segun la division se dé al momento de generar grupo académico.
 
- ☐ 2) horarios tienen la opcion de modificar su cantidad horas totales para validar sus horarios programados
+ ✔ 2) horarios tienen la opcion de modificar su cantidad horas totales para validar sus horarios programados @done (14-06-12 18:09)
    es para el tema del ambiente q contiene una capacidad.
 
- ☐ 3) Tiempo de tolerancia del docente
+ ✔ 3) Tiempo de tolerancia del docente @done (14-06-12 18:09)
   Este se regirá con el módulo de horarios donde se identificará la hora límite de tardanza para llegar a su clase.
   Los filtros son Ode, Int, Carrera, Cursos.
   Tendrá que crearse una tabla para manejar estos pesos de tolerancia en base a los filtros para cada horario en su lista de filtro.
