@@ -51,7 +51,7 @@ Lo puse Horario Académico Programado!:
    ✔ En excel @done (14-06-05 07:33)
 
 
- ☐ 3) Reporte de alumnos de matrícula, pagados y no pagados.
+ ✔ 3) Reporte de alumnos de matrícula, pagados y no pagados. @done (14-06-16 14:56)
   El reporte tiene que tener una seriedad de filtros, sea por Ode,inst,carrera, cursos
 
   Los alumnos pagados en la lista debe tener 2 titulos, Alumnos pagados y Alumnos pagados con problemas del 30% de inasistencia.

@@ -19,23 +19,28 @@ var id=$("#table_docente").jqGrid("getGridParam",'selrow');
         // console.log(data);
     var data = profesDisponibilidadDAO.cargarHorario();
     $(".newrow").remove();
-    data.forEach(function(el){
-        //AGREGO REGISTRO
-        AgregarRow();
-        var indice = $("#txt_cant_dis").val();
-        $("#cdispro_"+indice).val(el.cdispro);
-        $("#slct_dia_"+indice).val(el.cdia);
-        $("#slct_estado_"+indice).val(el.cestado);
-        $("#slct_hini_h_"+indice).val(el.hini.split(":")[0]);
-        $("#slct_hini_m_"+indice).val(el.hini.split(":")[1]);
-        $("#slct_hfin_h_"+indice).val(el.hfin.split(":")[0]);
-        $("#slct_hfin_m_"+indice).val(el.hfin.split(":")[1]);
-        $(".row-"+indice).find("select").attr("disabled","true");
-        $("#slct_estado_"+indice).removeAttr("disabled");
-        $(".newbotones_"+indice).remove();
+
+    if(data !== null){
+        
+        data.forEach(function(el){
+            //AGREGO REGISTRO
+            AgregarRow();
+            var indice = $("#txt_cant_dis").val();
+            $("#cdispro_"+indice).val(el.cdispro);
+            $("#slct_dia_"+indice).val(el.cdia);
+            $("#slct_estado_"+indice).val(el.cestado);
+            $("#slct_hini_h_"+indice).val(el.hini.split(":")[0]);
+            $("#slct_hini_m_"+indice).val(el.hini.split(":")[1]);
+            $("#slct_hfin_h_"+indice).val(el.hfin.split(":")[0]);
+            $("#slct_hfin_m_"+indice).val(el.hfin.split(":")[1]);
+            $(".row-"+indice).find("select").attr("disabled","true");
+            $("#slct_estado_"+indice).removeAttr("disabled");
+            $(".newbotones_"+indice).remove();
 
 
-    });
+        });
+    }
+
     $("#HorarioDisponible").show("slow");
 
 
