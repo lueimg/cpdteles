@@ -72,7 +72,7 @@ $grupo_cursos =array();
 $data_cursos = array();
 foreach ($cursos as  $curso) {
 	# code...
-	$tr_cursos .="<tr><td>".$curso['dcurso']."</td><td>".$curso['dprofes']."</td><td>".$curso['ncredit']."</td></tr>";
+	$tr_cursos .="<tr><td>".$curso['dcurso']."</td><td>".$curso['dprofes']."</td><td style=\"text-align:center\">".$curso['ncredit']."</td></tr>";
 	// print $tr_cursos;
 	$grupo_cursos [] = "'". $curso["ccuprpr"] . "'";
 	$data_cursos[$curso["ccuprpr"]] = $curso['dcurso'];
@@ -91,11 +91,11 @@ $tr_grupo_info = '';
 $grupo_info = $cn->loadObjectList();
 foreach ($grupo_info as  $info) {
 
-	$tr_grupo_info .="<tr><th><b>Filial</b></th><td>". $info["filial"]  ."</td></tr>";
+	$tr_grupo_info .="<tr><th style=\"width:20%\"><b>ODE</b></th><td  style=\"width:70%\">". $info["filial"]  ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Insitución</b></th><td>". $info["institucion"]  ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Carrera</b></th><td>". $info["carrera"]  ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Semestre</b></th><td>". $info["semestre"]  ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Inicio</b></th><td>". $info["finicio"] ."-".$info["cinicio"]  ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Semestre/Inicio</b></th><td>". $info["semestre"]  ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Fecha de Inicio/Fin</b></th><td>". $info["finicio"] ."-".$info["cinicio"]  ."</td></tr>";
 	;
 }
 
@@ -176,8 +176,12 @@ font-weight:bold;
 
 }
 </style>
-<div style='text-align:center'><h1>Horario Académico Programado</h1></div>
 
+
+<table style="text-align:center;">
+<tr><td><h1>Horarios Programados</h1></td></tr>
+</table>
+<p></p>
 <table class="cabecera" style='width:100%' cellpadding="2">
 	<tr>
 		<td style="text-align:left;">
@@ -194,7 +198,7 @@ font-weight:bold;
 					<tr>
 						<th><b>Curso</b></th>
 						<th><b>Profesor</b></th>
-						<th><b>Creditos</b></th>
+						<th style="width:10%;text-align:center"><b>Creditos</b></th>
 					</tr>
 					{$tr_cursos}
 				</table>
