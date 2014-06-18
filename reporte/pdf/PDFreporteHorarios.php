@@ -190,6 +190,7 @@ font-weight:bold;
 
 
 <table style="text-align:center;">
+<tr><td style="font-size: 1.5em;"><h1>GRUPO EDUCATIVO TELESUP</h1></td></tr>
 <tr><td><h1>Horarios Programados</h1></td></tr>
 </table>
 <p></p>
