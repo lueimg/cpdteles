@@ -63,6 +63,8 @@ hora.chora
 ,ins.dinstit
 ,gra.cfilial
 ,fil.dfilial
+,gra.csemaca
+,gra.cinicio
 from horprop ho
 inner join cuprprp cupr on cupr.ccuprpr = ho.ccurpro
 inner join gracprp gra on gra.cgracpr = cupr.cgracpr
@@ -90,7 +92,12 @@ foreach($horarios as $row){
 // $grilla[$row['cprofes']][$row['chora']][$row['dnomdia']][] = $row['cfilial'] . ' - ' .$row['cinstit'] . ' - '.$row['ccarrer'] . ' - '.$row['ccurso'];
 
 $grilla[$row['cprofes']][$row['chora']]['texto']= $row['dhora'];
-$grilla[$row['cprofes']][$row['chora']]['dias'][$row['dnomdia']][] = $row['dfilial'] . ' - ' .$row['dinstit'] . ' - '.$row['dcarrer'] . ' - '.$row['dcurso'];
+$grilla[$row['cprofes']][$row['chora']]['dias'][$row['dnomdia']][] = $row['dfilial'] 
+						. '<br>' .$row['dinstit'] 
+						. '<br>SEMESTRE: ' . $row["csemaca"]. '/'.$row["cinicio"]
+
+						. '<br>'.$row['dcarrer'] 
+						. '<br>'.$row['dcurso'];
 
 }
 
@@ -118,7 +125,7 @@ foreach ($profes as  $row) {
 	// print_r($row);
 	// print "</pre>";
 	// die();
-	$tr_horario .="<tr><td>".$row['texto']."</td><td>"
+	$tr_horario .="<tr><td class=\"text-th\">".$row['texto']."</td><td>"
 	. @implode('<hr>', $row['dias']['LUNES']) ."</td><td>"
 	. @implode('<hr>', $row['dias']['MARTES']) ."</td><td>"
 	. @implode('<hr>', $row['dias']['MIERCOLES']) ."</td><td>"
@@ -135,6 +142,8 @@ $pdf->AddPage('L', 'A4');
 
 
 
+$mes = array("","enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
+$fecha = "Lima, ".date("d").' de '.$mes[date('m')]. ' del '.date("Y");
 
 
 $html = <<<EOD
@@ -160,25 +169,39 @@ font-weight:bold;
 
 
 }
+.fondo-claro{
+	background-color:#A6D2F7
+}
+.horario,  td{
+	vertical-align:middle;
+	text-align:center;
+}
+.text-1{font-size:3em}
+.text-2{font-size:2em}
+.text-n{font-weight:bold; font-size: 1.5em; vertical-align:middle}
+.text-th{font-weight:bold;  vertical-align:middle}
 </style>
-<div style='text-align:center'><h1>Horario Académico Programado</h1></div>
 
+<table>
+<tr><td class="text-1">GRUPO EDUCATIVO TELESUP</td></tr>
+<tr><td class="text-2">CARGA HORARIA ASIGNADA AL DOCENTE</td></tr>
+</table>
+<p></p>
+<table>
+<tr><td class="text-n" style="text-align:left">DOCENTE: {$profesor}</td><td class="text-n" style="text-align:right">{$fecha}</td></tr>
 
+</table>
 
-	
-
-	<h3>Horario:</h3>
-	<h3>Profesor: {$profesor}</h3>
-	<table border="1" style='width:100%' cellpadding="2" >
-	<tr>
-	<th><b>Hora</b></th>
-	<th><b>Lunes</b></th>
-	<th><b>Martes</b></th>
-	<th><b>Miercoles</b></th>
-	<th><b>Jueves</b></th>
-	<th><b>Viernes</b></th>
-	<th><b>Sabado</b></th>
-	<th><b>Domingo</b></th>
+	<table border="1" style='width:100%' cellpadding="2" style="" class="horario">
+	<tr class="fondo-claro" style="background:#A6D2F7">
+		<th><b>Hora</b></th>
+		<th><b>Lunes</b></th>
+		<th><b>Martes</b></th>
+		<th><b>Miercoles</b></th>
+		<th><b>Jueves</b></th>
+		<th><b>Viernes</b></th>
+		<th><b>Sabado</b></th>
+		<th><b>Domingo</b></th>
 	</tr>
 	{$tr_horario}
 	</table>
