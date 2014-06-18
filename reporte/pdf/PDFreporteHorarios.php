@@ -105,8 +105,8 @@ foreach ($grupo_info as  $info) {
 	$tr_grupo_info .="<tr><th style=\"width:20%\"><b>ODE</b></th><td  style=\"width:70%\">". $info["filial"]  ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Insitución</b></th><td>". $info["institucion"]  ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Carrera</b></th><td>". $info["carrera"] ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Semestre/Inicio</b></th><td>".$semestre . "-".$num ."/" .$info["cinicio"] ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Fecha de Inicio/Fin</b></th><td>". $info["finicio"] ."/".$info["ffin"]  ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Semestre/Inicio</b></th><td>".$semestre . "-".$num ." / " .$info["cinicio"] ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Fecha de Inicio/Fin</b></th><td>". $info["finicio"] ." / ".$info["ffin"]  ."</td></tr>";
 	;
 }
 
