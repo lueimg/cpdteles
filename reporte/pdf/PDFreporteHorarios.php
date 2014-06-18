@@ -80,7 +80,7 @@ foreach ($cursos as  $curso) {
 }
 
 //GRUPO INFO
-$sql = "select fi.dfilial filial , ins.dinstit institucion, car.dcarrer carrera , gr.csemaca semestre , gr.finicio , gr.cinicio
+$sql = "select fi.dfilial filial , ins.dinstit institucion, car.dcarrer carrera , gr.csemaca semestre , gr.finicio , gr.ffin , gr.cinicio
 from gracprp gr 
 left join filialm fi on fi.cfilial = gr.cfilial
 left join instita ins on ins.cinstit = gr.cinstit
@@ -90,12 +90,23 @@ $cn->setQuery($sql);
 $tr_grupo_info = '';
 $grupo_info = $cn->loadObjectList();
 foreach ($grupo_info as  $info) {
-
+	list($semestre,$num) = explode("-", $info["semestre"]);
+	if($num== 1){
+		$num  = "I";
+	}elseif($num== 2){
+		$num  = "II";
+	}elseif($num== 3){
+		$num  = "III";
+	}elseif($num== 4){
+		$num  = "IV";
+	}elseif($num== 5){
+		$num  = "V";
+	}
 	$tr_grupo_info .="<tr><th style=\"width:20%\"><b>ODE</b></th><td  style=\"width:70%\">". $info["filial"]  ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Insitución</b></th><td>". $info["institucion"]  ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Carrera</b></th><td>". $info["carrera"]  ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Semestre/Inicio</b></th><td>". $info["semestre"]  ."</td></tr>";
-	$tr_grupo_info .="<tr><th><b>Fecha de Inicio/Fin</b></th><td>". $info["finicio"] ."-".$info["cinicio"]  ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Carrera</b></th><td>". $info["carrera"] ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Semestre/Inicio</b></th><td>".$semestre . "-".$num ."/" .$info["cinicio"] ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Fecha de Inicio/Fin</b></th><td>". $info["finicio"] ."/".$info["ffin"]  ."</td></tr>";
 	;
 }
 
