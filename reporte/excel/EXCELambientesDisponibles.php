@@ -57,6 +57,7 @@ CONCAT(hora.hinici,' - ',hora.hfin) dhora ,dia.cdia ,dia.dnomdia ,ho.cambien ,am
 ,cur.dcurso
 ,car.dcarrer
 ,CONCAT_WS(' ',per.dappape,per.dapmape,per.dnomper) nombre
+,tia.dtipamb
 from horprop ho 
 inner join cuprprp cupr on cupr.ccuprpr = ho.ccurpro 
 inner join gracprp gra on gra.cgracpr = cupr.cgracpr 
@@ -64,6 +65,7 @@ inner join diasm   dia on dia.cdia = ho.cdia
 inner join horam   hora on hora.chora = ho.chora 
 inner join instita ins on ins.cinstit = hora.cinstit 
 inner join ambienm amb on amb.cambien = ho.cambien 
+inner join tipamba tia on tia.ctipamb = amb.ctipamb
 inner join cursom  cur on cur.ccurso = cupr.ccurso
 inner join carrerm car on car.ccarrer = gra.ccarrer
 inner join profesm pro on pro.cprofes = ho.cprofes
@@ -88,6 +90,8 @@ foreach ($horarios as $row ) {
 								. '<br>'.$row["dcarrer"]
 								. '<br>'.$row["dcurso"]
 								. '<br>'.$row["nombre"]
+								. '<br>'.$row["numamb"]
+								. '<br>'.$row["dtipamb"]
 								;
 
 
