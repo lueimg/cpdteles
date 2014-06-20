@@ -75,6 +75,11 @@ class servletAmbiente extends controladorComandos{
 		
 					$where="";
 					$param=array();
+
+					
+					if($_GET['cfilial']!='' and substr($_GET['cfilial'],0,3)!='000'){
+						$where.=" AND a.cfilial in ('".str_replace(",","','",$_GET['cfilial'])."')";
+					}
 		
 					if( isset($_GET['dfilial']) ) {
 						if( trim($_GET['dfilial'])!='' ) {

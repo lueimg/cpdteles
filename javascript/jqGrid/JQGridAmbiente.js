@@ -3,7 +3,7 @@ var jQGridAmbiente={
     idLayerMessage:'layerMessage',
     Ambiente: function(){
         var gridC=$('#table_ambiente').jqGrid({
-            url:'../controlador/controladorSistema.php?comando=ambiente&action=jqgrid_ambiente',
+            url:'../controlador/controladorSistema.php?comando=ambiente&action=jqgrid_ambiente&cfilial='+$("#hd_idFilials").val(),
             datatype:this.type,
             gridview:true,
             height:345,
