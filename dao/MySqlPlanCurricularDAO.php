@@ -40,7 +40,7 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
     
     public function listarPlanCurricular($post){
         $db=creadorConexion::crear('MySql');
-        $sql1="  sselect g.ccurric
+        $sql1="  select g.ccurric
                 from ingalum i
                 inner join conmatp c on (i.cingalu=c.cingalu)
                 inner join gracprp g on (c.cgruaca=g.cgracpr)
