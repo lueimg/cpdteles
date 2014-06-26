@@ -133,6 +133,68 @@ class servletPlanCurricular extends controladorComandos{
 					$response["rows"]=$dataRow;
 					echo json_encode($response);
 				break;
+				case 'jqgrid_listar_plancurricular':
+					$page=$_GET["page"];
+					$limit=$_GET["rows"];
+					$sidx=$_GET["sidx"];
+					$sord=$_GET["sord"];
+                                        
+                    $cingalu= $_GET["cingalu"];
+
+					$where=" AND p.ccurric IN (	select g.ccurric
+								                from ingalum i
+								                inner join conmatp c on (i.cingalu=c.cingalu)
+								                inner join gracprp g on (c.cgruaca=g.cgracpr)
+								                where i.cingalu='".$cingalu."'
+								                order by fmatric DESC
+								                limit 0,1) ";
+					$param=array();
+		
+					if( isset($_GET['dcurso']) ) {
+						if( trim($_GET['dcurso'])!='' ) {
+							$where.=" AND c.dcurso ILIKE '%".trim($_GET['dcurso'])."%' ";
+						}
+					}
+					
+                    if( isset($_GET['estado']) ) {
+						if( trim($_GET['estado'])!='' ) {
+							$where.=" AND estado =  '".trim($_GET['estado'])."' ";
+						}
+					}
+					
+					if(!$sidx)
+                    $sidx=1 ; 
+		
+					$row=$daoPlancurricular->JQGridCountListarPlancurricular( $where );
+					$count=$row[0]['count'];
+					if($count>0) {
+							$total_pages=ceil($count/$limit);
+					}else {
+							$limit=0;
+							$total_pages=0;
+					}
+		
+					if($page>$total_pages) $page=$total_pages;
+		
+					$start=$page*$limit-$limit;
+					
+					$response=array("page"=>$page,"total"=>$total_pages,"records"=>$count);
+					$data=$daoPlancurricular->JQGRIDRowsListarPlancurricular($sidx, $sord, $start, $limit, $where);
+					$dataRow=array();
+					for($i=0;$i<count($data);$i++){
+						array_push($dataRow, array("id"=>$data[$i]['id'],"cell"=>array(								
+								$data[$i]['dmodulo'],
+								$data[$i]['dcurso'],
+								$data[$i]['ncredit'],
+								$data[$i]['requisito'],
+								$data[$i]['estado']
+								)
+							)
+						);
+					}
+					$response["rows"]=$dataRow;
+					echo json_encode($response);
+				break;
 				default:
 				echo json_encode(array('rst'=>3,'msg'=>'Action no encontrado'));
             endswitch;

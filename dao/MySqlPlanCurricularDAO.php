@@ -50,14 +50,16 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
         $db->setQuery($sql1);
         $data1=$db->loadObjectList();        
 
-        $sql="  select m.dmodulo,c.dcurso,p.ncredit,
-                    (select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
+        $sql="  select concat(ci.cciclo,'-',c.ccurso) as id,m.dmodulo,c.dcurso,p.ncredit,
+                    ifnull((select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
                     from cursom cu 
-                    where FIND_IN_SET (cu.ccurso,p.dreqcur)  >  0) as requisito
+                    where FIND_IN_SET (cu.ccurso,p.dreqcur)  >  0),'') as requisito,
+                    '' as estado
                 from placurp p
                 inner join moduloa m on (p.cmodulo=m.cmodulo)
                 inner join cursom c on (p.ccurso=c.ccurso)
-                where ccurric='".$data1[0]['ccurric']."'
+                inner join cicloa ci on (ci.cciclo=p.cciclo)
+                where p.ccurric='".$data1[0]['ccurric']."'
                 and p.cestado='1'
                 order by  m.dmodulo";
         
@@ -132,6 +134,7 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
             return array('rst'=>'3','msj'=>'Error al procesar Query',"sql"=>$csql,"sql"=>$sql);
         }   
     }
+
     public function JQGridCountPlancurricular ( $where ) {
        $db=creadorConexion::crear('MySql');
         $sql=" SELECT COUNT(*) AS count FROM placurp AS p
@@ -147,6 +150,7 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
             return array(array('COUNT'=>0));
         }
     }
+
     public function JQGRIDRowsPlancurricular ( $sidx, $sord, $start, $limit, $where) {
         $sql = "
             SELECT
@@ -201,7 +205,47 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
             return array('rst'=>'3','msj'=>'Error al procesar Query',"sql"=>$csql,"sql"=>$sql);
         }
     
-        }
-
     }
+
+    public function JQGridCountListarPlancurricular ( $where ) {
+       $db=creadorConexion::crear('MySql');
+        $sql=" SELECT COUNT(*) AS count 
+               from placurp p
+                inner join moduloa m on (p.cmodulo=m.cmodulo)
+                inner join cursom c on (p.ccurso=c.ccurso)
+                inner join cicloa ci on (ci.cciclo=p.cciclo)
+                WHERE p.cestado='1' ".$where;
+        
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();
+        //var_dump($sql);exit();
+        if( count($data)>0 ){
+            return $data;
+        }else{
+            return array(array('COUNT'=>0));
+        }
+    }
+
+    public function JQGRIDRowsListarPlancurricular ( $sidx, $sord, $start, $limit, $where) {
+        $sql = "select concat(ci.cciclo,'-',c.ccurso) as id,m.dmodulo,c.dcurso,p.ncredit,
+                        ifnull((select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
+                        from cursom cu 
+                        where FIND_IN_SET (cu.ccurso,p.dreqcur)  >  0),'') as requisito,
+                        '' as estado
+                from placurp p
+                inner join moduloa m on (p.cmodulo=m.cmodulo)
+                inner join cursom c on (p.ccurso=c.ccurso)
+                inner join cicloa ci on (ci.cciclo=p.cciclo)
+                WHERE p.cestado='1' ".$where."
+                ORDER BY  ".$sidx." ".$sord."
+                LIMIT ".$limit." OFFSET ".$start;
+       
+        $db=creadorConexion::crear('MySql');    
+
+        $db->setQuery($sql);
+        $data=$db->loadObjectList();        
+        return $data;
+        
+    }
+}
 ?>

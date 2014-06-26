@@ -20,8 +20,8 @@
 		<script type="text/javascript" src="../javascript/js/js-pre_ratificacion.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JQGridGrupoAcademico.js"></script>
-        <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>  
-        <script type="text/javascript" src="../javascript/dao/DAOplancurricular.js"></script>  
+        <script type="text/javascript" src="../javascript/jqGrid/JQGridPlanCurricular.js"></script>
+        <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>          
     </head>
 
 	<body>
@@ -72,29 +72,10 @@
                                         <div id="pager_table_grupo_academico"></div>
                                     </div>
                                     </td><td>                                    
-                                    <div class="corner_top ui-state-default" style="font-weight:bold">
-                                    <table border="1" cellpadding="0" cellspacing="0">
-                                        <tr class="" align="center">                              
-                                            <td class="t-center " width="50px">CICLO</td>
-                                            <td class="t-center " width="100px" >CURSO</td>
-                                            <td class="t-center " width="55px" >CREDITOS</td>
-                                            <td class="t-center " width="150px" >REQUISITOS</td>
-                                            <td class="t-center " width="80px">ESTADO</td>
-                                        </tr>
-                                    </table>
-                                    </div>                                    
-                                    <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 230px">
-                                    <table id="lista_plan" cellspacing="1" cellpadding="1" border="1"> </table>
+                                    <div style="overflow:auto;">
+                                        <table id="table_plan_curricular"></table>
+                                        <div id="pager_table_plan_curricular"></div>
                                     </div>
-                                    <div class="corner_bottom ui-state-default" style="text-align: right;height: 20px;padding: 2px;">
-                                        <span class="hv_icon corner_all" style="margin:2px -3px 0px 0px;" onclick="sistema.mostrar_cerrar_buscar('txtPlanCurricular','buscarPlanCurricular')">
-                                        <i id="buscarPlanCurricular" class="icon-gray icon-search"></i>
-                                        </span>
-                                        
-                                        <span style="display:inline-block;vertical-align:top">
-                                        <input id="txtPlanCurricular" class="input_buscar" type="text" style="width: 150px;display: none;" onkeyup="sistema.buscarEnTable(this.value,'lista_plan')">
-                                        </span>
-                                    </div>  
                                     </td></tr></table>                                  
                                 </td>
                               </tr>
