@@ -19,8 +19,8 @@ var jQGridPlanCurricular={
         {name:'dmodulo',index:'dmodulo',align:'left',width:60,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'dcurso',index:'dcurso',align:'left',width:120,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'ncredit',index:'ncredit',align:'center',width:40,editable:true,editrules:{required:true},sorttype:"text"},
-        {name:'requisito',index:'requisito',align:'center',width:120,editable:true,editrules:{required:true},sorttype:"text"},
-        {name:'estado',index:'estado',align:'center',width:100,editable:true,editrules:{required:true},sorttype:"text"}
+        {name:'requisito',index:'requisito',align:'left',width:120,editable:true,editrules:{required:true},sorttype:"text",search:false},
+        {name:'estado',index:'estado',align:'center',width:100,editable:true,editrules:{required:true},sorttype:"text",search:false}
             ],
             rowNum:10,
             //rowList:[5,10],

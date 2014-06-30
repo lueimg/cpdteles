@@ -141,20 +141,29 @@ class servletPlanCurricular extends controladorComandos{
                                         
                     $cingalu= $_GET["cingalu"];
 
-					$where=" AND p.ccurric IN (	select g.ccurric
-								                from ingalum i
-								                inner join conmatp c on (i.cingalu=c.cingalu)
-								                inner join gracprp g on (c.cgruaca=g.cgracpr)
-								                where i.cingalu='".$cingalu."'
-								                order by fmatric DESC
-								                limit 0,1) ";
+					$where2=" i.cingalu='".$cingalu."'";
+				                
 					$param=array();
 		
 					if( isset($_GET['dcurso']) ) {
 						if( trim($_GET['dcurso'])!='' ) {
-							$where.=" AND c.dcurso ILIKE '%".trim($_GET['dcurso'])."%' ";
+							$where.=" AND c.dcurso LIKE '%".trim($_GET['dcurso'])."%' ";
 						}
 					}
+
+					if( isset($_GET['dmodulo']) ) {
+						if( trim($_GET['dmodulo'])!='' ) {
+							$where.=" AND m.dmodulo LIKE '%".trim($_GET['dmodulo'])."%' ";
+						}
+					}
+
+					if( isset($_GET['ncredit']) ) {
+						if( trim($_GET['ncredit'])!='' ) {
+							$where.=" AND p.ncredit='".trim($_GET['ncredit'])."' ";
+						}
+					}
+
+
 					
                     if( isset($_GET['estado']) ) {
 						if( trim($_GET['estado'])!='' ) {
@@ -165,7 +174,7 @@ class servletPlanCurricular extends controladorComandos{
 					if(!$sidx)
                     $sidx=1 ; 
 		
-					$row=$daoPlancurricular->JQGridCountListarPlancurricular( $where );
+					$row=$daoPlancurricular->JQGridCountListarPlancurricular( $where, $where2 );
 					$count=$row[0]['count'];
 					if($count>0) {
 							$total_pages=ceil($count/$limit);
@@ -179,7 +188,7 @@ class servletPlanCurricular extends controladorComandos{
 					$start=$page*$limit-$limit;
 					
 					$response=array("page"=>$page,"total"=>$total_pages,"records"=>$count);
-					$data=$daoPlancurricular->JQGRIDRowsListarPlancurricular($sidx, $sord, $start, $limit, $where);
+					$data=$daoPlancurricular->JQGRIDRowsListarPlancurricular($sidx, $sord, $start, $limit, $where, $where2);
 					$dataRow=array();
 					for($i=0;$i<count($data);$i++){
 						array_push($dataRow, array("id"=>$data[$i]['id'],"cell"=>array(								

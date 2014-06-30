@@ -23,7 +23,7 @@ var jQGridGrupoAcademico={
         {name:'csemaca',index:'csemaca',align:'center',width:50,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'cinicio',index:'cinicio',align:'center',width:40,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'finicio',index:'finicio',align:'center',width:70,editable:true,editrules:{required:true},sorttype:"text"},
-        {name:'horario',index:'horario',align:'left',width:220,editable:true,editrules:{required:true},sorttype:"text"}
+        {name:'horario',index:'horario',align:'left',width:220,editable:true,editrules:{required:true},sorttype:"text",search:false}
             ],
             rowNum:10,
             //rowList:[5,10],
@@ -47,6 +47,14 @@ var jQGridGrupoAcademico={
                 gridC[0].toggleToolbar() 
             } 
         });
+        $("#table_grupo_academico").jqGrid('navButtonAdd',"#pager_table_grupo_academico",{
+            caption:"",
+            title:"Cargar", 
+            buttonicon :'icon-ok-sign', 
+            onClickButton:function(){
+                ListadoCursos();
+            } 
+        }); 
         //fin boton custom
     }
 }

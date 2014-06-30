@@ -152,6 +152,9 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
     }
 
     public function JQGRIDRowsPlancurricular ( $sidx, $sord, $start, $limit, $where) {
+
+        $db=creadorConexion::crear('MySql');    
+
         $sql = "
             SELECT
                 p.ccurric,
@@ -162,9 +165,8 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
                   ON c.ccurso = p.ccurso
             WHERE 1=1 ".$where."
             ORDER BY  ".$sidx." ".$sord."
-            LIMIT ".$limit." OFFSET ".$start;
-       
-        $db=creadorConexion::crear('MySql');	
+            LIMIT ".$limit." OFFSET ".$start;       
+        
 
         $db->setQuery($sql);
         $data=$db->loadObjectList();        
@@ -207,14 +209,27 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
     
     }
 
-    public function JQGridCountListarPlancurricular ( $where ) {
+    public function JQGridCountListarPlancurricular ( $where, $where2 ) {
        $db=creadorConexion::crear('MySql');
+
+       $sql2=" select g.ccurric
+                from ingalum i
+                inner join conmatp c on (i.cingalu=c.cingalu)
+                inner join gracprp g on (c.cgruaca=g.cgracpr)
+                where ".$where2." 
+                order by fmatric DESC
+                limit 0,1 ";
+        $db->setQuery($sql2);
+        $data2=$db->loadObjectList();
+
+
         $sql=" SELECT COUNT(*) AS count 
                from placurp p
                 inner join moduloa m on (p.cmodulo=m.cmodulo)
                 inner join cursom c on (p.ccurso=c.ccurso)
                 inner join cicloa ci on (ci.cciclo=p.cciclo)
-                WHERE p.cestado='1' ".$where;
+                WHERE p.cestado='1' 
+                AND p.ccurric='".$data2[0]['ccurric']."' ".$where;
         
         $db->setQuery($sql);
         $data=$db->loadObjectList();
@@ -226,21 +241,41 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
         }
     }
 
-    public function JQGRIDRowsListarPlancurricular ( $sidx, $sord, $start, $limit, $where) {
+    public function JQGRIDRowsListarPlancurricular ( $sidx, $sord, $start, $limit, $where,$where2) {
+        
+        $db=creadorConexion::crear('MySql');    
+        
+        $sql2=" select g.ccurric
+                from ingalum i
+                inner join conmatp c on (i.cingalu=c.cingalu)
+                inner join gracprp g on (c.cgruaca=g.cgracpr)
+                where ".$where2." 
+                order by fmatric DESC
+                limit 0,1 ";
+        $db->setQuery($sql2);
+        $data2=$db->loadObjectList();
+
+
         $sql = "select concat(ci.cciclo,'-',c.ccurso) as id,m.dmodulo,c.dcurso,p.ncredit,
                         ifnull((select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
                         from cursom cu 
                         where FIND_IN_SET (cu.ccurso,p.dreqcur)  >  0),'') as requisito,
-                        '' as estado
+                        IFNULL(cu.estado,'') as estado
                 from placurp p
                 inner join moduloa m on (p.cmodulo=m.cmodulo)
                 inner join cursom c on (p.ccurso=c.ccurso)
                 inner join cicloa ci on (ci.cciclo=p.cciclo)
-                WHERE p.cestado='1' ".$where."
+                left join ( select cu.ccurso,'Ok' as estado
+                            from decomap d
+                            inner join conmatp c on d.cconmat=c.cconmat
+                            inner join ingalum i  on i.cingalu=c.cingalu
+                            inner join cuprprp cu on cu.ccuprpr=d.ccurpro
+                            where ".$where2."
+                            and d.cestado='1'
+                            and d.nnoficu>=11) cu on (cu.ccurso=c.ccurso)
+                WHERE p.cestado='1' AND p.ccurric='".$data2[0]['ccurric']."' ".$where."
                 ORDER BY  ".$sidx." ".$sord."
-                LIMIT ".$limit." OFFSET ".$start;
-       
-        $db=creadorConexion::crear('MySql');    
+                LIMIT ".$limit." OFFSET ".$start;            
 
         $db->setQuery($sql);
         $data=$db->loadObjectList();        

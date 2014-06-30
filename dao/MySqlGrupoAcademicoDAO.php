@@ -115,6 +115,7 @@ class MySqlGrupoAcademicoDAO{
 
         $db=creadorConexion::crear('MySql');	
         //var_dump($sql);exit();
+        //echo $sql;
         $db->setQuery($sql);
         $data=$db->loadObjectList();        
         return $data;
@@ -666,6 +667,25 @@ class MySqlGrupoAcademicoDAO{
 		else{
             return array('rst'=>'2','msj'=>'No existen Secciones','data'=>$data,'sql'=>$sql);
         }
+  }
+
+  public function cargarCursosAcademicosAlumno($array){
+  		$sql="	select c.ccurso,cu.dcurso,c.ncredit
+				from cuprprp c
+				inner join cursom cu on (cu.ccurso=c.ccurso)
+				inner join horprop h on (c.ccuprpr=h.ccurpro)
+				where c.cgracpr='".$array['cgracpr']."'
+				and h.cestado='1'
+				and c.ccurso not in (
+					select cu.ccurso
+					from decomap d 
+					inner join conmatp c on c.cconmat=d.cconmat
+					INNER JOIN ingalum i on i.cingalu=c.cingalu
+					inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
+					where i.cingalu='".$array['cingalu']."'
+					and d.nnoficu>=11)
+				GROUP BY c.ccurso";	
+
   }
   
 }

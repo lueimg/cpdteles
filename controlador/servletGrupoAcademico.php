@@ -122,6 +122,30 @@ class servletGrupoAcademico extends controladorComandos{
 						if( trim($_GET['dcarrer'])!='' ) {
 							$where.=" AND c.dcarrer like '%".trim($_GET['dcarrer'])."%' ";
 						}
+					}
+
+					if( isset($_GET['dciclo']) ) {
+						if( trim($_GET['dciclo'])!='' ) {
+							$where.=" AND ci.dciclo like '%".trim($_GET['dciclo'])."%' ";
+						}
+					}
+
+					if( isset($_GET['csemaca']) ) {
+						if( trim($_GET['csemaca'])!='' ) {
+							$where.=" AND g.csemaca like '%".trim($_GET['csemaca'])."%' ";
+						}
+					}
+
+					if( isset($_GET['cinicio']) ) {
+						if( trim($_GET['cinicio'])!='' ) {
+							$where.=" AND g.cinicio like '%".trim($_GET['cinicio'])."%' ";
+						}
+					} 
+
+					if( isset($_GET['finicio']) ) {
+						if( trim($_GET['finicio'])!='' ) {
+							$where.=" AND g.finicio='".trim($_GET['finicio'])."' ";
+						}
 					}                                        
 										
 					if(!$sidx)$sidx=1 ; 
