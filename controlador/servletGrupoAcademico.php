@@ -124,6 +124,12 @@ class servletGrupoAcademico extends controladorComandos{
 						}
 					}
 
+					if( isset($_GET['dfilial']) ) {
+						if( trim($_GET['dfilial'])!='' ) {
+							$where.=" AND f.dfilial like '%".trim($_GET['dfilial'])."%' ";
+						}
+					}
+
 					if( isset($_GET['dciclo']) ) {
 						if( trim($_GET['dciclo'])!='' ) {
 							$where.=" AND ci.dciclo like '%".trim($_GET['dciclo'])."%' ";
@@ -171,6 +177,7 @@ class servletGrupoAcademico extends controladorComandos{
 					$indices=0;
 					for($i=0;$i<count($data);$i++){
 						array_push($dataRow, array("id"=>$data[$i]['id'],"cell"=>array( 								
+								$data[$i]['dfilial'],
 								$data[$i]['dcarrer'],
 								$data[$i]['dciclo'],
 								$data[$i]['csemaca'],

@@ -257,9 +257,9 @@ WHERE 1=1  AND ccurric =".$r['ccur']." AND cmodulo =".$r['cmod']."";
 
 
         $sql = "select concat(ci.cciclo,'-',c.ccurso) as id,m.dmodulo,c.dcurso,p.ncredit,
-                        ifnull((select GROUP_CONCAT(cu.dcurso SEPARATOR '<br>') 
+                        ifnull((select GROUP_CONCAT(cu.codicur SEPARATOR '<br>') 
                         from cursom cu 
-                        where FIND_IN_SET (cu.ccurso,p.dreqcur)  >  0),'') as requisito,
+                        where FIND_IN_SET (cu.ccurso,replace(p.dreqcur,'|',','))  >  0),'') as requisito,
                         IFNULL(cu.estado,'') as estado
                 from placurp p
                 inner join moduloa m on (p.cmodulo=m.cmodulo)

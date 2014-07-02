@@ -62,7 +62,20 @@ Lo puse Horario Académico Programado!:
 
 
 
+Verificar mantenimiento de asignacion de equivalencias
 
+un curso de una curricula puede tener mas de 1 equivalencia pero deberia ser igual al curso destino, pero el curso acta distinto ejemplo:
+
+  curriculax - cursox - ciclox   |  curriculaz - cursoz - cicloz | cursop | irregular
+  curriculax - cursox - ciclox   |  curriculaz - cursoz - cicloz | cursow | irregular
+
+  curriculax - cursox - ciclox   |  curriculax - cursox - ciclox | cursop | regular
+  curriculax - cursox - ciclox   |  curriculax - cursox - ciclox | cursow | regular
+
+
+  como se muestra el curso inicio y el curso destino viene hacer el mismo pero su curso de acta a reemplazar solo es distinto cabe decir q cuando quiere agregarse mas de 1 relacion de equivalencia a un curso todo se copia, y se valida q el curso de acta sea distinto.
+
+  este modelo se asemeja a la realidad de los cambios de los cursos.
 
 
 

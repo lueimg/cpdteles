@@ -670,7 +670,8 @@ class MySqlGrupoAcademicoDAO{
   }
 
   public function cargarCursosAcademicosAlumno($array){
-  		$sql="	select c.ccurso,cu.dcurso,c.ncredit
+  		$db=creadorConexion::crear('MySql');
+  		/*$sql="	select c.ccurso,cu.dcurso,c.ncredit
 				from cuprprp c
 				inner join cursom cu on (cu.ccurso=c.ccurso)
 				inner join horprop h on (c.ccuprpr=h.ccurpro)
@@ -684,7 +685,76 @@ class MySqlGrupoAcademicoDAO{
 					inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
 					where i.cingalu='".$array['cingalu']."'
 					and d.nnoficu>=11)
-				GROUP BY c.ccurso";	
+				GROUP BY c.ccurso";	*/
+
+		$sql="select t3.ccurricf,t3.ccursof,t3.dcursof,t3.ncredit,t3.gruequi,t3.ccurric,t3.ccurso,t3.dcurso
+from (
+	select ccurricf,ccursof,dcursof,ncredit,gruequi,ccurric,ccurso,dcurso
+	from (
+		select if(ccurria is not null,ccurria,ccurric) as ccurricf,if(ccursoa is not null, ccursoa,ccurso) as ccursof,if(dcurso2 is not null,dcurso2,dcurso) as dcursof,ncredit,gruequi,ccurric,ccurso,dcurso
+		from (
+			select c.ccurric,c.ccurso,cu.dcurso,c.ncredit,eq.ccurria,eq.ccursoa,cu2.dcurso as dcurso2,eq.gruequi
+			from cuprprp c
+			inner join cursom cu on (cu.ccurso=c.ccurso)
+			left join equisag eq on (eq.ccurric=c.ccurric and eq.ccurso=c.ccurso and eq.cestado='1')
+			left join cursom cu2 on (cu2.ccurso=eq.ccursoa)
+			inner join horprop h on (c.ccuprpr=h.ccurpro)
+			where c.cgracpr='KARLABIN013000000098'
+			and h.cestado='1'
+			and c.ccurso not in (
+				select cu.ccurso
+				from decomap d 
+				inner join conmatp c on c.cconmat=d.cconmat
+				INNER JOIN ingalum i on i.cingalu=c.cingalu
+				inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
+				where i.cingalu='HOMBRECE01400003433'
+				and d.nnoficu>=11)
+			GROUP BY c.ccurso,eq.ccurria,eq.ccursoa
+			union
+			select c.ccurric,c.ccurso,cu.dcurso,c.ncredit,null ccurria,null ccursoa,null dcurso2,null gruequi			
+			from cuprprp c
+			inner join cursom cu on (cu.ccurso=c.ccurso)
+			inner join horprop h on (c.ccuprpr=h.ccurpro)
+			where c.cgracpr='KARLABIN013000000098'
+			and h.cestado='1'
+			and c.ccurso not in (
+				select cu.ccurso
+				from decomap d 
+				inner join conmatp c on c.cconmat=d.cconmat
+				INNER JOIN ingalum i on i.cingalu=c.cingalu
+				inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
+				where i.cingalu='HOMBRECE01400003433'
+				and d.nnoficu>=11)
+			GROUP BY c.ccurso
+		) t
+	) t2
+	GROUP BY t2.ccurric,t2.ccurso,t2.gruequi
+) t3
+inner join 
+(
+	select ccurric,ccurso,estado
+	from (
+		select p.ccurric,p.ccurso,
+	    ifnull((select GROUP_CONCAT(cu.codicur SEPARATOR '<br>') 
+	    from cursom cu 
+	    where FIND_IN_SET (cu.ccurso,replace(p.dreqcur,'|',','))  >  0),'') as requisito,
+	    IFNULL(cu.estado,'') as estado
+	    from placurp p
+	    inner join moduloa m on (p.cmodulo=m.cmodulo)
+	    inner join cursom c on (p.ccurso=c.ccurso)
+	    inner join cicloa ci on (ci.cciclo=p.cciclo)
+	    left join ( select cu.ccurso,'Ok' as estado
+	                from decomap d
+	                inner join conmatp c on d.cconmat=c.cconmat
+	                inner join ingalum i  on i.cingalu=c.cingalu
+	                inner join cuprprp cu on cu.ccuprpr=d.ccurpro
+	                where i.cingalu='HOMBRECE01400003433'
+	                and d.cestado='1'
+	                and d.nnoficu>=11) cu on (cu.ccurso=c.ccurso)
+		WHERE p.cestado='1' AND p.ccurric='10000072'
+	) z
+	where z.estado!='Ok'
+) t4 on (t3.ccurricf=t4.ccurric and t3.ccursof=t4.ccurso)	";
 
   }
   

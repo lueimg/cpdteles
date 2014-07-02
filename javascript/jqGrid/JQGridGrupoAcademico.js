@@ -8,6 +8,7 @@ var jQGridGrupoAcademico={
             gridview:true,
             height:230,
             colNames:[
+                'Ode',
                 'Carrera',
                 'Ciclo',
                 'Periodo',
@@ -17,7 +18,7 @@ var jQGridGrupoAcademico={
             ],
             colModel:[               
 
-        
+        {name:'dfilial',index:'dfilial',align:'left',width:80,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'dcarrer',index:'dcarrer',align:'left',width:250,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'dciclo',index:'dciclo',align:'left',width:60,editable:true,editrules:{required:true},sorttype:"text"},
         {name:'csemaca',index:'csemaca',align:'center',width:50,editable:true,editrules:{required:true},sorttype:"text"},
