@@ -45,6 +45,18 @@ $(document).ready(function() {
 window.templatesHtml = {}
 templatesHtml.nuevoCursoActa =  _.template( $("#TemplateCurso").html() );
 
+
+// # se agrego grid de cursos 
+    jQGridCurso.CursoSelect();    
+
+    $('#tablecurso').dialog({
+        autoOpen: false,
+        show: 'fade', hide: 'fade',
+        modal: true,
+        width: 'auto', height: 'auto'
+    });
+
+
 });
 
 limpiarSelect=function(select){
@@ -169,27 +181,35 @@ edit_equivalencia_jqgrid=function(){
         var codigos_array = codigos.split(',');
         var total_cursos = codigos_array.length;
 
+        var array_acta = data.dactas.split(',');
+        var count_acta = 0;
          codigos_array.forEach(function(item) {
-            
+            // debugger
             // cargando cursos actas
             var select_id = AgregarCurso();
             //Rellenar grupo
             //OBTENER INSTITUCION Y CARRERA DE UNA CURRICULA
-            var data = item.split("~");
-            var get_data = GetInstitucionyCarrera(data[0]);
+            var dataActa = item.split("~");
+            var get_dataActa = GetInstitucionyCarrera(dataActa[0]);
              // debugger;
-            var cinstit = get_data.cinstit;
-            var ccarrer = get_data.ccarrer;
-            var ccurric = data[0];
-            var cmodulo = data[1];
-            var ccurso = data[2];
-
+            var cinstit = get_dataActa.cinstit;
+            var ccarrer = get_dataActa.ccarrer;
+            var ccurric = dataActa[0];
+            var cmodulo = dataActa[1];
+            var ccurso = dataActa[2];
+            var cacta = dataActa[3];
+            var dacta = array_acta[count_acta];
+            count_acta++;
+            // debugger
             // llenar datos
             $("#slct_instituto_asig_"+select_id).val(cinstit).trigger("change");
             $("#slct_carrera_asig_"+select_id).val(ccarrer).trigger("change");
             $("#slct_curricula_asig_"+select_id).val(ccurric).trigger("change");
             $("#slct_modulo_asig_"+select_id).val(cmodulo).trigger("change");
             $("#slct_curso_asig_"+select_id).val(ccurso);
+
+            $("#slct_acta_"+ select_id).html('<option value="'+ cacta +'">'+dacta+ '</option>');
+            $("#txt_acta_span_"+ select_id).text(dacta)            
 
         });
 
@@ -292,6 +312,14 @@ delete_equivalencia_jqgrid = function(){
 
 
 AgregarCurso = function(){
+
+    //VALIDA SI SE A ESCOGIDO UN CURSO
+    var curso_seleccionado = $('#slct_curso').val()
+    if( curso_seleccionado === '' ){
+        sistema.msjAdvertencia('Seleccione <b>un curso</b> antes')
+        return false;
+    }
+
     var tot=0;
     var htm=""; 
     tot = $("#txt_cant_cur").val()*1 + 1;
@@ -321,6 +349,31 @@ AgregarCurso = function(){
         cargarCursos_asig(tot);
     });
 
+    //VALIDAR CUANDO SE AGREGE UN CURSO
+    // 1. SI ES REGULAR 
+    // LOS CURSOS TIENE QUE SER LOS MISMO , EL CURSO FINAL PUEDE SER DIFERENTE
+    // 2. SI ES IRREGULAR 
+    // TODO PUEDES SER DIFERENTE
+
+    var tipo_asig = $("#slct_tequi").val();
+
+    if(tipo_asig === 'r'){
+
+            // llenar datos
+            $("#slct_instituto_asig_"+tot).val( $("#slct_instituto").val() ).trigger("change");
+            $("#slct_carrera_asig_"+tot).val( $("#slct_carrera").val() ).trigger("change");
+            $("#slct_curricula_asig_"+tot).val( $("#slct_curricula").val() ).trigger("change");
+            $("#slct_modulo_asig_"+tot).val( $("#slct_modulo").val() ).trigger("change");
+            $("#slct_curso_asig_"+tot).val( $("#slct_curso").val() );
+
+            // bloqueamos el cambio de estado 
+            //$("#slct_tequi").attr('disabled','true');
+    }
+
+
+
+
+
     return tot;
 }
 
@@ -333,11 +386,32 @@ RemoverCurso = function (i){
 
 
 
+// BUSQUEDA DE CURSO ACTA // NUEVO CAMPO RENCIEN AGREGADO
+searchCurso = function(id){
+    window.idFilaCurso = parseInt(id);
+    $('#tablecurso').dialog('open');
+
+
+}
 
 
 
+SeleccionarCurso = function (){
 
+    var id=$("#table_curso").jqGrid("getGridParam",'selrow');
+    if (id) {
+        var data = $("#table_curso").jqGrid('getRowData',id);
+        
+        $("#slct_acta_"+ window.idFilaCurso).html('<option value="'+ id +'">'+data.dcurso+ '</option>');
+        $("#txt_acta_span_"+ window.idFilaCurso).text(data.dcurso)
+                
+         $('#tablecurso').dialog('close');
+        
+    }else {
+        sistema.msjAdvertencia('Seleccione un registro a cargar');
+    }
 
+}
 
 
 

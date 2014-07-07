@@ -150,14 +150,47 @@
                 <option value="">--Seleccione--</option>
             </select>
         </td>
+
+
+
+
+        <td class="t-left label" >
+            <b>Curso Acta: </b>
+        </td>
+        <td class="t-left">
+            
+            <select id="slct_acta_<%= id %>" style="display:none"> </select>
+            <span id='txt_acta_span_<%= id %>'></span>
+            
+        </td>
+        <td>
+            <span class='formBotones' style=''>
+                <a class='btn btn-azul sombra-3d t-blanco' onclick="searchCurso('<%= id %>')" href='javascript:void(0)'>
+                    <i class='icon-white icon-search'></i>      
+                </a>
+            </span>
+        </td>
+
+
+
+
+
         <td class="t-left" >
            <span class='formBotones' style=''>
-            <a class='btn btn-azul sombra-3d t-blanco' onclick="RemoverCurso(this)" href='javascript:void(0)'>
-                <i class='icon-white icon-remove'></i>      
-            </a>
-        </span>
+                <a class='btn btn-azul sombra-3d t-blanco' onclick="RemoverCurso(this)" href='javascript:void(0)'>
+                    <i class='icon-white icon-remove'></i>      
+                </a>
+            </span>
     </td>
 </tr>
 
 </script>
+<div id="tablecurso" style="display: none;">
+     <section>
+                              <article style="margin-right:3px">
+                                <table id="table_curso"></table>
+                                <div id="pager_table_curso"></div>
+                              </article>
+                            </section>
 
+</div>

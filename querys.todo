@@ -45,3 +45,12 @@ Actualizar horprop:
   
   update horprop
   set cprofes ='2';
+
+ACTUALIZAR EQUISAG:
+  1. Agregar la columna ccuract
+  2. Revisar la columna ccurric  , en mi bd revise que estaba mal creado   ya lo corregi en la bd de produccion que tenia error.
+
+
+  
+
+

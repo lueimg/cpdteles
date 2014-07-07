@@ -171,6 +171,7 @@ where c.ccurric = '$post'";
                  ." ,ccurria = '". $data_array[2] ."'" 
                  ." ,cmoduloa = '".$data_array[3] ."'" 
                  ." ,ccursoa = '". $data_array[4] ."'" 
+                 ." ,ccuract = '". $data_array[5] ."'" 
                  ." ,estide = '". $post["estide"] ."'" 
                  ." ,cestado = '". 1 ."'" 
                  ." ,cusuari = '". $post["cusuari"] ."'" 
@@ -324,6 +325,7 @@ where c.ccurric = '$post'";
                  ." ,ccurria = '". $data_array[2] ."'" 
                  ." ,cmoduloa = '".$data_array[3] ."'" 
                  ." ,ccursoa = '". $data_array[4] ."'" 
+                 ." ,ccuract = '". $data_array[5] ."'" 
                  ." ,estide = '". $post["estide"] ."'" 
                  ." ,cestado = '". 1 ."'" 
                  ." ,cusuari = '". $post["cusuari"] ."'" 
@@ -435,19 +437,22 @@ cu.ccurso,
 cu.dcurso,
 m.cmodulo cciclo,
 m.dmodulo dciclo,
-GROUP_CONCAT(  CONCAT_WS('~',ca.ccurric, ma.cmodulo , cua.ccurso )  SEPARATOR ',') codigos ,
-GROUP_CONCAT(  CONCAT_WS('		',ca.dtitulo, ma.dmodulo , cua.dcurso )  SEPARATOR '<br>') titulos,
+GROUP_CONCAT(  CONCAT_WS('~',ca.ccurric, ma.cmodulo , cua.ccurso, cuact.ccurso )  SEPARATOR ',') codigos ,
+GROUP_CONCAT(  CONCAT('<b>Curricula:</b>',ca.dtitulo, '<br><b>Modulo:</b>',ma.dmodulo ,'<br><b>Curso:</b>', cua.dcurso, '<br><b>Acta:</b>',cuact.dcurso )  SEPARATOR '<hr>') titulos,
 e.gruequi grupo,
 IF(estide = 'r','Regular','Irregular') estide,
 estide cestide,
 car.cinstit inst,
-car.ccarrer carrer
+car.ccarrer carrer,
+GROUP_CONCAT( cuact.dcurso  SEPARATOR ',') dactas 
+
 
                 FROM equisag e
                 inner join curricm c on c.ccurric = e.ccurric
                 inner join curricm ca on ca.ccurric = e.ccurria
                 inner join cursom cu on cu.ccurso = e.ccurso
                 inner join cursom cua on cua.ccurso = e.ccursoa
+                inner join cursom cuact on cuact.ccurso = e.ccuract
                 left join moduloa m on m.cmodulo = e.cmodulo
                 left join moduloa ma on ma.cmodulo = e.cmoduloa
                 inner join carrerm car on car.ccarrer = c.ccarrer

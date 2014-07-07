@@ -21,6 +21,7 @@ var jQGridEquivalencia = {
                 'inst',
                 'carrer',
                 'grupo',
+                'dactas',
             ],
 
               /*
@@ -52,6 +53,7 @@ var jQGridEquivalencia = {
                 {name: 'inst', index: 'inst', align: 'left', width: 180, editable: true, editrules: {required: true}, sorttype: "text", hidden: true},
                 {name: 'carrer', index: 'carrer', align: 'left', width: 180, editable: true, editrules: {required: true}, sorttype: "text", hidden: true},
                 {name: 'grupo', index: 'grupo', align: 'left', width: 180, editable: true, editrules: {required: true}, sorttype: "text", hidden: true},
+                {name: 'dactas', index: 'dactas', align: 'left', width: 180, editable: true, editrules: {required: true}, sorttype: "text", hidden: true},
         
         ],  
             rowNum: 15,

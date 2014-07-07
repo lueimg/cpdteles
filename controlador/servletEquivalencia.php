@@ -172,6 +172,7 @@ car.ccarrer carrer
                   $data[$i]['inst'],
                   $data[$i]['carrer'],
                   $data[$i]['grupo'],
+                  $data[$i]['dactas'],
               )
                   )
           );

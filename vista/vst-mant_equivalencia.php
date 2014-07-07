@@ -20,10 +20,16 @@
         <script type="text/javascript" src="../javascript/templates.js"></script>
 
         <script src="../javascript/jqGrid/JQGridEquivalencia.js"></script>
+        <script src="../javascript/jqGrid/JQGridCurso.js"></script>
         <script src="../javascript/dao/DAOinstitucion.js"></script>
         <script src="../javascript/dao/DAOcarrera.js"></script>
         <script src="../javascript/dao/DAOEquiasg.js"></script>
         <script src="../javascript/js/js_mant_equiasg.js"></script>
+        <style>
+        hr{
+            margin:0px;
+        }
+        </style>
 
     </head>
 
