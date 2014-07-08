@@ -60,7 +60,7 @@ verHorario=function(cod){
 pasarRegistro=function(ccuprpr,gruequi,dcurso,dcursof,ncredit,dciclo){
 	var htm="";
 	var codigo='"'+ccuprpr+'","'+gruequi+'","'+ncredit+'"';
-	htm+="<tr id='' class='ui-widget-content jqgrow ui-row-ltr' "+ 
+	htm+="<tr id='curso_alumno_"+ccuprpr+"' class='ui-widget-content jqgrow ui-row-ltr' "+ 
 			 "onClick='sistema.selectorClass(this.id,"+'"'+"lista_grupos"+'"'+");' "+
 			 "onMouseOut='sistema.mouseOut(this.id)' onMouseOver='sistema.mouseOver(this.id)'>";
     htm+="<td width='140px' class='t-center'>"+dcurso+"</td>";
@@ -71,7 +71,7 @@ pasarRegistro=function(ccuprpr,gruequi,dcurso,dcursof,ncredit,dciclo){
 	htm+="</tr>";
 	var total=$("#total_credito").val()*1+ncredit*1;
 	$("#total_credito").val(total);	
-	$("#lista_curso_alumno").html(htm);
+	grupoAcademicoDAO.validarPasarRegistro(ccuprpr,gruequi,htm);	
 }
 
 eliminarRegistro=function(ccuprpr,gruequi,ncredit){

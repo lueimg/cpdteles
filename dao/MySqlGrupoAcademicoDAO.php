@@ -762,6 +762,44 @@ inner join
         }
 
   }
+
+  public function validarPasarRegistro($array){
+  		$db=creadorConexion::crear('MySql');
+
+  		$sql="	select  replace(p.dreqcur,'|',',')
+				from cuprprp c
+				inner join placurp p on c.ccurso=p.ccurso and c.ccurric=p.ccurric
+				where c.ccuprpr='".$array['ccuprpr']."'";
+
+  		if($array['gruequi']!=''){
+  			$sql="	select  GROUP_CONCAT(replace(p.dreqcur,'|',',') SEPARATOR ',')
+					from equisag e
+					inner join placurp p on e.ccursoa=p.ccurso and e.ccurria=p.ccurric
+					where e.gruequi='".$array['gruequi']."'
+					GROUP BY e.gruequi";
+  		}
+  		
+		$sql2="	SELECT c.ccurso,max(d.nnoficu) notafinal
+				from decomap d
+				inner join conmatp co on co.cconmat=d.cconmat
+				inner join ingalum i on i.cingalu=co.cingalu
+				inner join cuprprp c on c.ccuprpr=d.ccurpro
+				where d.cestado='1'
+				and i.cingalu='".$array['cingalu']."'
+				and FIND_IN_SET(c.ccurso,
+					(".$sql.")
+				)>0
+				GROUP BY c.ccurso;";
+        $db->setQuery($sql2);
+        $data2=$db->loadObjectList();
+
+        if(count($data2)>0){
+            return array('rst'=>'1','msj'=>'Cursos Academicos Cargados','data'=>$data2[0]['notafinal']);
+        }
+		else{
+            return array('rst'=>'2','msj'=>'No Hay Cursos Academicos','data'=>$data2,'sql'=>$sql);
+        }
+  }
   
 }
 ?>

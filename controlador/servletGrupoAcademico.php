@@ -107,6 +107,13 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['cingalu']=trim($_POST['cingalu']);
                 echo json_encode($daoGrupoAcademico->cargarCursosAcademicosAlumno($data));
             break;        
+            case 'validarPasarRegistro':
+            	$data=array();
+				$data['ccuprpr']=trim($_POST['ccuprpr']);
+				$data['gruequi']=trim($_POST['gruequi']);
+				$data['cingalu']=trim($_POST['cingalu']);
+                echo json_encode($daoGrupoAcademico->validarPasarRegistro($data));
+            break;
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;

@@ -424,6 +424,39 @@ var grupoAcademicoDAO={
             error: this.msjErrorAjax
         });
     },
+    validarPasarRegistro:function(ccuprp,gruequ,htm){
+
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'grupo_academico',
+                accion:'validarPasarRegistro',
+                ccuprpr:ccuprp,
+                gruequi:gruequ,
+                cingalu:$('#txt_cingalu').val()
+            },
+            beforeSend : function ( ) {
+                sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                sistema.cierraCargando(); 
+                if(obj.rst=='2'){
+                    $("#lista_curso_alumno").append(htm);
+                }
+                else if(obj.rst=='1' && obj.data*1>=11){
+                    $("#lista_curso_alumno").append(htm);       
+                }
+                else{
+                    sistema.msjAdvertencia('Curso seleccionado sin aprobar por falta de pre requisito',4000);
+                }
+                
+            },
+            error: this.msjErrorAjax
+        });
+    },
 	msjErrorAjax:function(){
         sistema.msjErrorCerrar('Error General, pongase en contacto con Sistemas');
     }
