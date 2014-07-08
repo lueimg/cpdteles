@@ -671,59 +671,55 @@ class MySqlGrupoAcademicoDAO{
 
   public function cargarCursosAcademicosAlumno($array){
   		$db=creadorConexion::crear('MySql');
-  		/*$sql="	select c.ccurso,cu.dcurso,c.ncredit
-				from cuprprp c
-				inner join cursom cu on (cu.ccurso=c.ccurso)
-				inner join horprop h on (c.ccuprpr=h.ccurpro)
-				where c.cgracpr='".$array['cgracpr']."'
-				and h.cestado='1'
-				and c.ccurso not in (
-					select cu.ccurso
-					from decomap d 
-					inner join conmatp c on c.cconmat=d.cconmat
-					INNER JOIN ingalum i on i.cingalu=c.cingalu
-					inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
-					where i.cingalu='".$array['cingalu']."'
-					and d.nnoficu>=11)
-				GROUP BY c.ccurso";	*/
+  		
+		$sql2=" select g.ccurric
+                from ingalum i
+                inner join conmatp c on (i.cingalu=c.cingalu)
+                inner join gracprp g on (c.cgruaca=g.cgracpr)
+                where i.cingalu='".$array['cingalu']."'
+                order by fmatric DESC
+                limit 0,1 ";
+        $db->setQuery($sql2);
+        $data2=$db->loadObjectList();
 
-		$sql="select t3.ccurricf,t3.ccursof,t3.dcursof,t3.ncredit,t3.gruequi,t3.ccurric,t3.ccurso,t3.dcurso
+
+		$sql="select t3.ccuprpr,t3.ccurricf,t3.ccursof,t3.dcursof,t3.ncredit,t3.gruequi,t3.ccurric,t3.ccurso,t3.dcurso
 from (
-	select ccurricf,ccursof,dcursof,ncredit,gruequi,ccurric,ccurso,dcurso
+	select ccuprpr,ccurricf,ccursof,dcursof,ncredit,gruequi,ccurric,ccurso,dcurso
 	from (
-		select if(ccurria is not null,ccurria,ccurric) as ccurricf,if(ccursoa is not null, ccursoa,ccurso) as ccursof,if(dcurso2 is not null,dcurso2,dcurso) as dcursof,ncredit,gruequi,ccurric,ccurso,dcurso
+		select ccuprpr,if(ccurria is not null,ccurria,ccurric) as ccurricf,if(ccursoa is not null, ccursoa,ccurso) as ccursof,if(dcurso2 is not null,dcurso2,dcurso) as dcursof,ncredit,gruequi,ccurric,ccurso,dcurso
 		from (
-			select c.ccurric,c.ccurso,cu.dcurso,c.ncredit,eq.ccurria,eq.ccursoa,cu2.dcurso as dcurso2,eq.gruequi
+			select c.ccuprpr,c.ccurric,c.ccurso,cu.dcurso,c.ncredit,eq.ccurria,eq.ccursoa,cu2.dcurso as dcurso2,eq.gruequi
 			from cuprprp c
 			inner join cursom cu on (cu.ccurso=c.ccurso)
 			left join equisag eq on (eq.ccurric=c.ccurric and eq.ccurso=c.ccurso and eq.cestado='1')
 			left join cursom cu2 on (cu2.ccurso=eq.ccursoa)
-			inner join horprop h on (c.ccuprpr=h.ccurpro)
-			where c.cgracpr='KARLABIN013000000098'
-			and h.cestado='1'
+			-- inner join horprop h on (c.ccuprpr=h.ccurpro)
+			where c.cgracpr='".$array['cgracpr']."'
+			-- and h.cestado='1'
 			and c.ccurso not in (
 				select cu.ccurso
 				from decomap d 
 				inner join conmatp c on c.cconmat=d.cconmat
 				INNER JOIN ingalum i on i.cingalu=c.cingalu
 				inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
-				where i.cingalu='HOMBRECE01400003433'
+				where i.cingalu='".$array['cingalu']."'
 				and d.nnoficu>=11)
 			GROUP BY c.ccurso,eq.ccurria,eq.ccursoa
 			union
-			select c.ccurric,c.ccurso,cu.dcurso,c.ncredit,null ccurria,null ccursoa,null dcurso2,null gruequi			
+			select c.ccuprpr,c.ccurric,c.ccurso,cu.dcurso,c.ncredit,null ccurria,null ccursoa,null dcurso2,null gruequi			
 			from cuprprp c
 			inner join cursom cu on (cu.ccurso=c.ccurso)
-			inner join horprop h on (c.ccuprpr=h.ccurpro)
-			where c.cgracpr='KARLABIN013000000098'
-			and h.cestado='1'
+			-- inner join horprop h on (c.ccuprpr=h.ccurpro)
+			where c.cgracpr='".$array['cgracpr']."'
+			-- and h.cestado='1'
 			and c.ccurso not in (
 				select cu.ccurso
 				from decomap d 
 				inner join conmatp c on c.cconmat=d.cconmat
 				INNER JOIN ingalum i on i.cingalu=c.cingalu
 				inner join cuprprp cu on (cu.ccuprpr=d.ccurpro) 
-				where i.cingalu='HOMBRECE01400003433'
+				where i.cingalu='".$array['cingalu']."'
 				and d.nnoficu>=11)
 			GROUP BY c.ccurso
 		) t
@@ -748,13 +744,22 @@ inner join
 	                inner join conmatp c on d.cconmat=c.cconmat
 	                inner join ingalum i  on i.cingalu=c.cingalu
 	                inner join cuprprp cu on cu.ccuprpr=d.ccurpro
-	                where i.cingalu='HOMBRECE01400003433'
+	                where i.cingalu='".$array['cingalu']."'
 	                and d.cestado='1'
 	                and d.nnoficu>=11) cu on (cu.ccurso=c.ccurso)
-		WHERE p.cestado='1' AND p.ccurric='10000072'
+		WHERE p.cestado='1' AND p.ccurric='".$data2[0]['ccurric']."'
 	) z
 	where z.estado!='Ok'
 ) t4 on (t3.ccurricf=t4.ccurric and t3.ccursof=t4.ccurso)	";
+		$db->setQuery($sql);
+        $data=$db->loadObjectList();
+
+        if(count($data)>0){
+            return array('rst'=>'1','msj'=>'Cursos Academicos Cargados','data'=>$data);
+        }
+		else{
+            return array('rst'=>'2','msj'=>'No Hay Cursos Academicos','data'=>$data,'sql'=>$sql);
+        }
 
   }
   

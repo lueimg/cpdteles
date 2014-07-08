@@ -21,7 +21,8 @@
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JQGridGrupoAcademico.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JQGridPlanCurricular.js"></script>
-        <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>          
+        <script type="text/javascript" src="../javascript/dao/DAOpago.js"></script>
+        <script type="text/javascript" src="../javascript/dao/DAOgrupoAcademico.js"></script>          
     </head>
 
 	<body>
@@ -61,6 +62,8 @@
                                   <input type="text" id="txt_nombre" class="input-large" disabled>
                                   <input type="hidden" id="txt_cingalu">
                                   <input type="hidden" id="txt_cgracpr">
+                                  <input type="hidden" id="txt_cgracpr_destino">  
+                                  <input type="hidden" id="txt_dciclo_destino">                                                                    
                                 </td>                                
                               </tr>
                               
@@ -80,6 +83,66 @@
                                 </td>
                               </tr>
                             </table>
+                            <table><tr><td>
+                            <!--listado de cursos de los grupos--><p><p>
+                            <div class="corner_top ui-state-default" style="font-weight:bold">
+                                <table>
+                                    <tr class="" align="center" style="width: 400px;">
+                                      <td colspan="5" class="t-center label">CURSOS DEL GRUPO SELECCIONADO</td>
+                                    </tr>
+                                    <tr class="" align="center" style="width: 400px;">
+                                        <td class="t-center label" width="120px">CURSO</td>
+                                        <td class="t-center label" width="120px">CURSO REEMPLAZO</td>
+                                        <td class="t-center label" width="20px">N° CRED.</td>
+                                        <td class="t-center label" width="20px">VER</td>
+                                        <td class="t-center label" width="20px">[X]</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 200px">
+                                <table id="lista_curso_grupos" cellspacing="1" cellpadding="1" border="1"> </table>
+                            </div>
+                            <div class="corner_bottom ui-state-default" style="text-align: right;height: 20px;padding: 2px;">
+                                <span class="hv_icon corner_all" style="margin:2px -3px 0px 0px;" onclick="sistema.mostrar_cerrar_buscar('txtGruposAcademicos','buscarGruposAcademicos')">
+                                <i id="buscarGruposAcademicos" class="icon-gray icon-search"></i>
+                                </span>
+                                
+                                <span style="display:inline-block;vertical-align:top">
+                                <input id="txtGruposAcademicos" class="input_buscar" type="text" style="width: 150px;display: none;" onkeyup="sistema.buscarEnTable(this.value,'lista_curso_grupos')">
+                                </span>
+                            </div>                                                        
+                            <!--fin listado de grupos-->
+                            </td><td>
+                            <!--listado de cursos de los grupos--><p><p>
+                            <div class="corner_top ui-state-default" style="font-weight:bold">
+                                <table>
+                                    <tr class="" align="center" style="width: 400px;">
+                                      <td colspan="5" class="t-center label">CURSOS DEL ALUMNO</td>
+                                    </tr>
+                                    <tr class="" align="center" style="width: 400px;">
+                                        <td class="t-center label" width="120px">CURSO</td>
+                                        <td class="t-center label" width="120px">CURSO REEMPLAZO</td>
+                                        <td class="t-center label" width="20px">N° CRED.</td>
+                                        <td class="t-center label" width="30px">CICLO.</td>
+                                        <td class="t-center label" width="20px">[X]</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="ui-widget-content_jqgrid" style="overflow: auto;height: 200px">
+                                <table id="lista_curso_alumno" cellspacing="1" cellpadding="1" border="1"> </table>
+                            </div>
+                            <div class="corner_bottom ui-state-default" style="text-align: right;height: 20px;padding: 2px;">
+                                <span class="hv_icon corner_all" style="margin:2px -3px 0px 0px;" onclick="sistema.mostrar_cerrar_buscar('txtGruposAcademicos','buscarGruposAcademicos')">
+                                <i id="buscarGruposAcademicos" class="icon-gray icon-search"></i>
+                                </span>
+                                
+                                <span style="display:inline-block;vertical-align:top">
+                                <input id="txtGruposAcademicos" class="input_buscar" type="text" style="width: 150px;display: none;" onkeyup="sistema.buscarEnTable(this.value,'lista_curso_alumno')">
+                                </span>
+                            </div>                                                        
+                            <!--fin listado de grupos-->
+                            </td>
+                            </tr></table>
 
                         </div>
     				</div>
