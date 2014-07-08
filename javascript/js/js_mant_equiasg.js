@@ -46,6 +46,10 @@ window.templatesHtml = {}
 templatesHtml.nuevoCursoActa =  _.template( $("#TemplateCurso").html() );
 
 
+
+//filtro instituicon para jqgrid curso
+  institucionDAO.ListaInstitutos(ListaInst);
+
 // # se agrego grid de cursos 
     jQGridCurso.CursoSelect();    
 
@@ -57,7 +61,14 @@ templatesHtml.nuevoCursoActa =  _.template( $("#TemplateCurso").html() );
     });
 
 
+
+
+
 });
+
+ListaInst=function(data){
+$("#cinstits").val(data)
+}
 
 limpiarSelect=function(select){
   $("#"+select).val("");
@@ -78,6 +89,7 @@ cargarCursos_asig=function(id){
 }
 
 add_equivalencia_jqgrid = function() {
+     $("#slct_tequi").removeAttr("disabled");
      $("tr.curso-acta").remove();
     $("select").val("");
     // $('#btnFormEquivalencia').attr('onclick', 'nuevoEquivalencia()');
@@ -158,6 +170,9 @@ GuardarCambiosEquivalencia = function(){
 
 
 edit_equivalencia_jqgrid=function(){
+    
+    // $("#slct_tequi").attr("disabled",'true');
+    $("#slct_tequi").attr('disabled','true');
   $("tr.curso-acta").remove();
   
    var id = $("#table_hora").jqGrid("getGridParam", 'selrow');
@@ -356,15 +371,15 @@ AgregarCurso = function(){
     // TODO PUEDES SER DIFERENTE
 
     var tipo_asig = $("#slct_tequi").val();
-
+    
     if(tipo_asig === 'r'){
-
+            $("#slct_tequi").attr('disabled','true');
             // llenar datos
-            $("#slct_instituto_asig_"+tot).val( $("#slct_instituto").val() ).trigger("change");
-            $("#slct_carrera_asig_"+tot).val( $("#slct_carrera").val() ).trigger("change");
-            $("#slct_curricula_asig_"+tot).val( $("#slct_curricula").val() ).trigger("change");
-            $("#slct_modulo_asig_"+tot).val( $("#slct_modulo").val() ).trigger("change");
-            $("#slct_curso_asig_"+tot).val( $("#slct_curso").val() );
+            $("#slct_instituto_asig_"+tot).val( $("#slct_instituto").val() ).trigger("change").attr('disabled','true');
+            $("#slct_carrera_asig_"+tot).val( $("#slct_carrera").val() ).trigger("change").attr('disabled','true');
+            $("#slct_curricula_asig_"+tot).val( $("#slct_curricula").val() ).trigger("change").attr('disabled','true');
+            $("#slct_modulo_asig_"+tot).val( $("#slct_modulo").val() ).trigger("change").attr('disabled','true');
+            $("#slct_curso_asig_"+tot).val( $("#slct_curso").val() ).attr('disabled','true');
 
             // bloqueamos el cambio de estado 
             //$("#slct_tequi").attr('disabled','true');

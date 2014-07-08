@@ -52,6 +52,7 @@
                         <div class="barra1"><i class="icon-gray icon-list-alt"></i> <b>Mantenimiento de Equivalencia de Cursos <? /*aqui va el titulo q presentara  */ ?></b></div>         
                         <div class="cont-der">
                             <input type="hidden" id="hora" value="">
+                            <input type="hidden" id="cinstits" value="">
                             <section>
                                 <article style="margin-right:3px">
                                     <table id="table_hora"></table>
