@@ -48,6 +48,10 @@
                             <div style="overflow:auto;">
                                 <table id="table_persona_ingalum"></table>
                                 <div id="pager_table_persona_ingalum"></div>
+                                <input type="hidden" id="tcreditos">
+                                <input type="hidden" id="total_credito" value='0'>
+                                <input type="hidden" id="ccreditosaux">
+                                <input type="hidden" id="tcreditosaux">
                             </div>
                             <!-- fin buscar -->
 
@@ -142,7 +146,27 @@
                             </div>                                                        
                             <!--fin listado de grupos-->
                             </td>
-                            </tr></table>
+                            </tr>
+                            <tr>
+                                <td colspan=2>
+                                        <span>
+                                        <a id="btn_cambiar_escala" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)" onclick="VerHorarioGeneral();">
+                                        <i class="icon-white icon-search"></i>
+                                        <span>Ver Horario General</span>
+                                        </a>
+                                        </span>
+                                        <span>  &nbsp&nbsp&nbsp&nbsp&nbsp
+                                        </span>
+                                        <span>
+                                        <a id="btn_cambiar_escala" class="btn btn-azul sombra-3d t-blanco" href="javascript:void(0)" onclick="GuardarGeneral();">
+                                        <i class="icon-white icon-ok-sign"></i>
+                                        <span>Guardar</span>
+                                        </a>
+                                        </span>
+                                    
+                                </td>
+                            </td></tr>
+                            </table>
 
                         </div>
     				</div>

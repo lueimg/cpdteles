@@ -114,6 +114,11 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['cingalu']=trim($_POST['cingalu']);
                 echo json_encode($daoGrupoAcademico->validarPasarRegistro($data));
             break;
+            case 'crearPonderado':
+            	$data=array();
+				$data['cingalu']=trim($_POST['cingalu']);
+                echo json_encode($daoGrupoAcademico->crearPonderado($data));
+            break;
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;

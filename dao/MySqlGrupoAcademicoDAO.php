@@ -778,8 +778,25 @@ inner join
 					where e.gruequi='".$array['gruequi']."'
 					GROUP BY e.gruequi";
   		}
+
+  		$sqlcurso=" SELECT ccurso 
+  					FROM cuprprp
+  					WHERE ccuprpr='".$array['ccuprpr']."' ";
+
+  		$sql="	SELECT count(c.ccurso) cantidad
+				from decomap d
+				inner join conmatp co on co.cconmat=d.cconmat
+				inner join ingalum i on i.cingalu=co.cingalu
+				inner join cuprprp c on c.ccuprpr=d.ccurpro
+				where d.cestado='1'
+				and i.cingalu='".$array['cingalu']."'
+				AND c.ccurso in (".$sqlcurso.") 
+				GROUP BY c.ccurso ";
+		$db->setQuery($sql);
+        $data=$db->loadObjectList();
+
   		
-		$sql2="	SELECT c.ccurso,max(d.nnoficu) notafinal
+		$sql2="	SELECT count(c.ccurso) cantidad,max(d.nnoficu) notafinal
 				from decomap d
 				inner join conmatp co on co.cconmat=d.cconmat
 				inner join ingalum i on i.cingalu=co.cingalu
@@ -793,12 +810,48 @@ inner join
         $db->setQuery($sql2);
         $data2=$db->loadObjectList();
 
+        $cantidad=0;
+
+        if(count($data)==0){
+        	$cantidad=0;
+        }
+        else{
+        	$cantidad=$data[0]['cantidad'];
+        }
+
         if(count($data2)>0){
-            return array('rst'=>'1','msj'=>'Cursos Academicos Cargados','data'=>$data2[0]['notafinal']);
+            return array('rst'=>'1','msj'=>'Cursos Academicos Cargados','data'=>$data2[0]['notafinal'],'data2'=>$cantidad);
         }
 		else{
             return array('rst'=>'2','msj'=>'No Hay Cursos Academicos','data'=>$data2,'sql'=>$sql);
         }
+  }
+
+  public function crearPonderado($array){
+  		$db=creadorConexion::crear('MySql');
+  		$creditos=26;
+  		$sql2=" select sum(d.nnoficu) suma,count(d.nnoficu) cantidad,round(sum(d.nnoficu)/count(d.nnoficu)) as notafinal,c.fmatric
+				from personm p
+				inner JOIN ingalum i on i.cperson=p.cperson
+				inner JOIN conmatp c on c.cingalu=i.cingalu
+				inner join decomap d on d.cconmat=c.cconmat
+				where i.cingalu='".$array["cingalu"]."'
+				and d.cestado='1'
+				GROUP BY c.cconmat
+				HAVING c.fmatric=max(c.fmatric);";
+        $db->setQuery($sql2);
+        $data2=$db->loadObjectList();
+
+        if($data2[0]['notafinal']<11){
+        	$creditos=16;
+        }
+        elseif($data2[0]['notafinal']>14){
+        	$creditos=26;
+        }
+
+
+        return array('rst'=>'1','msj'=>'Creditos cargados','creditos'=>$creditos);
+
   }
   
 }

@@ -424,7 +424,7 @@ var grupoAcademicoDAO={
             error: this.msjErrorAjax
         });
     },
-    validarPasarRegistro:function(ccuprp,gruequ,htm){
+    validarPasarRegistro:function(ccuprp,gruequ,htm,ncredit){
 
         $.ajax({
             url : this.url,
@@ -442,12 +442,25 @@ var grupoAcademicoDAO={
                 sistema.abreCargando();
             },
             success : function ( obj ) {
+                var cantidad=0; var adic="ok";
                 sistema.cierraCargando(); 
                 if(obj.rst=='2'){
-                    $("#lista_curso_alumno").append(htm);
+                    adicionarRegistro(htm,ncredit,ccuprp);                    
                 }
                 else if(obj.rst=='1' && obj.data*1>=11){
-                    $("#lista_curso_alumno").append(htm);       
+                    if(obj.data2*1>0 && obj.data2*1<3){
+                        $("#tcreditosaux").val('14');
+                        cantidad=$("#ccreditosaux").val()*1+1;
+                        $("#ccreditosaux").val(cantidad);
+                        adicionarRegistro(htm,ncredit,ccuprp,adic); 
+                    }
+                    else if(obj.data2*1==3){
+                        sistema.msjAdvertencia('Ud no puede ser matriculado tiene acumulado 3 veces un mismo curso.',4000);
+                    } 
+                    else{
+                        adicionarRegistro(htm,ncredit,ccuprp);
+                    }
+                    
                 }
                 else{
                     sistema.msjAdvertencia('Curso seleccionado sin aprobar por falta de pre requisito',4000);
@@ -457,6 +470,29 @@ var grupoAcademicoDAO={
             error: this.msjErrorAjax
         });
     },
+    crearPonderado:function(){
+
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'grupo_academico',
+                accion:'crearPonderado',
+                cingalu:$('#txt_cingalu').val()
+            },
+            beforeSend : function ( ) {
+                sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                sistema.cierraCargando(); 
+                $("#tcreditos").val(obj.creditos)
+                
+            },
+            error: this.msjErrorAjax
+        });
+    },    
 	msjErrorAjax:function(){
         sistema.msjErrorCerrar('Error General, pongase en contacto con Sistemas');
     }
