@@ -119,6 +119,12 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['cingalu']=trim($_POST['cingalu']);
                 echo json_encode($daoGrupoAcademico->crearPonderado($data));
             break;
+            case 'GAGetHorario':
+            	$data=array();
+				$data['cursos']=trim($_POST['cursos']);
+				$data['seccion']=trim($_POST['seccion']);
+                echo json_encode($daoGrupoAcademico->GAGetHorario($data));
+            break;
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;

@@ -853,6 +853,77 @@ inner join
         return array('rst'=>'1','msj'=>'Creditos cargados','creditos'=>$creditos);
 
   }
+
+  public function GAGetHorario($array){
+  		$db=creadorConexion::crear('MySql');
+  		$lista_cursos = $array['cursos'];
+  		$seccion_id = $array['seccion'];
+  		$sql2=" 
+select  dia.dnomdia ,hora.hinici ini , hora.hfin fin,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '02' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')lunes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '03' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')martes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '04' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')miercoles,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '05' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')jueves,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '06' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') viernes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '07' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') sabado,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '01' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') domingo
+from horprop ho
+left join diasm dia on dia.cdia = ho.cdia
+left join horam hora on hora.chora = ho.chora 
+where 
+ho.cdetgra='".$seccion_id."' and
+ho.ccurpro in ($lista_cursos) and ho.cestado = 1
+and hora.hinici is not null
+ group by hora.hinici
+order by hora.hinici asc
+  		";
+
+  		
+ $db->setQuery($sql2);
+$horario = $db->loadObjectList();
+
+$tr_horario = '';
+
+foreach ($horario as  $row) {
+
+	$tr_horario .="<tr><td>".$row['ini']. ' - '.$row['fin']."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['lunes'] ) ."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['martes'] ) ."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['miercoles'] ) ."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['jueves'] ) ."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['viernes'] ) ."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['sabado'] ) ."</td><td>"
+	. str_replace(array_keys($data_cursos) , array_values($data_cursos), $row['domingo'] ) ."</td></tr>";
+
+
+}
+
+
+$html = <<<EOD
+<h3>Horario:</h3>
+	<table border="1" style='width:100%' cellpadding="2" >
+	<tr>
+	<th class="t-center label"><b>Hora</b></th>
+	<th class="t-center label"><b>Lunes</b></th>
+	<th class="t-center label"><b>Martes</b></th>
+	<th class="t-center label"><b>Miercoles</b></th>
+	<th class="t-center label"><b>Jueves</b></th>
+	<th class="t-center label"><b>Viernes</b></th>
+	<th class="t-center label"><b>Sabado</b></th>
+	<th class="t-center label"><b>Domingo</b></th>
+	</tr>
+	{$tr_horario}
+	</table>
+
+EOD;
+
+
+        return array('rst'=>'1','msj'=>'Horario cargado','html'=>$html);
+
+  }
+
+
+
   
 }
 ?>

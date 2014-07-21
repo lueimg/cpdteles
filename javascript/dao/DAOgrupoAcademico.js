@@ -492,6 +492,31 @@ var grupoAcademicoDAO={
             },
             error: this.msjErrorAjax
         });
+    },
+    GAGetHorario:function(seccion,cursos){
+
+        $.ajax({
+            url : this.url,
+            type : 'POST',
+            async:false,//no ejecuta otro ajax hasta q este termine
+            dataType : 'json',
+            data : {
+                comando:'grupo_academico',
+                accion:'GAGetHorario',
+                cursos:cursos,
+                seccion:seccion
+            },
+            beforeSend : function ( ) {
+                sistema.abreCargando();
+            },
+            success : function ( obj ) {
+                sistema.cierraCargando(); 
+                $("#tablaHorario").html(obj.html);
+                 $('#vistaReportes').dialog("option", "position", "center");
+                
+            },
+            error: this.msjErrorAjax
+        });
     },    
 	msjErrorAjax:function(){
         sistema.msjErrorCerrar('Error General, pongase en contacto con Sistemas');
