@@ -125,6 +125,12 @@ class servletGrupoAcademico extends controladorComandos{
 				$data['seccion']=trim($_POST['seccion']);
                 echo json_encode($daoGrupoAcademico->GAGetHorario($data));
             break;
+            case 'GAGetHorarioGeneral':
+            	$data=array();
+				$data['cursos']=trim($_POST['cursos']);
+				$data['secciones']=trim($_POST['secciones']);
+                echo json_encode($daoGrupoAcademico->GAGetHorarioGeneral($data));
+            break;
     		default:
                 echo json_encode(array('rst'=>3,'msj'=>'Accion POST no encontrada'));
 				break;

@@ -178,7 +178,7 @@
 
 		<div id="vistaReportes" style="display: none;">
             <div>
-                <select name="slct_seccion" id="slct_seccion"></select>
+                <select name="slct_seccion" id="slct_seccion" style="display: none;"></select>
             </div> 
             <div id="tablaHorario">
                 
