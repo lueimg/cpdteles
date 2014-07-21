@@ -54,9 +54,7 @@ HTMLcargarCursosAcademicosAlumno=function(obj){
 	$("#lista_curso_grupos").html(htm);
 }
 
-verHorario=function(cod){
 
-}
 
 pasarRegistro=function(ccuprpr,gruequi,dcurso,dcursof,ncredit,dciclo){
 	var htm="";
@@ -126,9 +124,7 @@ adicionarRegistro=function(htm,ncredit,ccuprp,adic){
 	
 }
 
-VerHorarioGeneral=function(){
 
-}
 
 GuardarGeneral=function(){
 	

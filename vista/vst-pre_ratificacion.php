@@ -17,7 +17,8 @@
 		<script type="text/javascript" src="../javascript/sistema.js"></script>
 		<script type="text/javascript" src="../javascript/templates.js"></script>
 
-		<script type="text/javascript" src="../javascript/js/js-pre_ratificacion.js"></script>
+        <script type="text/javascript" src="../javascript/js/js-pre_ratificacion.js"></script>
+		<script type="text/javascript" src="../javascript/js/js-pre_ratificacion-reportes.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JqGridPersona.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JQGridGrupoAcademico.js"></script>
         <script type="text/javascript" src="../javascript/jqGrid/JQGridPlanCurricular.js"></script>
@@ -28,8 +29,8 @@
 	<body>
 		<div id="capaOscura" class="capaOscura" style="display:none"></div>
 		<div id="capaCargando" class="capaCargando" style="display:none"><div class="girando"><div class="estrella"></div></div></div>
-		<?require_once('ifrm-header.php')?>	
-		<?require_once('ifrm-nav.php')?>	
+		<?php require_once('ifrm-header.php'); ?>	
+		<?php require_once('ifrm-nav.php'); ?>	
         <div class="contenido">
 			<div class="cuerpo">
 				<div class="secc-izq" id="secc-izq" style="width:0px;">
@@ -174,7 +175,15 @@
             	</div>
 			</div>
 		</div>
-		
+
+		<div id="vistaReportes" style="display: none;">
+            <div>
+                <select name="slct_seccion" id="slct_seccion"></select>
+            </div> 
+            <div id="tablaHorario">
+                
+            </div>
+        </div>
 
         <div id="capaMensaje" class="capaMensaje" style="display:none"></div>		
 		<hr>
