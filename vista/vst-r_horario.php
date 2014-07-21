@@ -3,7 +3,7 @@
 <html>
 	<head>
 
-		<title>SGC2</title>
+		<title>Reporte Horario por Grupo | SGC2</title>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<link rel="shortcut icon" href="../images/favicon.ico">
 

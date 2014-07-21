@@ -52,9 +52,25 @@ $grupos = explode(',', $lista_grupo);
 
 
 
+## INICIO DE RECORRIDO POR GRUPO
+foreach ($grupos as $grupo) { 
 
-foreach ($grupos as $grupo) { // Inicio de Recorrido
 
+## OBTENIENDO SECCIONES POR GRUPO
+$sql = "SELECT cdetgra as id, dseccio as nombre 
+				FROM detgrap
+				WHERE cgracpr ='".$grupo."'";
+$cn->setQuery($sql);
+$secciones = $cn->loadObjectList();
+foreach ($secciones as $seccion) {
+
+	$seccion_id = $seccion['id'];
+	$seccion_nombre = $seccion['nombre'];
+	
+
+
+
+## OBTENEMOS LOS CURSOS Y PROFES
 $sql = "select cu.ccuprpr, cur.dcurso , CONCAT_WS(' ',dappape,dapmape,dnomper) dprofes,
 cu.ncredit
 from cuprprp cu 
@@ -62,10 +78,10 @@ left join profesm pro on pro.cprofes = cu.cprofes
 left join personm per on per.cperson = pro.cperson
 left join cursom  cur on cur.ccurso = cu.ccurso
 where cu.cgracpr='$grupo'";
+
 $cn->setQuery($sql);
-// print $sql;
+
 $cursos = $cn->loadObjectList();
- // print_r($cursos);
 
 $tr_cursos = '';
 $grupo_cursos =array();
@@ -79,7 +95,7 @@ foreach ($cursos as  $curso) {
 
 }
 
-//GRUPO INFO
+## INFORMACION  DEL GRUPO (GRACPRP)
 $sql = "select fi.dfilial filial , ins.dinstit institucion, car.dcarrer carrera , gr.csemaca semestre , gr.finicio , gr.ffin , gr.cinicio
 from gracprp gr 
 left join filialm fi on fi.cfilial = gr.cfilial
@@ -107,6 +123,7 @@ foreach ($grupo_info as  $info) {
 	$tr_grupo_info .="<tr><th><b>Carrera</b></th><td>". $info["carrera"] ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Semestre/Inicio</b></th><td>".$semestre . "-".$num ." / " .$info["cinicio"] ."</td></tr>";
 	$tr_grupo_info .="<tr><th><b>Fecha de Inicio/Fin</b></th><td>". $info["finicio"] ." / ".$info["ffin"]  ."</td></tr>";
+	$tr_grupo_info .="<tr><th><b>Seccion: </b></th><td>". $seccion_nombre  ."</td></tr>";
 	;
 }
 
@@ -114,17 +131,19 @@ foreach ($grupo_info as  $info) {
 $lista_cursos = implode(',', $grupo_cursos);
 $sql = "
 select  dia.dnomdia ,hora.hinici ini , hora.hfin fin,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '02' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')lunes,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '03' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')martes,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '04' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')miercoles,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '05' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')jueves,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '06' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') viernes,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '07' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') sabado,
-group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdia = '01' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') domingo
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '02' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')lunes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '03' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')martes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '04' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')miercoles,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '05' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora  ) SEPARATOR '<hr>')jueves,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '06' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') viernes,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '07' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') sabado,
+group_concat(DISTINCT(select distinct in_ho.ccurpro from horprop in_ho where in_ho.cdetgra='".$seccion_id."' and in_ho.cdia = '01' and in_ho.ccurpro = ho.ccurpro and in_ho.chora = ho.chora ) SEPARATOR '<hr>') domingo
 from horprop ho
 left join diasm dia on dia.cdia = ho.cdia
 left join horam hora on hora.chora = ho.chora 
-where ho.ccurpro in ($lista_cursos) and ho.cestado = 1
+where 
+ho.cdetgra='".$seccion_id."' and
+ho.ccurpro in ($lista_cursos) and ho.cestado = 1
 and hora.hinici is not null
  group by hora.hinici
 order by hora.hinici asc";
@@ -244,17 +263,9 @@ $pdf->writeHTML($html, true, false, true, false, '');
 // reset pointer to the last page
 $pdf->lastPage();
 
+	}
 }
 
-// print $html;
-
-
-
-
-
-
-
-
 //Close and output PDF document
-$pdf->Output('HorariosGrupo.pdf', 'I');
+$pdf->Output('ReporteHorariosGrupos.'.time().'.pdf', 'I');
 ?>
