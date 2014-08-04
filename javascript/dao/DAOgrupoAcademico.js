@@ -449,7 +449,7 @@ var grupoAcademicoDAO={
                 }
                 else if(obj.rst=='1' && obj.data*1>=11){
                     if(obj.data2*1>0 && obj.data2*1<3){
-                        $("#tcreditosaux").val('14');
+                        $("#tcreditosaux").val('20'); //por ahora solo será 20 valor real es 14
                         cantidad=$("#ccreditosaux").val()*1+1;
                         $("#ccreditosaux").val(cantidad);
                         adicionarRegistro(htm,ncredit,ccuprp,adic); 

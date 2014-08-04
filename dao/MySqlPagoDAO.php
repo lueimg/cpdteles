@@ -87,7 +87,17 @@ class MySqlPagoDAO{
 		if( count($data)>0){			
 			return array('rst'=>'1','msj'=>'Alumno Cargado','data'=>$data[0],'sql'=>$sql);exit();
         }else{ 
-			return array('rst'=>'2','msj'=>'Alumno no realizó ningun pago de pensión en el semestre actual','data'=>$data,'sql'=>$sql);exit();
+        $sql="	SELECT '0' as monto,r.cconcep,CONCAT(c.dconcep,' - ',c.ncuotas,'C - ',c.nprecio,' - Prom ',c.ctaprom,'C - ',c.mtoprom) AS concepto 
+				FROM recacap r
+				INNER JOIN concepp c ON (r.`cconcep`=c.`cconcep`)				
+				where cingalu='".$array["cingalu"]."'
+				and cgruaca='".$array["cgracpr"]."'				
+				AND r.ccuota>=1
+				GROUP BY r.cingalu,r.cgruaca";
+		$db->setQuery($sql);
+		$data=$db->loadObjectList();
+			//return array('rst'=>'2','msj'=>'Alumno no realizó ningun pago de pensión en el semestre actual','data'=>$data,'sql'=>$sql);exit();
+			return array('rst'=>'1','msj'=>'Alumno Cargado','data'=>$data[0],'sql'=>$sql);exit();				
         }
 	}
 
